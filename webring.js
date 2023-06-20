@@ -1,5 +1,6 @@
 const websites = [
     "https://website1.com",
+    "https://webring-blue.vercel.app/",
     "https://webring.blackpiratex.com",
     "https://website3.com"
   ];

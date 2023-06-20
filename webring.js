@@ -1,34 +1,30 @@
-// Define the array of websites heyyy
-const websites = [
-    'status.blackpiratex.com',
-    'https://webring-blue.vercel.app/',
-    'blackpiratex.com',
-    'gallery.blackpiratex.com'
-  ];
-  
-  // Get the current URL and query parameters
-  const currentURL = window.location.href;
-  const url = new URL(currentURL);
-  const queryParams = url.searchParams;
-  
-  // Check if 'next' or 'previous' parameters are present
-  if (queryParams.has('next')) {
-    // Find the index of the current URL in the array
-    const currentIndex = websites.findIndex(site => site === currentURL);
-  
-    // Calculate the index of the next URL, considering array bounds
-    const nextIndex = (currentIndex + 1) % websites.length;
-  
-    // Redirect to the next URL
-    window.location.href = websites[nextIndex];
-  } else if (queryParams.has('previous')) {
-    // Find the index of the current URL in the array
-    const currentIndex = websites.findIndex(site => site === currentURL);
-  
-    // Calculate the index of the previous URL, considering array bounds
-    const previousIndex = (currentIndex - 1 + websites.length) % websites.length;
-  
-    // Redirect to the previous URL
-    window.location.href = websites[previousIndex];
+// Fetch the websites from the text file
+function fetchWebsites() {
+    return fetch('websites.txt')
+      .then(response => response.text())
+      .then(text => text.trim().split('\n'));
   }
+  
+  // Function to navigate to the next website in the webring
+  function nextWebsite() {
+    fetchWebsites().then(websites => {
+      const currentURL = window.location.href;
+      const currentIndex = websites.indexOf(currentURL);
+      let nextIndex = currentIndex + 1;
+  
+      // Check if the current website is the last one in the webring
+      if (nextIndex >= websites.length) {
+        nextIndex = 0; // Wrap around to the first website
+      }
+  
+      // Navigate to the next website
+      window.location.href = websites[nextIndex];
+    });
+  }
+  
+  // Add a button or a link to trigger the nextWebsite function
+  document.addEventListener('DOMContentLoaded', function() {
+    const nextButton = document.getElementById('next-button');
+    nextButton.addEventListener('click', nextWebsite);
+  });
   

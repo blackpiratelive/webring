@@ -1,4 +1,4 @@
-// Define the array of websites
+// Define the array of websites heyyy
 const websites = [
     'status.blackpiratex.com',
     'https://webring-blue.vercel.app/',

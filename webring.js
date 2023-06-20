@@ -2,7 +2,7 @@ let websites = [];
 
 // Fetch the websites from the text file
 function fetchWebsites() {
-  return fetch('websites.txt')
+  return fetch('https://webring-blue.vercel.app/websites.txt')
     .then(response => response.text())
     .then(text => text.trim().split('\n'));
 }

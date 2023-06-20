@@ -1,22 +1,34 @@
+// Define the array of websites
 const websites = [
-    "https://firstwebsite.com",
-    "https://webring-blue.vercel.app/",
-    "https://thirdwebsite.com"
+    'status.blackpiratex.com',
+    'https://webring-blue.vercel.app/',
+    'blackpiratex.com',
+    'gallery.blackpiratex.com'
   ];
   
-  const currentWebsite = window.location.hostname;
-  const urlParams = new URLSearchParams(window.location.search);
-  const queryParam = urlParams.get('next');
+  // Get the current URL and query parameters
+  const currentURL = window.location.href;
+  const url = new URL(currentURL);
+  const queryParams = url.searchParams;
   
-  if (queryParam === 'true') {
-    const currentIndex = websites.indexOf(currentWebsite);
+  // Check if 'next' or 'previous' parameters are present
+  if (queryParams.has('next')) {
+    // Find the index of the current URL in the array
+    const currentIndex = websites.findIndex(site => site === currentURL);
+  
+    // Calculate the index of the next URL, considering array bounds
     const nextIndex = (currentIndex + 1) % websites.length;
-    window.location.href = `https://mywebring.com/${websites[nextIndex]}?next=true`;
-  } else {
-    const previousLink = document.getElementById('previousLink');
-    const nextLink = document.getElementById('nextLink');
-    const currentIndex = websites.indexOf(currentWebsite);
-    previousLink.href = `https://mywebring.com/${websites[currentIndex === 0 ? websites.length - 1 : currentIndex - 1]}?next=true`;
-    nextLink.href = `https://mywebring.com/${websites[(currentIndex + 1) % websites.length]}?next=true`;
+  
+    // Redirect to the next URL
+    window.location.href = websites[nextIndex];
+  } else if (queryParams.has('previous')) {
+    // Find the index of the current URL in the array
+    const currentIndex = websites.findIndex(site => site === currentURL);
+  
+    // Calculate the index of the previous URL, considering array bounds
+    const previousIndex = (currentIndex - 1 + websites.length) % websites.length;
+  
+    // Redirect to the previous URL
+    window.location.href = websites[previousIndex];
   }
   

@@ -1,0 +1,44 @@
+:root {
+  --grey: grey;
+}
+
+@keyframes gradient {
+    0% {
+      background-position: 100% 0%;
+    }
+    25% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 0% 100%;
+    }
+    75% {
+      background-position: 100% 100%;
+    }
+    100% {
+      background-position: 100% 0%;
+    }
+  }
+.highlight {
+    background: linear-gradient(to top right, #FF671F, white, #046A38);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+
+  text-fill-color: transparent;
+  animation: gradient 4s ease-in-out infinite;
+}
+body {
+    padding: 1rem;
+    border-radius: 16px;
+    width: 100%;
+    height: 100vh;
+}
+.subtitle {
+  color: var(--grey)
+}
+.bold {
+  font-weight: 900;
+  background: linear-gradient(to top right, #FF671F, white, #046A38);
+}

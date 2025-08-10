@@ -267,7 +267,6 @@
             </div>
         </div>
 
-        <!-- NEW "HOW TO JOIN" SECTION -->
         <div class="section">
             <h2>How to Join the Crew</h2>
             <p>Once the widget is on yer site, choose one of these ways to get on the crew list!</p>
@@ -279,8 +278,11 @@
             <div class="join-method">
                 <h4>Send a Message in a Bottle (Form)</h4>
                 <p>Not a coder? No problem! Just fill out this form, and we'll review your request to join.</p>
-                <form name="join-requests" method="POST" data-netlify="true" class="netlify-form">
+                <!-- UPDATED FORM TAG -->
+                <form name="join-requests" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/success.html" class="netlify-form">
                     <input type="hidden" name="form-name" value="join-requests" />
+                    <!-- Honeypot field for spam protection -->
+                    <p style="display:none"><label>Don’t fill this out if you're human: <input name="bot-field" /></label></p>
                     <p><input type="text" name="name" placeholder="Your Name or Ship's Name" required /></p>
                     <p><input type="url" name="website" placeholder="Your Website URL" required /></p>
                     <p><textarea name="description" placeholder="A short description of your site..." rows="3"></textarea></p>

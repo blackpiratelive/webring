@@ -1,0 +1,22 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g>
+        <!-- Bandana -->
+        <path d="M 10,30 C 10,10 90,10 90,30 L 95,40 L 5,40 Z" fill="#D2691E"/>
+        <circle cx="30" cy="25" r="5" fill="#FDF5E6"/>
+        <circle cx="50" cy="22" r="6" fill="#FDF5E6"/>
+        <circle cx="70" cy="25" r="5" fill="#FDF5E6"/>
+        <!-- Face -->
+        <path d="M 20,35 C 20,20 80,20 80,35 Q 95,65 80,90 L 20,90 Q 5,65 20,35 Z" fill="#F5DEB3"/>
+        <!-- Good Eye -->
+        <circle cx="38" cy="55" r="6" fill="white"/>
+        <circle cx="40" cy="56" r="3" fill="black"/>
+        <!-- Eye Patch Strap -->
+        <path d="M 50,55 H 95" stroke="black" stroke-width="3"/>
+        <!-- Eye Patch -->
+        <path d="M 60,50 C 80,50 80,65 60,65 Z" fill="black"/>
+        <!-- Goofy Smile -->
+        <path d="M 30,75 Q 50,85 70,75" stroke="black" stroke-width="3" fill="none"/>
+        <!-- Gold Tooth -->
+        <rect x="55" y="75" width="5" height="4" fill="#FFD700" />
+    </g>
+</svg>

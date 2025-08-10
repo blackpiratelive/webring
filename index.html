@@ -99,11 +99,75 @@
             padding: 15px;
             margin-bottom: 20px;
             border-radius: 10px;
-            transition: transform 0.3s ease-in-out;
         }
-        .section:nth-of-type(odd) { transform: rotate(-1deg); }
-        .section:nth-of-type(even) { transform: rotate(1deg); }
-        .section:hover { transform: rotate(0deg) scale(1.02); }
+        
+        #member-list .member-card {
+            border: 4px solid #8B4513;
+            background-color: #fdf5e6; /* Old Lace */
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+        #member-list .member-card:hover {
+            transform: scale(1.05) rotate(1deg);
+        }
+        
+        #member-list .member-card h3 {
+            font-size: 1.5rem;
+        }
+
+        #member-list .member-card a {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #8B0000;
+            color: #FFFF00;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+
+        /* --- STYLES for "Get the Widget" Section --- */
+        .wanted-poster {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            margin: 25px auto;
+            padding: 20px;
+            background-color: #fdf5e6;
+            border: 2px solid #a0522d;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+        }
+        .poster-text {
+            font-family: 'IM Fell English SC', serif;
+            color: #5a3d2b;
+        }
+        .poster-text h3 { font-size: 2.5rem; color: #8B0000; margin: 0; border-bottom: 3px double #5a3d2b; padding-bottom: 5px; }
+        .poster-text h4 { font-size: 1.8rem; margin: 10px 0 5px; }
+        .poster-text p { margin: 5px 0; font-size: 1.2rem; }
+
+        .cannon-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            min-height: 60px;
+        }
+        .cannon { width: 80px; transform: rotate(-15deg); margin-right: -15px; z-index: 2; }
+        #cannonball { display: none; position: absolute; width: 20px; height: 20px; background: #333; border-radius: 50%; left: 50%; top: 50%; transform: translate(-60px, -10px); z-index: 1; }
+        #cannonball.fire { display: block; animation: fire-cannon 1s ease-out forwards; }
+        @keyframes fire-cannon { 0% { transform: translate(-60px, -10px) scale(1); opacity: 1; } 100% { transform: translate(400px, -200px) scale(0); opacity: 0; } }
+        
+        #boom-text { position: absolute; left: 50%; top: 50%; font-size: 2.5rem; font-family: 'IM Fell English SC', serif; color: orange; text-shadow: 2px 2px black; opacity: 0; pointer-events: none; }
+        #boom-text.show { animation: boom-effect 0.5s ease-out forwards; }
+        @keyframes boom-effect { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 50% { opacity: 1; } 100% { transform: translate(-50%, -50%) scale(2); opacity: 0; } }
+
+        #copy-button { font-family: 'IM Fell English SC', serif; font-size: 1.2rem; padding: 10px 20px; border: none; background: #DAA520; color: #8B0000; cursor: pointer; border-radius: 50px; box-shadow: 0 5px #B8860B; transition: all 0.1s ease-in-out; }
+        #copy-button:active { transform: translateY(5px); box-shadow: 0 0 #B8860B; }
         
         #embed-code-container {
             background-color: #2F4F4F; /* Dark Slate Gray */
@@ -136,63 +200,14 @@
             font-weight: bold;
         }
         
-        @keyframes jiggle {
-            0%, 100% { transform: scale(1) rotate(0); }
-            25% { transform: scale(1.1) rotate(-3deg); }
-            75% { transform: scale(1.1) rotate(3deg); }
-        }
-
-        #copy-button {
-            font-family: 'IM Fell English SC', serif;
-            font-size: 1.2rem;
-            padding: 10px 20px;
-            border: none;
-            background: #DAA520; /* Gold */
-            color: #8B0000;
-            cursor: pointer;
-            border-radius: 50px;
-            box-shadow: 0 5px #B8860B; /* DarkGoldenRod */
-            transition: all 0.1s ease-in-out;
-        }
+        /* --- STYLES for How to Join Section --- */
+        .join-method { text-align: left; background: rgba(253, 245, 230, 0.8); border: 2px dashed #8B4513; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+        .join-method h4 { font-family: 'IM Fell English SC', serif; font-size: 1.5rem; margin-top: 0; color: #8B0000; }
+        .join-method p { font-size: 1rem; }
+        .join-button { display: inline-block; background: #DAA520; color: #8B0000; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-family: 'IM Fell English SC', serif; font-weight: bold; transition: transform 0.2s; }
+        .join-button:hover { transform: scale(1.1); }
+        .netlify-form input, .netlify-form textarea { width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 3px; border: 1px solid #a0522d; background: #fff; box-sizing: border-box; font-family: 'Gaegu', cursive; font-size: 1rem; }
         
-        #copy-button:hover {
-            animation: jiggle 0.5s;
-        }
-
-        #copy-button:active {
-            transform: translateY(5px);
-            box-shadow: 0 0 #B8860B;
-        }
-        
-        #member-list .member-card {
-            border: 4px solid #8B4513;
-            background-color: #fdf5e6; /* Old Lace */
-            padding: 10px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 5px;
-            transition: transform 0.2s;
-        }
-
-        #member-list .member-card:hover {
-            transform: scale(1.05) rotate(1deg);
-        }
-        
-        #member-list .member-card h3 {
-            font-size: 1.5rem;
-        }
-
-        #member-list .member-card a {
-            display: inline-block;
-            padding: 5px 10px;
-            background-color: #8B0000;
-            color: #FFFF00;
-            text-decoration: none;
-            border-radius: 3px;
-        }
-
         @keyframes fly-around {
             0% { transform: translate(0, 0) rotate(10deg); }
             25% { transform: translate(20px, -30px) rotate(0deg); }
@@ -206,107 +221,10 @@
             animation: fly-around 8s ease-in-out infinite;
             margin-top: 20px;
         }
-
-        /* --- NEW STYLES for Wanted Poster & Cannon --- */
-        .wanted-poster {
-            position: relative;
-            width: 100%;
-            max-width: 300px;
-            margin: 25px auto;
-            padding: 20px;
-            background-color: #fdf5e6; /* Old Lace */
-            border: 2px solid #a0522d; /* Sienna */
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
-        }
-        .poster-background {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            opacity: 0.2; /* Adjust if you add a texture */
-            z-index: 1;
-        }
-        .poster-text {
-            position: relative;
-            z-index: 2;
-            font-family: 'IM Fell English SC', serif;
-            color: #5a3d2b;
-        }
-        .poster-text h3 {
-            font-size: 2.5rem;
-            color: #8B0000;
-            margin: 0;
-            border-bottom: 3px double #5a3d2b;
-            padding-bottom: 5px;
-        }
-        .poster-text h4 {
-            font-size: 1.8rem;
-            margin: 10px 0 5px;
-        }
-        .poster-text p {
-            margin: 5px 0;
-            font-size: 1.2rem;
-        }
-
-        .cannon-container {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-            min-height: 60px;
-        }
-        .cannon {
-            width: 80px;
-            transform: rotate(-15deg);
-            margin-right: -15px;
-            z-index: 2;
-        }
-        #cannonball {
-            display: none;
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #333;
-            border-radius: 50%;
-            left: 50%;
-            top: 50%;
-            transform: translate(-60px, -10px); /* Start at cannon mouth */
-            z-index: 1;
-        }
-        #cannonball.fire {
-            display: block;
-            animation: fire-cannon 1s ease-out forwards;
-        }
-        @keyframes fire-cannon {
-            0% { transform: translate(-60px, -10px) scale(1); opacity: 1; }
-            100% { transform: translate(400px, -200px) scale(0); opacity: 0; }
-        }
-        
-        @keyframes boom-effect {
-            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-            50% { opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
-        }
-        #boom-text {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            font-size: 2.5rem;
-            font-family: 'IM Fell English SC', serif;
-            color: orange;
-            text-shadow: 2px 2px black;
-            opacity: 0;
-            pointer-events: none;
-        }
-        #boom-text.show {
-            animation: boom-effect 0.5s ease-out forwards;
-        }
     </style>
 </head>
 <body>
 
-    <!-- Animated icons in the background -->
     <div id="sea-animations">
         <img src="/icons/sailing-ship.svg" class="sailing-ship" alt="Sailing Ship">
     </div>
@@ -318,21 +236,15 @@
             <p style="font-size: 1.2rem;">The Goofiest Crew on the Seven Digital Seas!</p>
         </header>
 
-        <!-- Widget Preview Section -->
         <div class="section">
             <h2>The Spyglass</h2>
-            <div id="my-webring">
-                <!-- The widget will be dynamically inserted here -->
-            </div>
+            <div id="my-webring"></div>
         </div>
 
-        <!-- How to Join Section -->
         <div class="section">
-            <h2>Join the Crew!</h2>
+            <h2>Get the Widget!</h2>
             
-            <!-- WANTED POSTER -->
             <div class="wanted-poster">
-                <img src="" alt="A tattered paper background for a wanted poster" class="poster-background">
                 <div class="poster-text">
                     <h3>WANTED</h3>
                     <p>For Crimes of Goofiness</p>
@@ -341,22 +253,42 @@
                 </div>
             </div>
 
-            <p>Think ye have what it takes? Then grab the secret code!</p>
+            <p>First, add the widget to yer site. Grab the secret code below!</p>
             
-            <!-- CANNON AND BUTTON -->
             <div class="cannon-container">
                 <svg class="cannon" viewBox="0 0 100 60"><g><path d="M85,30a5,5 0 1,0 10,0a5,5 0 1,0-10,0" fill="#5C4033"/><path d="M90,30H20a5,5 0 0,0-5,5v-10a5,5 0 0,0 5,5H90Z" fill="#36454F"/><circle cx="40" cy="45" r="12" fill="#8B4513" stroke="#5C4033" stroke-width="3"/><circle cx="70" cy="45" r="12" fill="#8B4513" stroke="#5C4033" stroke-width="3"/></g></svg>
                 <button id="copy-button">Fire the Cannon!</button>
                 <div id="cannonball"></div>
                 <div id="boom-text">BOOM!</div>
             </div>
-            
+
             <div id="embed-code-container">
                 <pre><code id="embed-code"></code></pre>
             </div>
         </div>
 
-        <!-- Member List Section -->
+        <!-- NEW "HOW TO JOIN" SECTION -->
+        <div class="section">
+            <h2>How to Join the Crew</h2>
+            <p>Once the widget is on yer site, choose one of these ways to get on the crew list!</p>
+            <div class="join-method">
+                <h4>The Pirate's Way (GitHub)</h4>
+                <p>For salty sea dogs who know their code. Add your URL to the `members.txt` file and send a pull request!</p>
+                <a href="https://github.com/your-username/your-repo-name" target="_blank" class="join-button">Visit the Shipyard</a>
+            </div>
+            <div class="join-method">
+                <h4>Send a Message in a Bottle (Form)</h4>
+                <p>Not a coder? No problem! Just fill out this form, and we'll review your request to join.</p>
+                <form name="join-requests" method="POST" data-netlify="true" class="netlify-form">
+                    <input type="hidden" name="form-name" value="join-requests" />
+                    <p><input type="text" name="name" placeholder="Your Name or Ship's Name" required /></p>
+                    <p><input type="url" name="website" placeholder="Your Website URL" required /></p>
+                    <p><textarea name="description" placeholder="A short description of your site..." rows="3"></textarea></p>
+                    <p><button type="submit" class="join-button">Send the Bottle!</button></p>
+                </form>
+            </div>
+        </div>
+
         <div class="section">
             <h2>The Crew List</h2>
             <div id="member-list">
@@ -370,55 +302,36 @@
         <p>Built with stolen code and a bottle of rum.</p>
     </footer>
 
-    <!-- This script powers the index page functionality -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Set the embed code ---
+            const copyButton = document.getElementById('copy-button');
+            const cannonball = document.getElementById('cannonball');
+            const boomText = document.getElementById('boom-text');
             const embedCodeContainer = document.getElementById('embed-code');
+
+            // Set the embed code content
             const widgetUrl = new URL('/public/widget.js', window.location.href).href;
             const embedHtml = `<div id="my-webring"></div>\n<script async src="${widgetUrl}"><\/script>`;
             embedCodeContainer.textContent = embedHtml;
 
-            // --- Copy Button Logic ---
-            const copyButton = document.getElementById('copy-button');
-            const cannonball = document.getElementById('cannonball');
-            const boomText = document.getElementById('boom-text');
-
             copyButton.addEventListener('click', () => {
-                // Copy text to clipboard
-                const textToCopy = embedCodeContainer.textContent;
-                const textArea = document.createElement('textarea');
-                textArea.value = textToCopy;
-                document.body.appendChild(textArea);
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    copyButton.textContent = 'GOT IT, CAP\'N!';
-                } catch (err) {
-                    console.error('Arrgh, failed to copy: ', err);
-                    copyButton.textContent = 'LOST AT SEA :(';
-                }
-                document.body.removeChild(textArea);
-                setTimeout(() => {
-                    copyButton.textContent = 'Fire the Cannon!';
-                }, 2000);
+                // Copy the text from the visible code block
+                navigator.clipboard.writeText(embedCodeContainer.textContent);
+                
+                copyButton.textContent = 'CODE GRABBED!';
+                setTimeout(() => { copyButton.textContent = 'Fire the Cannon!'; }, 2000);
 
-                // Fire the cannon!
+                // Fire the animation
                 cannonball.classList.remove('fire');
                 boomText.classList.remove('show');
-                // This is a trick to restart the CSS animation
                 void cannonball.offsetWidth; 
                 cannonball.classList.add('fire');
                 boomText.classList.add('show');
             });
 
-            // --- Fetch and display the member list ---
             const memberListContainer = document.getElementById('member-list');
             fetch('/api/webring?action=list')
-                .then(response => {
-                    if (response.ok) return response.json();
-                    return fetch('/members.txt').then(res => res.text());
-                })
+                .then(response => response.ok ? response.json() : fetch('/members.txt').then(res => res.text()))
                 .then(data => {
                     let members;
                     if (typeof data === 'string') {
@@ -428,15 +341,12 @@
                     }
 
                     if (members && members.length > 0) {
-                        memberListContainer.innerHTML = ''; // Clear loading text
+                        memberListContainer.innerHTML = '';
                         members.forEach(url => {
                             const memberCard = document.createElement('div');
                             memberCard.className = 'member-card';
                             const domain = new URL(url).hostname.replace('www.', '');
-                            memberCard.innerHTML = `
-                                <h3>${domain}</h3>
-                                <a href="${url}" target="_blank" rel="noopener noreferrer">Visit Port</a>
-                            `;
+                            memberCard.innerHTML = `<h3>${domain}</h3><a href="${url}" target="_blank" rel="noopener noreferrer">Visit Port</a>`;
                             memberListContainer.appendChild(memberCard);
                         });
                     } else {
@@ -450,7 +360,6 @@
         });
     </script>
     
-    <!-- This script loads the widget for the preview -->
     <script async src="/public/widget.js"></script>
 
 </body>

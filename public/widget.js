@@ -73,10 +73,11 @@
       const action = event.target.getAttribute('data-action');
       
       try {
-        // UPDATED: The API path is now correct for Netlify.
         const apiUrl = new URL('/.netlify/functions/webring', apiBaseUrl);
         apiUrl.searchParams.append('url', currentPageUrl);
         apiUrl.searchParams.append('action', action);
+        // NEW: Tell the API we want a JSON response
+        apiUrl.searchParams.append('json', 'true');
 
         // Optional: Show a loading state
         widgetContainer.querySelector('h3').textContent = 'Sailing the seas...';

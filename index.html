@@ -144,6 +144,7 @@
             background-color: #fdf5e6;
             border: 2px solid #a0522d;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+            box-sizing: border-box; /* FIX: Prevents overflow */
         }
         .poster-text {
             font-family: 'IM Fell English SC', serif;
@@ -183,6 +184,7 @@
             white-space: pre-wrap;
             position: relative;
             margin-top: 20px;
+            box-sizing: border-box; /* FIX: Prevents overflow */
         }
         
         #embed-code-container::before {
@@ -238,7 +240,7 @@
         }
 
         @keyframes fly-around {
-            0% { transform: translate(0, 0) rotate(10deg); }
+            0%, 100% { transform: translate(0, 0) rotate(10deg); }
             25% { transform: translate(20px, -30px) rotate(0deg); }
             50% { transform: translate(0, -50px) rotate(-10deg); }
             75% { transform: translate(-20px, -30px) rotate(0deg); }
@@ -251,7 +253,7 @@
             margin-top: 20px;
         }
 
-        /* --- NEW: Responsive Styles --- */
+        /* --- Responsive Styles --- */
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
             h2 { 

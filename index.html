@@ -204,6 +204,7 @@
             color: #F0E68C; /* Khaki */
             font-size: 16px;
             font-weight: bold;
+            word-break: break-all; /* FIX: Force long strings to wrap */
         }
         
         /* --- STYLES for How to Join Section --- */
@@ -281,6 +282,9 @@
             #member-list .member-card {
                 flex-direction: column; /* Stack on small phones */
                 text-align: center;
+            }
+            #embed-code-container code {
+                font-size: 14px; /* Make code smaller on phones */
             }
         }
     </style>

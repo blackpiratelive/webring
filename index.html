@@ -107,10 +107,12 @@
             padding: 10px;
             margin-bottom: 10px;
             display: flex;
+            flex-direction: column; /* Stack on mobile */
             justify-content: space-between;
             align-items: center;
             border-radius: 5px;
             transition: transform 0.2s;
+            gap: 10px;
         }
 
         #member-list .member-card:hover {
@@ -119,6 +121,7 @@
         
         #member-list .member-card h3 {
             font-size: 1.5rem;
+            margin: 0;
         }
 
         #member-list .member-card a {
@@ -128,6 +131,7 @@
             color: #FFFF00;
             text-decoration: none;
             border-radius: 3px;
+            white-space: nowrap;
         }
 
         /* --- STYLES for "Get the Widget" Section --- */
@@ -208,13 +212,11 @@
         .join-button:hover { transform: scale(1.1); }
         .join-form input, .join-form textarea { width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 3px; border: 1px solid #a0522d; background: #fff; box-sizing: border-box; font-family: 'Gaegu', cursive; font-size: 1rem; }
         
-        /* NEW STYLE for input errors */
         .join-form input.input-error {
             border: 2px solid #8B0000; /* Dark Red */
             background-color: #f8d7da;
         }
 
-        /* --- STYLES for Success/Error Message --- */
         #form-message {
             display: none;
             padding: 15px;
@@ -247,6 +249,37 @@
             position: relative;
             animation: fly-around 8s ease-in-out infinite;
             margin-top: 20px;
+        }
+
+        /* --- NEW: Responsive Styles --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { 
+                font-size: 2rem; 
+                animation: none; /* Disable wiggle on mobile */
+            }
+            .main-container {
+                padding: 10px;
+                border-width: 10px;
+            }
+            .section {
+                transform: none !important; /* Disable crooked sections on mobile */
+            }
+            #member-list .member-card {
+                flex-direction: row; /* Keep horizontal layout on tablets */
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.8rem; }
+            .poster-text h3 { font-size: 2rem; }
+            .poster-text h4 { font-size: 1.5rem; }
+            
+            #member-list .member-card {
+                flex-direction: column; /* Stack on small phones */
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -300,7 +333,7 @@
             <div class="join-method">
                 <h4>The Pirate's Way (GitHub)</h4>
                 <p>For salty sea dogs who know their code. Add your URL to the `members.txt` file and send a pull request!</p>
-                <a href="https://github.com/blackpiratelive/webring" target="_blank" class="join-button">Visit the Shipyard</a>
+                <a href="https://github.com/your-username/your-repo-name" target="_blank" class="join-button">Visit the Shipyard</a>
             </div>
             <div class="join-method">
                 <h4>Send a Message in a Bottle (Form)</h4>
@@ -368,7 +401,7 @@
                 nameInput.classList.remove('input-error');
                 websiteInput.classList.remove('input-error');
 
-                // --- NEW: Validation Check ---
+                // --- Validation Check ---
                 if (nameInput.value.trim() === '' || websiteInput.value.trim() === '') {
                     formMessage.textContent = "Arrgh! A pirate needs a name and a ship (website)!";
                     formMessage.className = 'error';
@@ -409,7 +442,7 @@
                 });
             });
 
-            // --- NEW: Listeners to remove error state on input ---
+            // --- Listeners to remove error state on input ---
             nameInput.addEventListener('input', () => {
                 if (nameInput.value.trim() !== '') {
                     nameInput.classList.remove('input-error');
@@ -422,16 +455,10 @@
             });
 
             const memberListContainer = document.getElementById('member-list');
-            fetch('/api/webring?action=list')
-                .then(response => response.ok ? response.json() : fetch('/members.txt').then(res => res.text()))
+            fetch('/.netlify/functions/webring?action=list') // Correct path for Netlify
+                .then(response => response.ok ? response.json() : Promise.reject('Failed to fetch crew list'))
                 .then(data => {
-                    let members;
-                    if (typeof data === 'string') {
-                        members = data.split('\n').filter(line => line.trim() !== '');
-                    } else if (data.members) {
-                        members = data.members;
-                    }
-
+                    let members = data.members;
                     if (members && members.length > 0) {
                         memberListContainer.innerHTML = '';
                         members.forEach(url => {

@@ -9,6 +9,18 @@ const membersPath = path.join(process.cwd(), 'members.txt');
 
 // The handler for the serverless function.
 const handler = async (event) => {
+  // --- NEW: Handle the browser's security check (preflight request) ---
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
+    };
+  }
+
   try {
     // Get the 'url' and 'action' from the query string.
     const { url: currentSiteUrl, action = 'next' } = event.queryStringParameters;

@@ -1,29 +1,28 @@
-// api/webring.js
+// netlify/functions/webring.js
 // This is the serverless function that powers the webring.
 
 import { promises as fs } from 'fs';
 import path from 'path';
 
-export default async function handler(req, res) {
-  // Get the 'url' and 'action' from the query string.
-  const { url: currentSiteUrl, action = 'next' } = req.query;
+// This is a more reliable way to find files in a serverless environment.
+const membersPath = path.join(process.cwd(), 'members.txt');
 
+// The handler for the serverless function.
+const handler = async (event) => {
   try {
-    // Find the `members.txt` file in the project's root directory.
-    const membersPath = path.join(process.cwd(), 'members.txt');
-    
+    // Get the 'url' and 'action' from the query string.
+    const { url: currentSiteUrl, action = 'next' } = event.queryStringParameters;
+
     // Read and parse the list of members.
     const membersFile = await fs.readFile(membersPath, 'utf-8');
     const members = membersFile.split('\n').filter(line => line.trim() !== '');
 
     if (members.length === 0) {
-      return res.status(500).json({ error: 'Member list is empty.' });
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Member list is empty.' }),
+      };
     }
-
-    // Set CORS headers to allow the widget to be used on any domain.
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     // Find the index of the current site in the members array.
     const currentIndex = members.findIndex(memberUrl => {
@@ -31,12 +30,13 @@ export default async function handler(req, res) {
     });
 
     let targetUrl;
+    let responseBody;
 
-    // Determine the target URL based on the requested action.
+    // Determine the target URL or response based on the requested action.
     switch (action) {
-      // NEW: This case handles the request for the full member list.
       case 'list':
-        return res.status(200).json({ members });
+        responseBody = JSON.stringify({ members });
+        break;
 
       case 'previous':
         if (currentIndex !== -1) {
@@ -45,6 +45,7 @@ export default async function handler(req, res) {
         } else {
           targetUrl = members[members.length - 1];
         }
+        responseBody = JSON.stringify({ targetUrl });
         break;
 
       case 'random':
@@ -53,6 +54,7 @@ export default async function handler(req, res) {
           randomIndex = Math.floor(Math.random() * members.length);
         } while (members.length > 1 && randomIndex === currentIndex);
         targetUrl = members[randomIndex];
+        responseBody = JSON.stringify({ targetUrl });
         break;
 
       case 'next':
@@ -63,14 +65,27 @@ export default async function handler(req, res) {
         } else {
           targetUrl = members[0];
         }
+        responseBody = JSON.stringify({ targetUrl });
         break;
     }
-    
-    // Send the target URL back as JSON for navigation actions.
-    res.status(200).json({ targetUrl });
+
+    // Return a successful response.
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Allow requests from any domain
+        'Content-Type': 'application/json',
+      },
+      body: responseBody,
+    };
 
   } catch (error) {
     console.error('Failed to process webring request:', error);
-    res.status(500).json({ error: 'Could not load webring members.' });
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Could not load webring members.' }),
+    };
   }
-}
+};
+
+export { handler };

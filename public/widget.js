@@ -73,7 +73,8 @@
       const action = event.target.getAttribute('data-action');
       
       try {
-        const apiUrl = new URL('/api/webring', apiBaseUrl);
+        // UPDATED: The API path is now correct for Netlify.
+        const apiUrl = new URL('/.netlify/functions/webring', apiBaseUrl);
         apiUrl.searchParams.append('url', currentPageUrl);
         apiUrl.searchParams.append('action', action);
 

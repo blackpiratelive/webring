@@ -9,7 +9,7 @@ const membersPath = path.join(process.cwd(), 'members.txt');
 
 // The handler for the serverless function.
 const handler = async (event) => {
-  // --- NEW: Handle the browser's security check (preflight request) ---
+  // Handle the browser's security check (preflight request)
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,
@@ -36,20 +36,26 @@ const handler = async (event) => {
       };
     }
 
-    // Find the index of the current site in the members array.
+    // --- NEW LOGIC: Handle 'list' action separately ---
+    if (action === 'list') {
+      return {
+        statusCode: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ members }),
+      };
+    }
+
+    // --- All other actions (next, previous, random) will now redirect ---
     const currentIndex = members.findIndex(memberUrl => {
         return currentSiteUrl && currentSiteUrl.startsWith(memberUrl);
     });
 
     let targetUrl;
-    let responseBody;
 
-    // Determine the target URL or response based on the requested action.
     switch (action) {
-      case 'list':
-        responseBody = JSON.stringify({ members });
-        break;
-
       case 'previous':
         if (currentIndex !== -1) {
           const prevIndex = (currentIndex - 1 + members.length) % members.length;
@@ -57,7 +63,6 @@ const handler = async (event) => {
         } else {
           targetUrl = members[members.length - 1];
         }
-        responseBody = JSON.stringify({ targetUrl });
         break;
 
       case 'random':
@@ -66,7 +71,6 @@ const handler = async (event) => {
           randomIndex = Math.floor(Math.random() * members.length);
         } while (members.length > 1 && randomIndex === currentIndex);
         targetUrl = members[randomIndex];
-        responseBody = JSON.stringify({ targetUrl });
         break;
 
       case 'next':
@@ -77,18 +81,16 @@ const handler = async (event) => {
         } else {
           targetUrl = members[0];
         }
-        responseBody = JSON.stringify({ targetUrl });
         break;
     }
 
-    // Return a successful response.
+    // --- UPDATED: Return a 302 Redirect ---
+    // This tells the browser to automatically navigate to the new URL.
     return {
-      statusCode: 200,
+      statusCode: 302,
       headers: {
-        'Access-Control-Allow-Origin': '*', // Allow requests from any domain
-        'Content-Type': 'application/json',
+        'Location': targetUrl,
       },
-      body: responseBody,
     };
 
   } catch (error) {

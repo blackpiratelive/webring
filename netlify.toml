@@ -1,0 +1,10 @@
+# netlify.toml
+# This tells Netlify how to build your site.
+
+[build]
+  # This confirms that your main page (index.html) and other assets are in the root.
+  publish = "."
+
+[functions]
+  # This tells Netlify that your serverless functions are in the "netlify/functions" folder.
+  directory = "netlify/functions"

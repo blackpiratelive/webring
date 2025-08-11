@@ -144,7 +144,7 @@
             background-color: #fdf5e6;
             border: 2px solid #a0522d;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
-            box-sizing: border-box; /* FIX: Prevents overflow */
+            box-sizing: border-box; /* Prevents overflow */
         }
         .poster-text {
             font-family: 'IM Fell English SC', serif;
@@ -152,7 +152,11 @@
         }
         .poster-text h3 { font-size: 2.5rem; color: #8B0000; margin: 0; border-bottom: 3px double #5a3d2b; padding-bottom: 5px; }
         .poster-text h4 { font-size: 1.8rem; margin: 10px 0 5px; }
-        .poster-text p { margin: 5px 0; font-size: 1.2rem; }
+        .poster-text p { 
+            margin: 5px 0; 
+            font-size: 1.2rem;
+            word-wrap: break-word; /* Prevents text overflow */
+        }
 
         .cannon-container {
             position: relative;
@@ -180,11 +184,9 @@
             border: 5px solid #DAA520;
             border-radius: 5px;
             text-align: left;
-            word-wrap: break-word;
-            white-space: pre-wrap;
             position: relative;
             margin-top: 20px;
-            box-sizing: border-box; /* FIX: Prevents overflow */
+            box-sizing: border-box; /* Prevents overflow */
         }
         
         #embed-code-container::before {
@@ -200,11 +202,16 @@
             border-radius: 3px;
         }
 
+        #embed-code-container pre {
+            white-space: pre-wrap;       /* CSS3 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+        }
+
         #embed-code-container code {
             color: #F0E68C; /* Khaki */
             font-size: 16px;
             font-weight: bold;
-            word-break: break-all; /* FIX: Force long strings to wrap */
+            word-break: break-all; /* Force long strings to wrap */
         }
         
         /* --- STYLES for How to Join Section --- */
@@ -339,7 +346,7 @@
             <div class="join-method">
                 <h4>The Pirate's Way (GitHub)</h4>
                 <p>For salty sea dogs who know their code. Add your URL to the `members.txt` file and send a pull request!</p>
-                <a href="https://github.com/your-username/your-repo-name" target="_blank" class="join-button">Visit the Shipyard</a>
+                <a href="https://github.com/blackpiratelive/webring/" target="_blank" class="join-button">Visit the Shipyard</a>
             </div>
             <div class="join-method">
                 <h4>Send a Message in a Bottle (Form)</h4>
@@ -398,7 +405,23 @@
                 boomText.classList.add('show');
             });
 
-            // --- UPDATED FORM SUBMISSION LOGIC ---
+            // --- Helper function to validate URL ---
+            const isValidUrl = (string) => {
+                try {
+                    new URL(string);
+                    return string.startsWith('http://') || string.startsWith('https://');
+                } catch (_) {
+                    return false;  
+                }
+            }
+
+            // --- Helper function to validate Name ---
+            const isValidName = (string) => {
+                // Check for HTML tags or other unwanted characters
+                const invalidChars = /[<>\/]/;
+                return !invalidChars.test(string);
+            }
+
             joinForm.addEventListener('submit', event => {
                 event.preventDefault();
 
@@ -406,19 +429,36 @@
                 formMessage.style.display = 'none';
                 nameInput.classList.remove('input-error');
                 websiteInput.classList.remove('input-error');
+                
+                let isValid = true;
+                let errorMessage = '';
 
-                // --- Validation Check ---
-                if (nameInput.value.trim() === '' || websiteInput.value.trim() === '') {
-                    formMessage.textContent = "Arrgh! A pirate needs a name and a ship (website)!";
+                // --- UPDATED Validation Checks ---
+                if (nameInput.value.trim() === '') {
+                    isValid = false;
+                    errorMessage = "Arrgh! A pirate needs a name!";
+                    nameInput.classList.add('input-error');
+                } else if (!isValidName(nameInput.value)) {
+                    isValid = false;
+                    errorMessage = "Shiver me timbers! A name shouldn't have strange symbols like < or >!";
+                    nameInput.classList.add('input-error');
+                }
+
+                if (websiteInput.value.trim() === '') {
+                    isValid = false;
+                    // Use the more specific message if both are empty
+                    errorMessage = errorMessage || "Every pirate needs a ship (website)!";
+                    websiteInput.classList.add('input-error');
+                } else if (!isValidUrl(websiteInput.value)) {
+                    isValid = false;
+                    errorMessage = errorMessage || "That doesn't look like a proper ship's URL! Make sure it starts with http:// or https://";
+                    websiteInput.classList.add('input-error');
+                }
+
+                if (!isValid) {
+                    formMessage.textContent = errorMessage;
                     formMessage.className = 'error';
                     formMessage.style.display = 'block';
-
-                    if (nameInput.value.trim() === '') {
-                        nameInput.classList.add('input-error');
-                    }
-                    if (websiteInput.value.trim() === '') {
-                        websiteInput.classList.add('input-error');
-                    }
                     return; // Stop the submission
                 }
                 

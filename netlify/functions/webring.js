@@ -22,8 +22,8 @@ const handler = async (event) => {
   }
 
   try {
-    // Get the 'url' and 'action' from the query string.
-    const { url: currentSiteUrl, action = 'next' } = event.queryStringParameters;
+    // Get the 'url', 'action', and the new 'json' parameter from the query string.
+    const { url: currentSiteUrl, action = 'next', json } = event.queryStringParameters;
 
     // Read and parse the list of members.
     const membersFile = await fs.readFile(membersPath, 'utf-8');
@@ -36,7 +36,7 @@ const handler = async (event) => {
       };
     }
 
-    // --- NEW LOGIC: Handle 'list' action separately ---
+    // The 'list' action ALWAYS returns JSON.
     if (action === 'list') {
       return {
         statusCode: 200,
@@ -48,7 +48,7 @@ const handler = async (event) => {
       };
     }
 
-    // --- All other actions (next, previous, random) will now redirect ---
+    // --- All other actions (next, previous, random) ---
     const currentIndex = members.findIndex(memberUrl => {
         return currentSiteUrl && currentSiteUrl.startsWith(memberUrl);
     });
@@ -84,14 +84,26 @@ const handler = async (event) => {
         break;
     }
 
-    // --- UPDATED: Return a 302 Redirect ---
-    // This tells the browser to automatically navigate to the new URL.
-    return {
-      statusCode: 302,
-      headers: {
-        'Location': targetUrl,
-      },
-    };
+    // --- NEW: Check if the request wants JSON or a Redirect ---
+    if (json === 'true') {
+      // If the JS widget called this, send back JSON.
+      return {
+        statusCode: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ targetUrl }),
+      };
+    } else {
+      // If the HTML widget called this, perform a redirect.
+      return {
+        statusCode: 302,
+        headers: {
+          'Location': targetUrl,
+        },
+      };
+    }
 
   } catch (error) {
     console.error('Failed to process webring request:', error);

@@ -6,11 +6,19 @@ const db = createClient({
 });
 
 export default async function handler(req, res) {
+  // 1. Force fresh data (No Caching)
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  
   try {
-    // Select verified/pending sites, order by newest first
-    const result = await db.execute('SELECT title, url, slug FROM sites ORDER BY id DESC');
+    // 2. Select specific columns including STATUS
+    const result = await db.execute({
+        sql: 'SELECT title, url, slug, status FROM sites ORDER BY id DESC',
+        args: []
+    });
+    
     res.status(200).json(result.rows);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Failed to fetch members' });
   }
 }

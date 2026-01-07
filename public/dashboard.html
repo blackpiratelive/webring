@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSutra Dashboard</title>
+    <style>
+        :root { --bg: #121212; --card: #1e1e1e; --text: #e0e0e0; --accent: #ff8c42; --danger: #ff4444; --admin: #ffd700; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); max-width: 500px; margin: 2rem auto; padding: 1rem; line-height: 1.5; }
+        
+        h1 { margin-bottom: 2rem; color: var(--accent); }
+        h3 { margin-top: 0; }
+        
+        /* Form Inputs */
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; margin-top: 15px; }
+        input, select { width: 100%; padding: 12px; background: #2a2a2a; border: 1px solid #444; color: white; border-radius: 4px; box-sizing: border-box; }
+        input:focus, select:focus { outline: none; border-color: var(--accent); }
+        
+        /* Buttons */
+        button { width: 100%; padding: 12px; margin-top: 20px; font-weight: bold; cursor: pointer; border: none; border-radius: 4px; transition: opacity 0.2s; }
+        button:hover { opacity: 0.9; }
+        .btn-primary { background: var(--accent); color: #121212; }
+        .btn-danger { background: var(--danger); color: white; }
+        
+        /* Layout */
+        .card { background: var(--card); padding: 25px; border-radius: 8px; border: 1px solid #333; }
+        .hidden { display: none; }
+        
+        /* Badges & Admin UI */
+        .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; float: right; }
+        .badge-pending { background: #555; color: white; }
+        .badge-verified { background: #28a745; color: white; }
+        .badge-suspended { background: #dc3545; color: white; }
+
+        .admin-box { border: 1px solid var(--admin); padding: 15px; border-radius: 4px; background: rgba(255, 215, 0, 0.05); margin-top: 20px; }
+        .admin-label { color: var(--admin); margin-top: 0; }
+
+        .back-link { display: block; margin-top: 20px; text-align: center; color: #888; text-decoration: none; font-size: 0.9rem; }
+        .back-link:hover { color: var(--accent); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Member Dashboard</h1>
+    </header>
+
+    <div id="loginSection" class="card">
+        <h3>Login</h3>
+        <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 20px;">
+            Enter your Site ID and Secret Key. <br>
+            <small>(Admins: Enter target Site ID and Admin Secret)</small>
+        </p>
+        
+        <label for="loginSlug">Site ID (Slug)</label>
+        <input type="text" id="loginSlug" placeholder="e.g. rohit-blog">
+        
+        <label for="loginKey">Secret Key</label>
+        <input type="password" id="loginKey" placeholder="e.g. a1b2-c3d4...">
+        
+        <button onclick="login()" class="btn-primary" id="loginBtn">Access Dashboard</button>
+    </div>
+
+    <div id="dashboardSection" class="card hidden">
+        <div style="margin-bottom: 20px; overflow: hidden;">
+            <h3 style="float: left;">Edit Details</h3>
+            <span id="statusBadge" class="badge badge-pending">PENDING</span>
+        </div>
+
+        <label for="editTitle">Site Title</label>
+        <input type="text" id="editTitle">
+
+        <label for="editUrl">Website URL</label>
+        <input type="url" id="editUrl">
+
+        <div id="adminControls" class="admin-box hidden">
+            <h4 class="admin-label">⚡ Admin Controls</h4>
+            <label>Change Status</label>
+            <select id="editStatus">
+                <option value="pending">Pending</option>
+                <option value="verified">Verified</option>
+                <option value="suspended">Suspended</option>
+            </select>
+            
+            <label>User Email (Read Only)</label>
+            <input type="text" id="viewEmail" readonly style="opacity: 0.6; cursor: not-allowed;">
+        </div>
+        <button onclick="updateSite()" class="btn-primary" id="updateBtn">Save Changes</button>
+
+        <hr style="border-color: #333; margin: 30px 0;">
+
+        <h3>Danger Zone</h3>
+        <p style="font-size: 0.8rem; opacity: 0.7;">Permanently remove this site from the ring.</p>
+        <button onclick="deleteSite()" class="btn-danger" id="deleteBtn">Delete Site Forever</button>
+    </div>
+
+    <a href="/" class="back-link">&larr; Back to Home</a>
+
+    <script>
+        let currentSlug = '';
+        let currentKey = '';
+        let isAdmin = false;
+
+        // --- LOGIN FUNCTION ---
+        async function login() {
+            const slug = document.getElementById('loginSlug').value.trim();
+            const key = document.getElementById('loginKey').value.trim();
+            const btn = document.getElementById('loginBtn');
+
+            if(!slug || !key) return alert("Please enter both ID and Key");
+
+            btn.textContent = "Verifying...";
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/manage', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ slug, key, action: 'login' })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    currentSlug = slug;
+                    currentKey = key;
+                    isAdmin = data.isAdmin || false; // Backend flag
+
+                    // Populate Form
+                    document.getElementById('editTitle').value = data.site.title;
+                    document.getElementById('editUrl').value = data.site.url;
+                    
+                    // Badge Logic
+                    const badge = document.getElementById('statusBadge');
+                    badge.textContent = data.site.status.toUpperCase();
+                    badge.className = `badge badge-${data.site.status}`;
+
+                    // Toggle Admin UI
+                    const adminDiv = document.getElementById('adminControls');
+                    if (isAdmin) {
+                        adminDiv.classList.remove('hidden');
+                        document.getElementById('editStatus').value = data.site.status;
+                        document.getElementById('viewEmail').value = data.site.email || "No email provided";
+                    } else {
+                        adminDiv.classList.add('hidden');
+                    }
+
+                    // Show Dashboard
+                    document.getElementById('loginSection').classList.add('hidden');
+                    document.getElementById('dashboardSection').classList.remove('hidden');
+                } else {
+                    alert(data.error || "Login Failed");
+                    btn.textContent = "Access Dashboard";
+                    btn.disabled = false;
+                }
+            } catch (err) {
+                alert("Connection Error");
+                btn.textContent = "Access Dashboard";
+                btn.disabled = false;
+            }
+        }
+
+        // --- UPDATE FUNCTION ---
+        async function updateSite() {
+            const newTitle = document.getElementById('editTitle').value;
+            const newUrl = document.getElementById('editUrl').value;
+            const newStatus = document.getElementById('editStatus').value; // For admins
+            const btn = document.getElementById('updateBtn');
+
+            btn.textContent = "Saving...";
+            
+            try {
+                const payload = { 
+                    slug: currentSlug, 
+                    key: currentKey, 
+                    action: 'update',
+                    newTitle, 
+                    newUrl,
+                    newStatus: isAdmin ? newStatus : undefined // Only send status if admin
+                };
+
+                const res = await fetch('/api/manage', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+                
+                if (data.success) {
+                    alert("Updated successfully!");
+                    if(isAdmin) location.reload(); // Reload to see status badge update
+                } else {
+                    alert("Error: " + data.error);
+                }
+            } catch (e) {
+                alert("Update failed.");
+            } finally {
+                btn.textContent = "Save Changes";
+            }
+        }
+
+        // --- DELETE FUNCTION ---
+        async function deleteSite() {
+            const confirmDelete = confirm("⚠️ Are you sure? This action is permanent.");
+            if (!confirmDelete) return;
+
+            const btn = document.getElementById('deleteBtn');
+            btn.textContent = "Deleting...";
+
+            try {
+                const res = await fetch('/api/manage', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        slug: currentSlug, 
+                        key: currentKey, 
+                        action: 'delete' 
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    alert("Site deleted.");
+                    window.location.href = "/";
+                } else {
+                    alert("Error: " + data.error);
+                    btn.textContent = "Delete Site Forever";
+                }
+            } catch (e) {
+                alert("Delete failed.");
+                btn.textContent = "Delete Site Forever";
+            }
+        }
+    </script>
+</body>
+</html>

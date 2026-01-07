@@ -1,33 +1,37 @@
 import { createClient } from '@libsql/client';
+import { randomUUID } from 'crypto';
 
-// 1. Initialize Database Client
+// Initialize Database
 const db = createClient({
   url: process.env.TURSO_DATABASE_URL,
   authToken: process.env.TURSO_AUTH_TOKEN,
 });
 
 export default async function handler(req, res) {
-  // Only allow POST requests
+  // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
   const { title, url, slug, email } = req.body;
 
-  // Basic validation
+  // 1. Validation
   if (!title || !url || !slug) {
     return res.status(400).json({ error: 'Title, URL, and Slug are required' });
   }
 
+  // 2. Generate Secret Key (Master Password)
+  const secretKey = randomUUID();
+
   try {
-    // 2. Insert into Turso Database
-    // We still save the email if provided (for your records), but we don't send anything.
+    // 3. Insert into Database
+    // We store email if provided, but it's optional in the schema
     await db.execute({
-      sql: 'INSERT INTO sites (title, url, slug, email) VALUES (?, ?, ?, ?)',
-      args: [title, url, slug, email || null],
+      sql: 'INSERT INTO sites (title, url, slug, email, secret_key, status) VALUES (?, ?, ?, ?, ?, ?)',
+      args: [title, url, slug, email || null, secretKey, 'pending'],
     });
 
-    // 3. Generate the HTML Snippet
+    // 4. Construct the HTML Snippet
     const host = req.headers.host; 
     const protocol = req.headers['x-forwarded-proto'] || 'https';
     const baseUrl = `${protocol}://${host}`;
@@ -45,15 +49,20 @@ export default async function handler(req, res) {
 </div>
 `;
 
-    // 4. Success Response
-    res.status(200).json({ success: true, snippet });
+    // 5. Success Response
+    // We return the secretKey here so the frontend can display it to the user
+    res.status(200).json({ 
+        success: true, 
+        snippet, 
+        secretKey 
+    });
 
   } catch (error) {
     console.error("Join API Error:", error);
 
-    // Check for unique constraint violation (Duplicate Slug)
+    // Handle duplicate Slugs
     if (error.message && error.message.includes('UNIQUE constraint failed')) {
-      return res.status(409).json({ error: 'This Slug (ID) is already taken. Please choose another.' });
+      return res.status(409).json({ error: 'This ID (Slug) is already taken. Please choose another.' });
     }
 
     res.status(500).json({ error: 'Internal Server Error' });

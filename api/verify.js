@@ -6,7 +6,7 @@ const db = createClient({
 });
 
 export default async function handler(req, res) {
-  // Only allow POST (triggered by button click)
+  // Only allow POST
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
   const { slug } = req.body;
@@ -23,9 +23,8 @@ export default async function handler(req, res) {
     if (!site) return res.status(404).json({ error: "Site not found" });
 
     // 2. Fetch their Homepage
-    // We use an AbortController to timeout after 5 seconds so your server doesn't hang
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000); 
+    const timeout = setTimeout(() => controller.abort(), 8000); // 8 seconds timeout
 
     const response = await fetch(site.url, { 
         signal: controller.signal,
@@ -41,18 +40,20 @@ export default async function handler(req, res) {
 
     const html = await response.text();
 
-    // 3. Scan HTML for your domain
-    // We check for 'webring.blackpiratex.com' OR 'websutra' just to be safe
-    const isVerified = html.includes('webring.blackpiratex.com') || html.includes('websutra');
+    // 3. STRICT CHECK
+    // We look for the specific ID of the container div OR the specific link.
+    // This prevents false positives from just mentioning the name "WebSutra".
+    const hasWidgetId = html.includes('id="websutra-ring"');
+    const hasMainLink = html.includes('href="https://webring.blackpiratex.com"');
 
-    if (isVerified) {
+    if (hasWidgetId || hasMainLink) {
         await db.execute({
             sql: "UPDATE sites SET status = 'verified' WHERE slug = ?",
             args: [slug]
         });
         return res.status(200).json({ success: true, message: "Verification Successful!" });
     } else {
-        return res.status(400).json({ error: "Widget code not found on your homepage. Please ensure you added the HTML." });
+        return res.status(400).json({ error: "Widget code not found. Please ensure you pasted the HTML snippet correctly." });
     }
 
   } catch (error) {

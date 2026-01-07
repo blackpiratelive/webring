@@ -12,9 +12,9 @@ h1 {
     margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 2px;
-    background-color: black;
+    
     /* The Gradient Text Effect */
-    background: linear-gradient(to right, #FF9933, #ffffff, #138808);
+    background: linear-gradient(to right, #FF9933, black, #138808);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     

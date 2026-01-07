@@ -15,31 +15,27 @@ export default async function handler(req, res) {
   const secretKey = randomUUID(); // The User's Master Password
 
   try {
-    // Transaction-like logic: Create User -> Get ID -> Create Site
-    await db.execute("BEGIN TRANSACTION");
+    // We use db.batch to send multiple SQL statements in ONE atomic HTTP request.
+    // If any statement fails, the whole batch fails (Rollback is automatic).
+    await db.batch([
+        {
+            // 1. Create User
+            sql: "INSERT INTO users (secret_key, email) VALUES (?, ?)",
+            args: [secretKey, email || null]
+        },
+        {
+            // 2. Create Site
+            // We use 'last_insert_rowid()' to grab the ID of the user we just created above.
+            sql: "INSERT INTO sites (user_id, slug, url, title, status) VALUES (last_insert_rowid(), ?, ?, ?, ?)",
+            args: [slug, url, title, 'pending']
+        }
+    ]);
 
-    // 1. Create User
-    const userResult = await db.execute({
-        sql: "INSERT INTO users (secret_key, email) VALUES (?, ?) RETURNING id",
-        args: [secretKey, email || null]
-    });
-    
-    // Get the ID of the new user
-    // Note: Turso/LibSQL returns inserted ID differently sometimes, ensuring we catch it.
-    const userId = userResult.rows[0].id || userResult.lastInsertRowid;
-
-    // 2. Create Site linked to that User
-    await db.execute({
-        sql: "INSERT INTO sites (user_id, slug, url, title, status) VALUES (?, ?, ?, ?, ?)",
-        args: [userId, slug, url, title, 'pending']
-    });
-
-    await db.execute("COMMIT");
-
-    // 3. Generate Snippet (Same as before)
+    // --- Success! Generate Snippet ---
     const host = req.headers.host; 
     const protocol = req.headers['x-forwarded-proto'] || 'https';
     const baseUrl = `${protocol}://${host}`;
+    
     const snippet = `
 <div id="websutra-ring">
   <p>Member of <a href="${baseUrl}">WebSutra</a></p>
@@ -51,10 +47,10 @@ export default async function handler(req, res) {
     res.status(200).json({ success: true, snippet, secretKey });
 
   } catch (error) {
-    await db.execute("ROLLBACK"); // Undo if site creation fails
     console.error(error);
-    if (error.message.includes('UNIQUE constraint')) {
-        return res.status(409).json({ error: 'ID/Slug already taken.' });
+    // Check for "Unique constraint" error (Duplicate Slug)
+    if (error.message && error.message.includes('UNIQUE constraint')) {
+        return res.status(409).json({ error: 'ID (Slug) already taken. Please choose another.' });
     }
     res.status(500).json({ error: 'Server Error' });
   }

@@ -1,0 +1,6 @@
+{
+  "name": "websutra-ring",
+  "dependencies": {
+    "@libsql/client": "latest"
+  }
+}

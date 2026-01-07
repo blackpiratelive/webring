@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WebSutra Banner 250x250</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+        font-family: "Arial Black", Gadget, sans-serif;
+    }
+
+    /* Link Wrapper */
+    .banner-link {
+        text-decoration: none;
+        display: block;
+        width: 250px;
+        height: 250px;
+        /* To account for the drop shadow without cutting it off in strict iframes, 
+           you might need to reduce width slightly or set margin, 
+           but standard ad slots usually handle inner content. */
+    }
+
+    .banner-square {
+        width: 240px; /* Slightly smaller to fit shadow */
+        height: 240px;
+        background-color: #008080; /* Windows Teal */
+        border: 4px outset #ffffff;
+        padding: 5px;
+        text-align: center;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        box-shadow: 8px 8px 0px #000000; /* Hard shadow */
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+
+    /* Header Bar */
+    .banner-square h2 {
+        background-color: navy;
+        color: yellow;
+        margin: 0;
+        padding: 5px;
+        font-size: 16px;
+        border: 2px inset white;
+        text-transform: uppercase;
+    }
+
+    /* Content Area */
+    .banner-square .content {
+        font-family: "Times New Roman", serif;
+        font-size: 18px;
+        line-height: 1.2;
+    }
+
+    /* Animations */
+    .pulse-text {
+        animation: pulse 0.5s infinite alternate;
+        font-weight: bold;
+        font-size: 20px;
+        margin: 10px 0;
+        font-family: Arial, sans-serif;
+    }
+
+    @keyframes pulse {
+        from { color: #ff00ff; transform: scale(1); }
+        to { color: #ffffff; transform: scale(1.1); }
+    }
+
+    /* Button Style */
+    .click-btn {
+        background: #cccccc;
+        border: 2px outset #ffffff;
+        font-size: 14px;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+        padding: 5px;
+        font-family: Verdana, sans-serif;
+    }
+
+    .banner-square:active .click-btn {
+        border-style: inset;
+    }
+</style>
+</head>
+<body>
+
+    <!-- LINK: Change href="#" to your actual Join URL -->
+    <a href="#" target="_blank" class="banner-link">
+        <div class="banner-square">
+            <h2>⚠ WEBMASTER ALERT ⚠</h2>
+            
+            <div class="content">
+                <p>Is your site<br><strong>LONELY?</strong> 😭</p>
+                <p class="pulse-text">JOIN WEBSUTRA!</p>
+                <p style="font-size: 14px; font-style: italic;">The #1 Ring for<br>Desi Sites 🇮🇳</p>
+            </div>
+            
+            <div class="click-btn">
+                ENTER HERE
+            </div>
+        </div>
+    </a>
+
+</body>
+</html>

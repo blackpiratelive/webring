@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WebSutra Banner 468x60</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* Prevents scrollbars in iframes */
+        background-color: transparent;
+    }
+
+    /* The Link Wrapper (Makes the whole thing clickable or just contains layout) */
+    .banner-link {
+        text-decoration: none;
+        display: block;
+        width: 468px; /* Standard Banner Width */
+        height: 60px; /* Standard Banner Height */
+    }
+
+    .banner-classic {
+        width: 100%;
+        height: 100%;
+        background-color: #ffff00; /* Bright Yellow */
+        border: 5px ridge #0000ff; /* Blue Ridge Border */
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+        box-sizing: border-box;
+        font-family: sans-serif;
+        cursor: pointer;
+    }
+
+    /* Text Styles */
+    .banner-classic h2 {
+        font-family: "Comic Sans MS", "Chalkboard SE", sans-serif;
+        color: #ff0000; /* Red Text */
+        margin: 0;
+        font-size: 24px;
+        text-shadow: 2px 2px #00ff00; /* Green Shadow */
+        line-height: 1;
+    }
+
+    /* Marquee Box */
+    .marquee-container {
+        overflow: hidden;
+        white-space: nowrap;
+        background: white;
+        border: 2px inset #ccc;
+        width: 180px;
+        color: blue;
+        font-weight: bold;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+    }
+
+    .scrolling {
+        display: inline-block;
+        padding-left: 100%;
+        animation: scroll-left 6s linear infinite;
+    }
+
+    @keyframes scroll-left {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+    }
+
+    /* Button Style */
+    .click-btn {
+        background: #cccccc;
+        border: 2px outset #ffffff;
+        font-size: 10px;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+        padding: 2px 5px;
+        font-family: Verdana, sans-serif;
+    }
+    
+    .banner-classic:hover .click-btn {
+        background-color: #e0e0e0;
+    }
+</style>
+</head>
+<body>
+
+    <!-- LINK: Change href="#" to your actual Join URL -->
+    <a href="#" target="_blank" class="banner-link">
+        <div class="banner-classic">
+            <!-- Left: Logo -->
+            <div class="amateur-font">
+                <h2>WebSutra</h2>
+            </div>
+            
+            <!-- Middle: Marquee -->
+            <div class="marquee-container">
+                <div class="scrolling">★ JOIN TODAY!!! ★ DESI LINKS ★ FREE TRAFFIC ★</div>
+            </div>
+            
+            <!-- Right: Button -->
+            <div class="click-btn">
+                CLICK<br>HERE
+            </div>
+        </div>
+    </a>
+
+</body>
+</html>

@@ -12,31 +12,58 @@
     <a href="dashboard.html">Member Login</a>
     
     <header>
-        <h1>WebSutra: Indian Webring 🕸️</h1>
-        <p>The Indian Small Web. Connected.</p>
+        <h1>WebSutra: Indian Webring 🇮🇳</h1>
+        <p>Place for desi links 😜</p>
     </header>
 
+<section class="info">
+<h2>What?</h2>
+<p>A webring is a list of websites that are linked together. It helps you to find handmade amateur websites. This webring is made specifically for Indian hobbyist and(or) amateur webmasters to showcase their site.</p>
+<h2>Why?</h2>
+<p>I have found a lot of cool people from my country (India) who run their own personal site/blog. I want to build a directory for others to find cool personal sites</p>
+<h2>How to Join?</h2>
+<p>Enter your details in the form below and it would be automatically saved. <b>Save your token somewhere safe.</b> For verification login to your dashboard and click on verify after adding the webring widget link to your site. It must be anywhere on the homepage, the verification process fetches your domain's root html (for example if your domain is blackpiratex.com it fetches https://blackpiratex.com only and checks if the widget is present) and checks for the widget. If found it automatically verifies it. If you want to add the widget someplace else, please send me an email for manual verification at sudip@blackpiratex.com. All users can add upto two websites, if you want to add more websites, send me an email.</p>
+
+<h2>Eligibility</h2>
+<ul>
+<li>Handmade personal sites only, No ads, no commercial sites</li>
+<li>Must have respectable amount of content. Handmade single page websites are allowed but must have decent amount of texts or images</li>
+<li>I reserve the right to delete any site at my own discretion</li>
+</ul>
+<h2>Privacy</h2>
+<p>Your name, email, website url, and your token are saved as plain text in the db. Email is purely optional and for me to contact you, if necessary. </p>
+<h2>FAQS</h2>
+<details>
+<summary>I am not an Indian can I join? </summary>
+<p>Nope, but if your site contains India or Indian culture related content then you can submit here.</p>
+</details>
+<details>
+<summary>How do you verify if someone is from India or not?</summary>
+<p>I don't.</p>
+</details>
+<p>Have more questions? Email me.</p>
+<hr>
     <section id="join-section">
-        <h2>Join the Ring</h2>
+        <h2>Join Websutra: Indian Webring</h2>
         <form id="joinForm">
-            <label for="title">Site Name:</label><br>
+            <label for="title">Site Name:(required)</label><br>
             <input type="text" id="title" placeholder="e.g. Rohit's Garden" required>
             <br><br>
 
-            <label for="url">URL:</label><br>
+            <label for="url">URL:(required)</label><br>
             <input type="url" id="url" placeholder="e.g. https://rohit.me" required>
             <br><br>
 
-            <label for="slug">Unique ID:</label><br>
+            <label for="slug">Unique ID:(required)</label><br>
             <input type="text" id="slug" placeholder="e.g. rohit-notes" required pattern="[a-zA-Z0-9-]+">
             <small>(Letters, numbers, and hyphens only)</small>
             <br><br>
 
-            <label for="email">Email:</label><br>
+            <label for="email">Email:(optional)</label><br>
             <input type="email" id="email" placeholder="Private, for recovery">
             <br><br>
 
-            <button type="submit">Join & Get Code</button>
+            <button type="submit">Join & Get Secret Code</button>
         </form>
 
         <div id="result"></div>
@@ -82,7 +109,35 @@
     <hr>
 
     <footer>
-        <p>WebSutra is open source. <a href="dashboard.html">Manage your site</a></p>
+    
+    <div class="banner-square">
+        <h2>⚠ WEBMASTER ALERT ⚠</h2>
+        <div class="content">
+            <p>Is your site<br><strong>LONELY?</strong> 😭</p>
+            <p class="pulse-text">JOIN WEBSUTRA!</p>
+            <p style="font-size: 14px; font-style: italic;">The #1 Ring for<br>Desi Sites 🇮🇳</p>
+        </div>
+        <button class="click-btn" style="padding: 5px; font-size: 14px;">
+            ENTER HERE
+        </button>
+    </div>
+
+    
+    
+    <div class="banner-classic">
+        <div class="amateur-font">
+            <h2>WebSutra</h2>
+        </div>
+        <div class="marquee-container" style="width: 180px; color: blue;">
+            <div class="scrolling">★ JOIN TODAY!!! ★ DESI LINKS ★ FREE TRAFFIC ★</div>
+        </div>
+        <button class="click-btn">
+            CLICK<br>HERE
+        </button>
+    </div>
+    
+    
+        <p>WebSutra is open source. <a href="https://github.com/blackpiratelive/webring.git>Source code here.</a> <a href="dashboard.html">Manage your site</a></p>
         <p>Made by <a href="https://blackpiratex.com" target="_blank">BlackPiratex</a></p>
     </footer>
 </div>

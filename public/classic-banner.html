@@ -5,10 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WebSutra Responsive Banner</title>
 <style>
-    body {
+    /* 1. RESET: Force no scrolling on the document level */
+    html, body {
         margin: 0;
         padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden; /* CRITICAL: Kills scrollbars */
         background-color: transparent;
+        font-family: sans-serif;
+    }
+
+    * {
+        box-sizing: border-box; /* Ensures padding/borders don't expand width */
     }
 
     /* Link Wrapper */
@@ -16,26 +25,23 @@
         text-decoration: none;
         display: block;
         width: 100%;
-        max-width: 468px; /* Stops it from getting too big on desktop */
-        margin: 0 auto;   /* Centers it if iframe is wider */
+        height: 100%;
     }
 
     .banner-classic {
         background-color: #ffff00; /* Bright Yellow */
         border: 5px ridge #0000ff; /* Blue Ridge Border */
         
-        /* Flexbox Layout */
+        /* Layout */
         display: flex;
-        flex-wrap: wrap; /* Allows items to drop to next line */
+        flex-wrap: wrap; /* Allows wrapping */
         align-items: center;
         justify-content: space-between;
+        align-content: center; /* Vertically center content */
         
-        padding: 5px 10px;
-        box-sizing: border-box;
-        cursor: pointer;
-        
-        /* Minimum height for desktop feel, but allows growth */
-        min-height: 60px; 
+        padding: 4px 8px;
+        width: 100%;
+        height: 100%; /* Fill the iframe */
     }
 
     /* Text Styles */
@@ -43,10 +49,10 @@
         font-family: "Comic Sans MS", "Chalkboard SE", sans-serif;
         color: #ff0000;
         margin: 0;
-        font-size: 24px;
+        font-size: 22px; /* Slightly smaller to be safe */
         text-shadow: 2px 2px #00ff00;
         line-height: 1;
-        /* Flex: Do not shrink */
+        white-space: nowrap;
         flex-shrink: 0; 
     }
 
@@ -58,13 +64,15 @@
         border: 2px inset #ccc;
         color: blue;
         font-weight: bold;
-        font-size: 14px;
+        font-size: 13px;
         font-family: Arial, sans-serif;
         height: 20px;
         line-height: 20px;
+        position: relative;
         
-        /* Desktop: Fixed width */
-        width: 180px; 
+        /* Flex magic: Grow to fill space, but don't get smaller than 100px */
+        flex: 1 1 120px; 
+        margin: 0 10px;
     }
 
     .scrolling {
@@ -86,37 +94,36 @@
         color: black;
         font-weight: bold;
         text-align: center;
-        padding: 2px 5px;
+        padding: 3px 6px;
         font-family: Verdana, sans-serif;
         flex-shrink: 0;
-    }
-    
-    .banner-classic:hover .click-btn {
-        background-color: #e0e0e0;
+        white-space: nowrap;
     }
 
-    /* --- RESPONSIVE MAGIC --- */
-    /* When width is less than approx 400px */
-    @media (max-width: 420px) {
+    /* --- MOBILE BREAKPOINT --- */
+    /* Triggers when iframe width is small (typical mobile portrait) */
+    @media (max-width: 450px) {
         .banner-classic {
-            justify-content: space-between;
-            padding: 8px;
+            padding: 6px;
+            align-content: space-around; /* Space out rows */
         }
 
-        /* Order: Logo(1), Button(2), Marquee(3) */
+        /* Row 1: Logo and Button */
         .banner-classic h2 {
             order: 1;
-            font-size: 20px; /* Slightly smaller text */
+            font-size: 20px;
         }
         
         .click-btn {
             order: 2;
         }
 
+        /* Row 2: Marquee drops down */
         .marquee-container {
             order: 3;
-            width: 100%;      /* Full width on mobile */
-            margin-top: 8px;  /* Space between rows */
+            flex: 1 1 100%; /* Force full width */
+            margin: 6px 0 0 0; /* Add top margin */
+            width: 100%;
         }
     }
 </style>
@@ -124,7 +131,7 @@
 <body>
 
     <!-- LINK: Change href="#" to your actual Join URL -->
-    <a href="https://webring.blackpiratex.com" target="_blank" class="banner-link">
+    <a href="#" target="_blank" class="banner-link">
         <div class="banner-classic">
             <!-- Logo -->
             <div class="amateur-font">

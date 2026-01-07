@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebSutra: The Indian Small Web</title>
     <style>
-        /* --- Theme Variables (Monochrome + Tricolor Accents) --- */
+        /* --- Theme Variables --- */
         :root {
             --bg: #0a0a0a;
             --card-bg: #141414;
@@ -15,16 +15,15 @@
             
             /* Indian Flag Palette */
             --saffron: #FF9933;
-            --white-ish: #e0e0e0;
+            --white: #ffffff;
             --green: #138808;
             
             /* Gradients */
-            --tricolor-text: linear-gradient(90deg, var(--saffron), var(--white-ish), var(--green));
-            --saffron-btn: linear-gradient(135deg, #FF9933, #ff7700);
+            --tricolor-gradient: linear-gradient(90deg, var(--saffron), #e0e0e0, var(--green));
         }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text-primary);
             margin: 0;
@@ -32,184 +31,142 @@
             line-height: 1.5;
         }
 
-        #container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+        #container { max-width: 800px; margin: 0 auto; }
 
-        /* --- Header & Typography --- */
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            /* Tricolor text gradient */
-            background: var(--tricolor-text);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-        }
-
-        header p {
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        h2 {
-            border-left: 4px solid var(--saffron);
-            padding-left: 10px;
-            margin-top: 40px;
-        }
-
+        /* --- Header --- */
+        header { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; color: var(--text-primary); }
+        header p { color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        
         a { color: var(--saffron); text-decoration: none; transition: color 0.2s; }
-        a:hover { color: var(--white-ish); }
-
-        /* --- Navigation Link --- */
-        .nav-link {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            border: 1px solid var(--border);
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            background: var(--card-bg);
-        }
+        a:hover { color: var(--white); }
+        .nav-link { position: absolute; top: 20px; right: 20px; border: 1px solid var(--border); padding: 8px 12px; border-radius: 4px; font-size: 0.9rem; background: var(--card-bg); }
         .nav-link:hover { border-color: var(--saffron); }
 
-        /* --- Sections & Cards --- */
-        section { margin-bottom: 40px; }
+        /* --- Sections --- */
+        section { margin-bottom: 50px; }
+        h2 { border-left: 4px solid var(--saffron); padding-left: 10px; margin-bottom: 20px; }
 
-        /* --- Join Form Styling --- */
-        form {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            display: grid;
-            gap: 15px;
-        }
-
-        input, button {
-            width: 100%;
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            background: #000;
-            color: var(--text-primary);
-            font-size: 1rem;
-            box-sizing: border-box; /* Important for mobile padding */
+        /* --- Join Form --- */
+        form { background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border); display: grid; gap: 15px; }
+        
+        input { 
+            width: 100%; padding: 12px; border-radius: 6px; 
+            border: 1px solid var(--border); background: #000; 
+            color: var(--text-primary); font-size: 1rem; box-sizing: border-box; 
         }
         input:focus { outline: none; border-color: var(--saffron); }
 
+        /* TRICOLOR BUTTON (JOIN) */
         button.submit-btn {
-            background: var(--saffron-btn);
-            color: #000;
-            font-weight: 700;
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
             border: none;
+            background: var(--tricolor-gradient);
+            color: #000;
+            font-weight: 800;
+            font-size: 1rem;
             cursor: pointer;
+            transition: opacity 0.2s;
         }
         button.submit-btn:hover { opacity: 0.9; }
 
-        /* --- Directory List Styling --- */
-        .filter-controls {
-            margin-bottom: 20px;
-            padding: 10px;
-            background: var(--card-bg);
-            border-radius: 6px;
-            display: inline-block;
-        }
-        .filter-controls label { margin-right: 15px; cursor: pointer; color: var(--text-secondary); }
-        .filter-controls input:checked + span { color: var(--saffron); font-weight: bold; }
-
-        #members-list {
-            list-style: none;
-            padding: 0;
+        /* --- Filter Pills --- */
+        .filter-pills {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
         }
 
-        /* List Item Card */
+        .filter-pills label {
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+        }
+
+        .filter-pills input { display: none; }
+
+        .filter-pills span {
+            display: block;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: #222;
+            color: #888;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        /* Verified Pill Active (Green) */
+        .filter-pills input[value="verified"]:checked + span {
+            background: var(--green);
+            color: #fff;
+            border-color: var(--green);
+        }
+
+        /* Pending Pill Active (Orange) */
+        .filter-pills input[value="pending"]:checked + span {
+            background: var(--saffron);
+            color: #000;
+            border-color: var(--saffron);
+        }
+
+        /* All Pill Active (White) */
+        .filter-pills input[value="all"]:checked + span {
+            background: var(--white);
+            color: #000;
+            border-color: var(--white);
+        }
+
+        /* --- Directory List --- */
+        #members-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 15px; }
+
         .site-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            padding: 15px 20px;
+            padding: 20px;
             border-radius: 8px;
             display: flex;
-            flex-direction: column; /* Stack on mobile first */
+            flex-direction: column;
             gap: 15px;
+            transition: transform 0.2s;
         }
 
-        /* Desktop view for list item */
         @media (min-width: 600px) {
-            .site-card {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-            }
+            .site-card { flex-direction: row; justify-content: space-between; align-items: center; }
             .site-details { flex-grow: 1; }
             .site-actions { flex-shrink: 0; display: flex; align-items: center; gap: 15px; }
         }
 
-        .site-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: 0;
-            color: var(--text-primary);
-        }
-        
-        .site-url {
-            display: block;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-top: 4px;
-            font-family: monospace;
-            word-break: break-all;
-        }
+        .site-title { font-size: 1.1rem; font-weight: 600; margin: 0; color: var(--text-primary); }
+        .site-url { display: block; color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px; font-family: monospace; word-break: break-all; }
 
-        /* Badges & Buttons */
-        .badge {
-            padding: 4px 10px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .badge-verified { background: #003300; color: var(--green); border: 1px solid var(--green); }
+        /* Status Badges */
+        .badge { padding: 4px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
+        .badge-verified { background: #002200; color: var(--green); border: 1px solid var(--green); }
         .badge-pending { background: #331a00; color: var(--saffron); border: 1px solid var(--saffron); }
 
+        /* TRICOLOR BUTTON (VISIT) */
         .visit-btn {
             padding: 8px 16px;
-            background: transparent;
-            border: 1px solid var(--saffron);
-            color: var(--saffron);
             border-radius: 4px;
             font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: 700;
             text-decoration: none;
             white-space: nowrap;
-        }
-        .visit-btn:hover { background: var(--saffron); color: #000; }
-
-        /* --- Footer --- */
-        footer {
-            margin-top: 60px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border);
+            background: var(--tricolor-gradient);
+            color: #000;
+            border: none;
+            display: inline-block;
             text-align: center;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
         }
+        .visit-btn:hover { opacity: 0.9; color: #000; }
 
-        /* --- Helpers --- */
+        /* --- Footer & Helpers --- */
+        footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
         #result { display: none; margin-top: 20px; }
         .key-box { background: #220a00; border: 1px solid var(--saffron); color: var(--saffron); padding: 15px; border-radius: 4px; margin-bottom: 15px; word-break: break-all; }
         .code-box { background: #000; padding: 15px; border: 1px solid var(--border); overflow-x: auto; border-radius: 4px; font-family: monospace; color: #ccc; }
@@ -225,11 +182,8 @@
         <p>The Indian Small Web. Connected.</p>
     </header>
 
-
     <section id="join-section">
         <h2>Join the Ring</h2>
-        <p style="color: var(--text-secondary);">Add your personal corner of the internet.</p>
-        
         <form id="joinForm">
             <input type="text" id="title" placeholder="Site Name (e.g. Rohit's Garden)" required>
             <input type="url" id="url" placeholder="URL (e.g. https://rohit.me)" required>
@@ -241,22 +195,24 @@
             <button type="submit" class="submit-btn">Join & Get Code</button>
         </form>
 
-        <div id="result">
-            </div>
+        <div id="result"></div>
     </section>
-
 
     <section id="directory-section">
         <h2>Members Directory</h2>
         
-        <div class="filter-controls">
+        <div class="filter-pills">
             <label>
                 <input type="radio" name="filter" value="verified" checked onchange="filterSites()">
-                <span>Verified Only</span>
+                <span>Verified</span>
+            </label>
+            <label>
+                <input type="radio" name="filter" value="pending" onchange="filterSites()">
+                <span>Pending</span>
             </label>
             <label>
                 <input type="radio" name="filter" value="all" onchange="filterSites()">
-                <span>Show All</span>
+                <span>All</span>
             </label>
         </div>
 
@@ -265,7 +221,6 @@
         </ul>
     </section>
 
-
     <footer>
         <p>WebSutra is open source. <a href="dashboard.html">Manage your site</a></p>
         <p>Made by <a href="https://blackpiratex.com" target="_blank">BlackPiratex</a></p>
@@ -273,51 +228,44 @@
 </div>
 
 <script>
-    // Store sites globally for filtering
     let allSites = [];
 
-    // 1. Fetch and Load Members
+    // 1. Fetch Members
     async function loadMembers() {
         const listContainer = document.getElementById('members-list');
         try {
             const res = await fetch('/api/members');
-            if (!res.ok) throw new Error("Failed to fetch");
+            if (!res.ok) throw new Error("Failed");
             
-            // Assuming /api/members returns all sites. 
-            // If it only returns verified, you might need to adjust the API endpoint or logic.
             allSites = await res.json();
             
             if (allSites.length === 0) {
-                listContainer.innerHTML = "<li style='padding: 20px; text-align: center; color: var(--text-secondary);'>No members yet. Be the first!</li>";
+                listContainer.innerHTML = "<li style='padding: 20px; text-align: center; color: #666;'>No members yet.</li>";
                 return;
             }
-            
-            // Initial render (defaults to verified due to radio button state)
             filterSites();
 
         } catch (e) {
             console.error(e);
-            listContainer.innerHTML = "<li style='color: var(--danger); text-align:center;'>Error loading directory.</li>";
+            listContainer.innerHTML = "<li style='color: var(--saffron); text-align:center;'>Error loading directory.</li>";
         }
     }
 
-    // 2. Filter and Render Function
+    // 2. Filter Logic
     function filterSites() {
         const filterValue = document.querySelector('input[name="filter"]:checked').value;
         const listContainer = document.getElementById('members-list');
         
-        // Filter based on selection
         const filteredSites = allSites.filter(site => {
             if (filterValue === 'all') return true;
-            return site.status === 'verified';
+            return site.status === filterValue;
         });
 
         if (filteredSites.length === 0) {
-             listContainer.innerHTML = `<li style='padding: 20px; text-align: center; color: var(--text-secondary);'>No ${filterValue} sites found.</li>`;
+             listContainer.innerHTML = `<li style='padding: 20px; text-align: center; color: #666;'>No ${filterValue} sites found.</li>`;
              return;
         }
 
-        // Render List View
         listContainer.innerHTML = filteredSites.map(site => {
             const badgeClass = site.status === 'verified' ? 'badge-verified' : 'badge-pending';
             const badgeText = site.status === 'verified' ? 'Verified' : 'Pending';
@@ -337,11 +285,9 @@
         }).join('');
     }
 
-
-    // 3. Handle Signup Form
+    // 3. Signup Logic
     document.getElementById('joinForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        
         const btn = e.target.querySelector('button');
         const originalText = btn.textContent;
         btn.textContent = "Processing...";
@@ -360,27 +306,22 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-            
             const data = await res.json();
             
             if (data.success) {
                 const resultDiv = document.getElementById('result');
                 resultDiv.style.display = 'block';
-                
                 resultDiv.innerHTML = `
                     <div class="key-box">
                         <strong>⚠️ SAVE THIS SECRET KEY:</strong><br>
                         <span style="font-family: monospace; font-size: 1.1em; user-select: all;">${data.secretKey}</span>
                         <br><small>You need this to login to the dashboard.</small>
                     </div>
-                    
-                    <p>Copy this code to your website footer:</p>
+                    <p>Copy this code to your website:</p>
                     <div class="code-box">${data.snippet.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
                 `;
-
                 e.target.reset();
                 btn.textContent = "Joined Successfully!";
-                // Reload list to show new pending member if "Show All" is selected
                 loadMembers(); 
             } else {
                 alert(data.error || "Error joining");
@@ -388,14 +329,12 @@
                 btn.disabled = false;
             }
         } catch (err) {
-            console.error(err);
             alert("Server Error");
             btn.textContent = originalText;
             btn.disabled = false;
         }
     });
     
-    // Initial Load
     loadMembers();
 </script>
 </body>

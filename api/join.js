@@ -12,26 +12,43 @@ export default async function handler(req, res) {
   const { title, url, slug, email } = req.body;
   if (!title || !url || !slug) return res.status(400).json({ error: 'Missing fields' });
 
-  const secretKey = randomUUID(); // The User's Master Password
+  const secretKey = randomUUID();
 
   try {
-    // We use db.batch to send multiple SQL statements in ONE atomic HTTP request.
-    // If any statement fails, the whole batch fails (Rollback is automatic).
+    // 1. DATABASE TRANSACTION (Add User & Site)
     await db.batch([
         {
-            // 1. Create User
             sql: "INSERT INTO users (secret_key, email) VALUES (?, ?)",
             args: [secretKey, email || null]
         },
         {
-            // 2. Create Site
-            // We use 'last_insert_rowid()' to grab the ID of the user we just created above.
             sql: "INSERT INTO sites (user_id, slug, url, title, status) VALUES (last_insert_rowid(), ?, ?, ?, ?)",
             args: [slug, url, title, 'pending']
         }
     ]);
 
-    // --- Success! Generate Snippet ---
+    // 2. ZAPIER TRIGGER (Outgoing Webhook)
+    // We send this *after* the DB insert succeeds.
+    if (process.env.ZAPIER_WEBHOOK_URL) {
+        console.log("Triggering Zapier...");
+        
+        // We do NOT await this. We want to return the response to the user 
+        // immediately without waiting for Zapier to finish.
+        fetch(process.env.ZAPIER_WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                event: 'New Webring Member',
+                site_name: title,      // Name requested
+                website_url: url,      // URL requested
+                site_slug: slug,
+                user_email: email || "Not provided",
+                timestamp: new Date().toISOString()
+            })
+        }).catch(err => console.error("Zapier Webhook Failed:", err));
+    }
+
+    // 3. GENERATE SNIPPET & RETURN SUCCESS
     const host = req.headers.host; 
     const protocol = req.headers['x-forwarded-proto'] || 'https';
     const baseUrl = `${protocol}://${host}`;
@@ -48,7 +65,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error(error);
-    // Check for "Unique constraint" error (Duplicate Slug)
     if (error.message && error.message.includes('UNIQUE constraint')) {
         return res.status(409).json({ error: 'ID (Slug) already taken. Please choose another.' });
     }

@@ -31,7 +31,7 @@
             line-height: 1.5;
         }
 
-        #container { max-width: 800px; margin: 0 auto; }
+        #container { max-width: 900px; margin: 0 auto; }
 
         /* --- Header --- */
         header { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
@@ -48,7 +48,7 @@
         h2 { border-left: 4px solid var(--saffron); padding-left: 10px; margin-bottom: 20px; }
 
         /* --- Join Form --- */
-        form { background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border); display: grid; gap: 15px; }
+        form { background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border); display: grid; gap: 15px; max-width: 600px; margin: 0 auto; }
         
         input { 
             width: 100%; padding: 12px; border-radius: 6px; 
@@ -57,117 +57,80 @@
         }
         input:focus { outline: none; border-color: var(--saffron); }
 
-        /* TRICOLOR BUTTON (JOIN) */
         button.submit-btn {
-            width: 100%;
-            padding: 12px;
-            border-radius: 6px;
-            border: none;
-            background: var(--tricolor-gradient);
-            color: #000;
-            font-weight: 800;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: opacity 0.2s;
+            width: 100%; padding: 12px; border-radius: 6px; border: none;
+            background: var(--tricolor-gradient); color: #000; font-weight: 800;
+            font-size: 1rem; cursor: pointer; transition: opacity 0.2s;
         }
         button.submit-btn:hover { opacity: 0.9; }
 
         /* --- Filter Pills --- */
-        .filter-pills {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .filter-pills label {
-            cursor: pointer;
-            flex: 1;
-            text-align: center;
-        }
-
+        .filter-pills { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
+        .filter-pills label { cursor: pointer; flex: 1; text-align: center; max-width: 150px; }
         .filter-pills input { display: none; }
-
         .filter-pills span {
-            display: block;
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            background: #222;
-            color: #888;
-            border: 1px solid var(--border);
+            display: block; padding: 8px 16px; border-radius: 50px; font-size: 0.9rem;
+            font-weight: 600; background: #222; color: #888; border: 1px solid var(--border);
             transition: all 0.2s;
         }
 
-        /* Verified Pill Active (Green) */
-        .filter-pills input[value="verified"]:checked + span {
-            background: var(--green);
-            color: #fff;
-            border-color: var(--green);
-        }
+        /* Filter Active States */
+        .filter-pills input[value="verified"]:checked + span { background: var(--green); color: #fff; border-color: var(--green); }
+        .filter-pills input[value="pending"]:checked + span { background: var(--saffron); color: #000; border-color: var(--saffron); }
+        .filter-pills input[value="all"]:checked + span { background: var(--white); color: #000; border-color: var(--white); }
 
-        /* Pending Pill Active (Orange) */
-        .filter-pills input[value="pending"]:checked + span {
-            background: var(--saffron);
-            color: #000;
-            border-color: var(--saffron);
-        }
-
-        /* All Pill Active (White) */
-        .filter-pills input[value="all"]:checked + span {
-            background: var(--white);
-            color: #000;
-            border-color: var(--white);
-        }
-
-        /* --- Directory List --- */
-        #members-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 15px; }
-
-        .site-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 20px;
+        /* --- TABLE STYLES --- */
+        .table-responsive {
+            overflow-x: auto;
             border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            transition: transform 0.2s;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
         }
 
-        @media (min-width: 600px) {
-            .site-card { flex-direction: row; justify-content: space-between; align-items: center; }
-            .site-details { flex-grow: 1; }
-            .site-actions { flex-shrink: 0; display: flex; align-items: center; gap: 15px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            white-space: nowrap; /* Keeps rows on one line */
         }
 
-        .site-title { font-size: 1.1rem; font-weight: 600; margin: 0; color: var(--text-primary); }
-        .site-url { display: block; color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px; font-family: monospace; word-break: break-all; }
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: #000;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        td { font-size: 0.95rem; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+        .site-link { color: var(--text-secondary); font-family: monospace; font-size: 0.9rem; }
+        .site-link:hover { color: var(--white); text-decoration: underline; }
 
         /* Status Badges */
         .badge { padding: 4px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
         .badge-verified { background: #002200; color: var(--green); border: 1px solid var(--green); }
         .badge-pending { background: #331a00; color: var(--saffron); border: 1px solid var(--saffron); }
 
-        /* TRICOLOR BUTTON (VISIT) */
+        /* Visit Button */
         .visit-btn {
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-decoration: none;
-            white-space: nowrap;
-            background: var(--tricolor-gradient);
-            color: #000;
-            border: none;
-            display: inline-block;
-            text-align: center;
+            padding: 6px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 700;
+            text-decoration: none; background: var(--tricolor-gradient); color: #000;
+            border: none; display: inline-block;
         }
         .visit-btn:hover { opacity: 0.9; color: #000; }
 
         /* --- Footer & Helpers --- */
         footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
-        #result { display: none; margin-top: 20px; }
+        #result { display: none; margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto; }
         .key-box { background: #220a00; border: 1px solid var(--saffron); color: var(--saffron); padding: 15px; border-radius: 4px; margin-bottom: 15px; word-break: break-all; }
         .code-box { background: #000; padding: 15px; border: 1px solid var(--border); overflow-x: auto; border-radius: 4px; font-family: monospace; color: #ccc; }
     </style>
@@ -183,7 +146,7 @@
     </header>
 
     <section id="join-section">
-        <h2>Join the Ring</h2>
+        <h2 style="text-align: center; border: none; margin-bottom: 10px;">Join the Ring</h2>
         <form id="joinForm">
             <input type="text" id="title" placeholder="Site Name (e.g. Rohit's Garden)" required>
             <input type="url" id="url" placeholder="URL (e.g. https://rohit.me)" required>
@@ -216,9 +179,21 @@
             </label>
         </div>
 
-        <ul id="members-list">
-            <li style="opacity: 0.5; padding: 20px; text-align: center;">Loading directory...</li>
-        </ul>
+        <div class="table-responsive">
+            <table id="members-table">
+                <thead>
+                    <tr>
+                        <th>Site Name</th>
+                        <th>URL</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="members-body">
+                    <tr><td colspan="4" style="text-align:center; padding: 30px; opacity: 0.5;">Loading directory...</td></tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <footer>
@@ -232,7 +207,7 @@
 
     // 1. Fetch Members
     async function loadMembers() {
-        const listContainer = document.getElementById('members-list');
+        const tableBody = document.getElementById('members-body');
         try {
             const res = await fetch('/api/members');
             if (!res.ok) throw new Error("Failed");
@@ -240,21 +215,21 @@
             allSites = await res.json();
             
             if (allSites.length === 0) {
-                listContainer.innerHTML = "<li style='padding: 20px; text-align: center; color: #666;'>No members yet.</li>";
+                tableBody.innerHTML = "<tr><td colspan='4' style='text-align:center; padding: 30px;'>No members yet.</td></tr>";
                 return;
             }
             filterSites();
 
         } catch (e) {
             console.error(e);
-            listContainer.innerHTML = "<li style='color: var(--saffron); text-align:center;'>Error loading directory.</li>";
+            tableBody.innerHTML = "<tr><td colspan='4' style='text-align:center; color: var(--saffron);'>Error loading directory.</td></tr>";
         }
     }
 
-    // 2. Filter Logic
+    // 2. Filter Logic (Table Version)
     function filterSites() {
         const filterValue = document.querySelector('input[name="filter"]:checked').value;
-        const listContainer = document.getElementById('members-list');
+        const tableBody = document.getElementById('members-body');
         
         const filteredSites = allSites.filter(site => {
             if (filterValue === 'all') return true;
@@ -262,25 +237,21 @@
         });
 
         if (filteredSites.length === 0) {
-             listContainer.innerHTML = `<li style='padding: 20px; text-align: center; color: #666;'>No ${filterValue} sites found.</li>`;
+             tableBody.innerHTML = `<tr><td colspan='4' style='text-align:center; padding: 30px; color: #666;'>No ${filterValue} sites found.</td></tr>`;
              return;
         }
 
-        listContainer.innerHTML = filteredSites.map(site => {
+        tableBody.innerHTML = filteredSites.map(site => {
             const badgeClass = site.status === 'verified' ? 'badge-verified' : 'badge-pending';
             const badgeText = site.status === 'verified' ? 'Verified' : 'Pending';
             
             return `
-                <li class="site-card">
-                    <div class="site-details">
-                        <h3 class="site-title">${site.title}</h3>
-                        <a href="${site.url}" target="_blank" class="site-url">${site.url}</a>
-                    </div>
-                    <div class="site-actions">
-                        <span class="badge ${badgeClass}">${badgeText}</span>
-                        <a href="${site.url}" target="_blank" class="visit-btn">Visit Site &rarr;</a>
-                    </div>
-                </li>
+                <tr>
+                    <td style="font-weight: 600; color: #fff;">${site.title}</td>
+                    <td><a href="${site.url}" target="_blank" class="site-link">${site.url}</a></td>
+                    <td><span class="badge ${badgeClass}">${badgeText}</span></td>
+                    <td><a href="${site.url}" target="_blank" class="visit-btn">Visit &rarr;</a></td>
+                </tr>
             `;
         }).join('');
     }

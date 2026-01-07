@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   const secretKey = randomUUID();
 
   try {
-    // 1. DATABASE TRANSACTION (Add User & Site)
+    // 1. DATABASE TRANSACTION
     await db.batch([
         {
             sql: "INSERT INTO users (secret_key, email) VALUES (?, ?)",
@@ -27,28 +27,33 @@ export default async function handler(req, res) {
         }
     ]);
 
-    // 2. ZAPIER TRIGGER (Outgoing Webhook)
-    // We send this *after* the DB insert succeeds.
+    // 2. ZAPIER TRIGGER (Updated to use AWAIT)
     if (process.env.ZAPIER_WEBHOOK_URL) {
         console.log("Triggering Zapier...");
         
-        // We do NOT await this. We want to return the response to the user 
-        // immediately without waiting for Zapier to finish.
-        fetch(process.env.ZAPIER_WEBHOOK_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                event: 'New Webring Member',
-                site_name: title,      // Name requested
-                website_url: url,      // URL requested
-                site_slug: slug,
-                user_email: email || "Not provided",
-                timestamp: new Date().toISOString()
-            })
-        }).catch(err => console.error("Zapier Webhook Failed:", err));
+        try {
+            // FIX: We must AWAIT this, otherwise Vercel kills the request 
+            // before it reaches Make.com
+            const webhookRes = await fetch(process.env.ZAPIER_WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    event: 'New Webring Member',
+                    site_name: title,
+                    website_url: url,
+                    site_slug: slug,
+                    user_email: email || "Not provided",
+                    timestamp: new Date().toISOString()
+                })
+            });
+            console.log("Zapier Status:", webhookRes.status);
+        } catch (webhookError) {
+            console.error("Zapier Failed:", webhookError);
+            // We ignore errors here so the user still gets their success message
+        }
     }
 
-    // 3. GENERATE SNIPPET & RETURN SUCCESS
+    // 3. RETURN SUCCESS
     const host = req.headers.host; 
     const protocol = req.headers['x-forwarded-proto'] || 'https';
     const baseUrl = `${protocol}://${host}`;
@@ -66,7 +71,7 @@ export default async function handler(req, res) {
   } catch (error) {
     console.error(error);
     if (error.message && error.message.includes('UNIQUE constraint')) {
-        return res.status(409).json({ error: 'ID (Slug) already taken. Please choose another.' });
+        return res.status(409).json({ error: 'ID (Slug) already taken.' });
     }
     res.status(500).json({ error: 'Server Error' });
   }

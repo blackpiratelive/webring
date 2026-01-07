@@ -5,26 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebSutra: The Indian Small Web</title>
     <style>
-        :root { --bg: #121212; --card: #1e1e1e; --text: #e0e0e0; --accent: #ff8c42; }
-        body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); max-width: 700px; margin: 0 auto; padding: 2rem; line-height: 1.5; }
+        :root { --bg: #121212; --card: #1e1e1e; --text: #e0e0e0; --accent: #ff8c42; --code-bg: #000; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); max-width: 700px; margin: 0 auto; padding: 2rem; line-height: 1.6; }
+        
         h1, h2 { color: var(--accent); margin-top: 2rem; }
         a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Login Button Style */
+        .login-link {
+            float: right;
+            border: 1px solid #333;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            transition: background 0.2s;
+        }
+        .login-link:hover { background: #333; text-decoration: none; }
+
         /* Form Styling */
-        form { display: grid; gap: 10px; background: var(--card); padding: 1.5rem; border-radius: 8px; border: 1px solid #333; }
-        input, button { padding: 10px; background: #2a2a2a; border: 1px solid #444; color: white; border-radius: 4px; }
-        button { background: var(--accent); color: #121212; font-weight: bold; cursor: pointer; border: none; }
+        form { display: grid; gap: 12px; background: var(--card); padding: 1.5rem; border-radius: 8px; border: 1px solid #333; }
+        input, button { padding: 12px; background: #2a2a2a; border: 1px solid #444; color: white; border-radius: 4px; font-size: 1rem; }
+        input:focus { border-color: var(--accent); outline: none; }
+        button { background: var(--accent); color: #121212; font-weight: bold; cursor: pointer; border: none; transition: opacity 0.2s; }
         button:hover { opacity: 0.9; }
+
         /* List Styling */
-        #members { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .site { background: var(--card); padding: 10px; border: 1px solid #333; border-radius: 4px; font-size: 0.9rem; }
-        .site small { display: block; opacity: 0.6; margin-top: 5px; }
-        /* Code Box */
-        #result { display: none; background: #000; padding: 1rem; border: 1px solid #444; margin-top: 1rem; overflow-x: auto; font-family: monospace; }
+        #members { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+        .site { background: var(--card); padding: 15px; border: 1px solid #333; border-radius: 4px; font-size: 0.95rem; }
+        .site small { display: block; opacity: 0.6; margin-top: 5px; font-size: 0.8rem; }
+        .verified-badge { color: #28a745; font-size: 0.8em; margin-left: 5px; }
+
+        /* Result Box */
+        #result { display: none; margin-top: 2rem; animation: fadeIn 0.3s ease-in; }
+        .key-box { background: #331100; border: 1px solid #ff8c42; color: #ff8c42; padding: 15px; border-radius: 4px; margin-bottom: 15px; }
+        .code-box { background: var(--code-bg); padding: 15px; border: 1px solid #444; overflow-x: auto; border-radius: 4px; font-family: monospace; white-space: pre-wrap; }
+        
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #333; text-align: center; opacity: 0.6; font-size: 0.9rem; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <header>
+        <a href="dashboard.html" class="login-link">Member Login &rarr;</a>
+        
         <h1>WebSutra 🕸️</h1>
         <p>A webring for the Indian Small Web. No JavaScript widgets, no tracking. Just links connecting personal corners of the internet.</p>
     </header>
@@ -32,29 +59,37 @@
     <section>
         <h2>Join the Ring</h2>
         <form id="joinForm">
-            <input type="text" id="title" placeholder="Site Name (e.g., Rohit's Notes)" required>
-            <input type="url" id="url" placeholder="URL (e.g., https://rohit.me)" required>
-            <input type="text" id="slug" placeholder="Unique ID (e.g., rohit-notes)" required>
-            <input type="email" id="email" placeholder="Email (Private, for recovery only)" required>
+            <input type="text" id="title" placeholder="Site Name (e.g. Rohit's Notes)" required>
+            <input type="url" id="url" placeholder="URL (e.g. https://rohit.me)" required>
+            <input type="text" id="slug" placeholder="Unique ID (e.g. rohit-notes)" required pattern="[a-zA-Z0-9-]+" title="Letters, numbers, and hyphens only">
+            <input type="email" id="email" placeholder="Email (Private, optional)" >
             <button type="submit">Join & Get Code</button>
         </form>
-        <div id="result"></div>
+
+        <div id="result">
+            </div>
     </section>
 
     <section>
         <h2>Members</h2>
         <ul id="members">
-            <li>Loading members...</li>
+            <li style="opacity: 0.5;">Loading members...</li>
         </ul>
     </section>
 
+    <footer>
+        <p>WebSutra is open source. <a href="dashboard.html">Manage your site</a></p>
+    </footer>
+
     <script>
-        // 1. Handle Signup
+        // 1. Handle Signup Form Submission
         document.getElementById('joinForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            
             const btn = e.target.querySelector('button');
             const originalText = btn.textContent;
             btn.textContent = "Processing...";
+            btn.disabled = true;
             
             const payload = {
                 title: document.getElementById('title').value,
@@ -69,37 +104,70 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
+                
                 const data = await res.json();
                 
                 if (data.success) {
-                    document.getElementById('result').style.display = 'block';
-                    document.getElementById('result').textContent = data.snippet;
-                    btn.textContent = "Success!";
-                    loadMembers(); // Refresh list
+                    const resultDiv = document.getElementById('result');
+                    resultDiv.style.display = 'block';
+                    
+                    // Display the Secret Key and the Code Snippet
+                    resultDiv.innerHTML = `
+                        <div class="key-box">
+                            <strong>⚠️ IMPORTANT: SAVE THIS KEY</strong><br>
+                            <span style="font-family: monospace; font-size: 1.2em; user-select: all;">${data.secretKey}</span>
+                            <br><small>You need this key to edit or delete your site later. We cannot recover it.</small>
+                        </div>
+                        
+                        <p>Copy this code to your website:</p>
+                        <div class="code-box">${data.snippet.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
+                    `;
+
+                    // Reset form and reload list
+                    e.target.reset();
+                    btn.textContent = "Joined Successfully!";
+                    loadMembers(); 
                 } else {
-                    alert(data.error || "Error joining");
+                    alert(data.error || "Error joining webring");
                     btn.textContent = originalText;
+                    btn.disabled = false;
                 }
-            } catch (err) { alert("Server Error"); btn.textContent = originalText; }
+            } catch (err) {
+                console.error(err);
+                alert("Server Error. Please check console.");
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
         });
 
         // 2. Fetch Members List
         async function loadMembers() {
             try {
                 const res = await fetch('/api/members');
+                if (!res.ok) throw new Error("Failed to fetch");
+                
                 const sites = await res.json();
                 const list = document.getElementById('members');
+                
+                if (sites.length === 0) {
+                    list.innerHTML = "<li style='opacity:0.6'>No members yet. Be the first!</li>";
+                    return;
+                }
+
                 list.innerHTML = sites.map(site => `
                     <li class="site">
                         <a href="${site.url}" target="_blank"><strong>${site.title}</strong></a>
+                        ${site.status === 'verified' ? '<span class="verified-badge" title="Verified Member">✓</span>' : ''}
                         <small>${site.url}</small>
                     </li>
                 `).join('');
             } catch (e) {
-                document.getElementById('members').innerHTML = "<li>Error loading members.</li>";
+                console.error(e);
+                document.getElementById('members').innerHTML = "<li>Error loading members list.</li>";
             }
         }
         
+        // Initial Load
         loadMembers();
     </script>
 </body>

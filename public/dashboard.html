@@ -20,11 +20,12 @@
         input:focus { outline: none; border-color: var(--accent); }
 
         /* Buttons */
-        button { padding: 10px 16px; cursor: pointer; border: none; border-radius: 6px; font-weight: 600; transition: opacity 0.2s; }
+        button { padding: 8px 16px; cursor: pointer; border: none; border-radius: 6px; font-weight: 600; transition: opacity 0.2s; font-size: 0.9rem; }
         button:hover { opacity: 0.9; }
         .btn-primary { background: var(--accent); color: #000; }
         .btn-secondary { background: #333; color: #fff; }
         .btn-danger { background: rgba(255, 68, 68, 0.1); color: var(--danger); border: 1px solid var(--danger); }
+        .btn-success { background: var(--success); color: #fff; }
         .btn-block { width: 100%; }
 
         /* Layout Utilities */
@@ -34,16 +35,14 @@
         .grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
         @media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
 
-        /* Specific Components */
-        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; float: right; }
+        /* Badges */
+        .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; }
         .badge-pending { background: #332b00; color: #ffbb33; border: 1px solid #ffbb33; }
         .badge-verified { background: #002200; color: #00C851; border: 1px solid #00C851; }
-        .badge-suspended { background: #220000; color: #ff4444; border: 1px solid #ff4444; }
-
+        
         /* Code Block */
-        .code-area { background: #000; padding: 15px; border-radius: 6px; border: 1px solid #333; margin-top: 10px; }
+        .code-area { background: #000; padding: 15px; border-radius: 6px; border: 1px solid #333; margin-top: 10px; margin-bottom: 15px; }
         .code-area pre { margin: 0; white-space: pre-wrap; word-break: break-all; color: #aaffaa; font-size: 0.9rem; }
-        .instructions { font-size: 0.9rem; color: #aaa; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 6px; margin-top: 15px; }
     </style>
 </head>
 <body>
@@ -110,21 +109,18 @@
     </div>
 
     <script>
-        // --- STATE ---
         let sessionKey = localStorage.getItem('websutra_key') || '';
         let currentUser = null;
 
-        // Auto-login if key exists
         if(sessionKey) {
             document.getElementById('loginKey').value = sessionKey;
             login();
         }
 
-        // --- API HELPER ---
-        async function api(data) {
-            data.key = sessionKey;
+        async function api(endpoint, data) {
+            if(endpoint.includes('manage')) data.key = sessionKey;
             try {
-                const req = await fetch('/api/manage', {
+                const req = await fetch(endpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
@@ -133,22 +129,15 @@
             } catch(e) { return { error: "Network Error" }; }
         }
 
-        // --- ACTIONS ---
-
         async function login() {
             const keyInput = document.getElementById('loginKey').value.trim();
             if(!keyInput) return alert("Please enter your key");
             
-            const res = await fetch('/api/manage', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'login', key: keyInput })
-            });
-            const data = await res.json();
+            const data = await api('/api/manage', { action: 'login', key: keyInput });
 
             if(data.success) {
                 sessionKey = keyInput;
-                localStorage.setItem('websutra_key', sessionKey); // Save login
+                localStorage.setItem('websutra_key', sessionKey);
                 currentUser = data.user;
                 renderDashboard(data.user, data.sites);
             } else {
@@ -162,14 +151,34 @@
             location.href = '/';
         }
 
+        // --- VERIFICATION LOGIC ---
+        async function verifySite(slug, btnId) {
+            const btn = document.getElementById(btnId);
+            const originalText = btn.textContent;
+            btn.textContent = "Scanning...";
+            btn.disabled = true;
+
+            const res = await api('/api/verify', { slug: slug });
+
+            if (res.success) {
+                btn.className = "btn-success";
+                btn.textContent = "✓ Success";
+                setTimeout(() => login(), 1000); // Reload dashboard
+            } else {
+                alert(res.error);
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+
         async function saveProfile() {
             const newEmail = document.getElementById('userEmail').value;
-            const res = await api({ action: 'update_profile', newEmail });
+            const res = await api('/api/manage', { action: 'update_profile', newEmail });
             if(res.success) alert("Email updated."); else alert(res.error);
         }
 
         async function saveSite(id) {
-            const res = await api({
+            const res = await api('/api/manage', {
                 action: 'update_site',
                 siteId: id,
                 newTitle: document.getElementById(`title-${id}`).value,
@@ -180,25 +189,21 @@
         }
 
         async function deleteSite(id) {
-            if(!confirm("Permanently delete this site? This cannot be undone.")) return;
-            const res = await api({ action: 'delete_site', siteId: id });
-            if(res.success) login(); // Reload data
-            else alert(res.error);
+            if(!confirm("Permanently delete this site?")) return;
+            const res = await api('/api/manage', { action: 'delete_site', siteId: id });
+            if(res.success) login(); else alert(res.error);
         }
 
         async function addSite() {
-            const res = await api({
+            const res = await api('/api/manage', {
                 action: 'add_site',
                 newTitle: document.getElementById('newTitle').value,
                 newUrl: document.getElementById('newUrl').value,
                 newSlug: document.getElementById('newSlug').value
             });
             if(res.success) {
-                document.getElementById('newTitle').value = '';
-                document.getElementById('newUrl').value = '';
-                document.getElementById('newSlug').value = '';
                 toggleAddForm();
-                login(); // Reload
+                login(); 
             } else {
                 alert(res.error);
             }
@@ -218,18 +223,14 @@
             }
         }
 
-        // --- RENDERING ---
-
         function renderDashboard(user, sites) {
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('mainInterface').classList.remove('hidden');
 
-            // 1. Profile Data
             document.getElementById('userEmail').value = user.email || "";
             document.getElementById('siteCount').textContent = sites.length;
             document.getElementById('maxSites').textContent = user.max_sites;
 
-            // 2. Add Button Visibility
             if(sites.length >= user.max_sites) {
                 document.getElementById('showAddBtn').style.display = 'none';
                 document.getElementById('addSiteCard').classList.add('hidden');
@@ -237,14 +238,14 @@
                 document.getElementById('showAddBtn').style.display = 'block';
             }
 
-            // 3. Render Sites
             const container = document.getElementById('sitesContainer');
             if(sites.length === 0) {
                 container.innerHTML = '<div style="text-align:center; padding: 40px; color:#666;">No sites found. Add one below!</div>';
                 return;
             }
 
-            const host = window.location.origin;
+            // Hardcoded host for the snippet
+            const host = "https://webring.blackpiratex.com"; 
 
             container.innerHTML = sites.map(site => {
                 const snippet = `
@@ -255,11 +256,13 @@
   <a href="${host}/api/ring?action=next&slug=${site.slug}">Next →</a>
 </div>`.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+                const badgeClass = site.status === 'verified' ? 'badge-verified' : 'badge-pending';
+
                 return `
                 <div class="card">
                     <div style="display:flex; justify-content:space-between; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 15px;">
                         <h3 style="margin:0">${site.title}</h3>
-                        <span class="badge badge-${site.status}">${site.status}</span>
+                        <span class="badge ${badgeClass}">${site.status}</span>
                     </div>
 
                     <div class="grid">
@@ -278,16 +281,21 @@
                         </div>
 
                         <div style="background: #111; padding: 15px; border-radius: 8px; border: 1px solid #333;">
-                            <h4 style="margin-top:0; color:#fff;">Integration & Verification</h4>
-                            <p style="font-size:0.85rem; color:#888; margin-bottom: 10px;">Paste this HTML into your website footer:</p>
+                            <h4 style="margin-top:0; color:#fff;">Code & Status</h4>
+                            <p style="font-size:0.85rem; color:#888; margin-bottom: 5px;">Paste into your site footer:</p>
                             
                             <div class="code-area"><pre>${snippet}</pre></div>
 
-                            <div class="instructions">
-                                <strong>How to Verify:</strong><br>
-                                1. Deploy your site with the code above.<br>
-                                2. Visit your site and click "Next" or "Prev".<br>
-                                3. We will detect the referer and mark you as Verified automatically.
+                            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #333; padding-top: 15px;">
+                                <div>
+                                    <span style="font-size: 0.85rem; color: #888;">Current Status:</span>
+                                    <span class="badge ${badgeClass}" style="margin-left: 5px;">${site.status}</span>
+                                </div>
+                                
+                                ${site.status === 'pending' 
+                                    ? `<button id="verify-btn-${site.id}" onclick="verifySite('${site.slug}', 'verify-btn-${site.id}')" class="btn-secondary">Verify Now</button>`
+                                    : `<span style="color: #00C851; font-size: 1.2rem;">✓</span>`
+                                }
                             </div>
                         </div>
                     </div>

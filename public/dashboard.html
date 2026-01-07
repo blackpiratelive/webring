@@ -4,107 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebSutra Dashboard</title>
-    <style>
-        :root { --bg: #0a0a0a; --card: #161616; --input: #222; --border: #333; --text: #e0e0e0; --accent: #ff8c42; --danger: #ff4444; --success: #00C851; }
-        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); max-width: 900px; margin: 0 auto; padding: 2rem; line-height: 1.5; }
-        
-        /* Typography */
-        h1, h2, h3 { margin-top: 0; color: #fff; }
-        h1 { color: var(--accent); }
-        a { color: #888; text-decoration: none; }
-        a:hover { color: var(--accent); }
-
-        /* Forms */
-        label { display: block; font-size: 0.85rem; color: #888; margin-bottom: 5px; margin-top: 15px; font-weight: 600; }
-        input { width: 100%; padding: 12px; background: var(--input); border: 1px solid var(--border); color: white; border-radius: 6px; box-sizing: border-box; font-family: monospace; }
-        input:focus { outline: none; border-color: var(--accent); }
-
-        /* Buttons */
-        button { padding: 8px 16px; cursor: pointer; border: none; border-radius: 6px; font-weight: 600; transition: opacity 0.2s; font-size: 0.9rem; }
-        button:hover { opacity: 0.9; }
-        .btn-primary { background: var(--accent); color: #000; }
-        .btn-secondary { background: #333; color: #fff; }
-        .btn-danger { background: rgba(255, 68, 68, 0.1); color: var(--danger); border: 1px solid var(--danger); }
-        .btn-success { background: var(--success); color: #fff; }
-        .btn-block { width: 100%; }
-
-        /* Layout Utilities */
-        .hidden { display: none !important; }
-        .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 25px; margin-bottom: 25px; }
-        .flex { display: flex; gap: 10px; }
-        .grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-        @media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
-
-        /* Badges */
-        .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; }
-        .badge-pending { background: #332b00; color: #ffbb33; border: 1px solid #ffbb33; }
-        .badge-verified { background: #002200; color: #00C851; border: 1px solid #00C851; }
-        
-        /* Code Block */
-        .code-area { background: #000; padding: 15px; border-radius: 6px; border: 1px solid #333; margin-top: 10px; margin-bottom: 15px; }
-        .code-area pre { margin: 0; white-space: pre-wrap; word-break: break-all; color: #aaffaa; font-size: 0.9rem; }
-    </style>
 </head>
 <body>
 
-    <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 40px;">
+    <header>
         <h1>WebSutra Dashboard</h1>
-        <a href="/" onclick="logout()">Logout / Home</a>
+        <a href="/" onclick="logout(); return false;">Logout / Home</a>
     </header>
 
-    <div id="loginSection" style="max-width: 400px; margin: 0 auto;">
-        <div class="card">
-            <h2 style="margin-bottom: 20px;">Member Login</h2>
-            <label>Secret Key</label>
-            <input type="password" id="loginKey" placeholder="Paste your key here...">
-            <button onclick="login()" class="btn-primary btn-block" style="margin-top: 20px;">Access Dashboard</button>
-            <p style="font-size: 0.8rem; color: #666; text-align: center; margin-top: 15px;">Use the key you received during signup.</p>
-        </div>
+    <hr>
+
+    <div id="loginSection">
+        <h2>Member Login</h2>
+        <label for="loginKey">Secret Key:</label>
+        <input type="password" id="loginKey" placeholder="Paste your key here...">
+        <br><br>
+        <button onclick="login()">Access Dashboard</button>
+        <p><small>Use the key you received during signup.</small></p>
     </div>
 
-    <div id="mainInterface" class="hidden">
+    <div id="mainInterface" style="display: none;">
         
-        <div class="card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3 style="margin:0">Profile Settings</h3>
-                <span style="font-size: 0.9rem; color: #888;">Usage: <strong id="siteCount" style="color:#fff">0</strong> / <span id="maxSites">2</span> sites</span>
-            </div>
-            <div class="flex">
-                <div style="flex-grow: 1;">
-                    <label style="margin-top:0">Registered Email</label>
-                    <input type="email" id="userEmail">
-                </div>
-                <button onclick="saveProfile()" class="btn-secondary" style="align-self: flex-end;">Update Email</button>
-            </div>
+        <div>
+            <h3>Profile Settings</h3>
+            <p>Usage: <strong id="siteCount">0</strong> / <span id="maxSites">2</span> sites</p>
+            
+            <label for="userEmail">Registered Email:</label>
+            <input type="email" id="userEmail">
+            <button onclick="saveProfile()">Update Email</button>
         </div>
 
+        <hr>
+
+        <h3>Your Sites</h3>
         <div id="sitesContainer"></div>
 
-        <div id="addSiteCard" class="card hidden">
-            <h3>+ Add New Site</h3>
-            <label>Site Title</label>
-            <input type="text" id="newTitle" placeholder="My Awesome Blog">
-            
-            <div class="grid">
-                <div>
-                    <label>URL</label>
-                    <input type="url" id="newUrl" placeholder="https://...">
-                </div>
-                <div>
-                    <label>Unique Slug (ID)</label>
-                    <input type="text" id="newSlug" placeholder="my-blog">
-                </div>
-            </div>
-            
-            <div style="margin-top: 20px; display: flex; gap: 10px;">
-                <button onclick="addSite()" class="btn-primary">Create Site</button>
-                <button onclick="toggleAddForm()" class="btn-secondary">Cancel</button>
-            </div>
-        </div>
+        <hr>
 
-        <button id="showAddBtn" onclick="toggleAddForm()" class="btn-secondary btn-block" style="padding: 15px; border: 1px dashed #444;">
-            + Add Another Site
-        </button>
+        <button id="showAddBtn" onclick="toggleAddForm()">+ Add Another Site</button>
+
+        <div id="addSiteCard" style="display: none; border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
+            <h3>Add New Site</h3>
+            
+            <label>Site Title:</label><br>
+            <input type="text" id="newTitle" placeholder="My Awesome Blog"><br><br>
+            
+            <label>URL:</label><br>
+            <input type="url" id="newUrl" placeholder="https://..."><br><br>
+            
+            <label>Unique Slug (ID):</label><br>
+            <input type="text" id="newSlug" placeholder="my-blog"><br><br>
+            
+            <button onclick="addSite()">Create Site</button>
+            <button onclick="toggleAddForm()">Cancel</button>
+        </div>
 
     </div>
 
@@ -119,7 +72,7 @@
         }
 
         async function api(endpoint, data) {
-            // FIX: Only attach sessionKey if data.key is NOT already present
+            // Attach sessionKey if not present
             if(endpoint.includes('manage') && !data.key) {
                 data.key = sessionKey;
             }
@@ -138,7 +91,6 @@
             const keyInput = document.getElementById('loginKey').value.trim();
             if(!keyInput) return alert("Please enter your key");
             
-            // We pass the key explicitly here
             const data = await api('/api/manage', { action: 'login', key: keyInput });
 
             if(data.success) {
@@ -167,9 +119,7 @@
             const res = await api('/api/verify', { slug: slug });
 
             if (res.success) {
-                btn.className = "btn-success";
                 btn.textContent = "✓ Success";
-                // Reload dashboard to update UI
                 setTimeout(() => login(), 1000); 
             } else {
                 alert(res.error);
@@ -219,20 +169,21 @@
         function toggleAddForm() {
             const form = document.getElementById('addSiteCard');
             const btn = document.getElementById('showAddBtn');
-            const isHidden = form.classList.contains('hidden');
             
-            if(isHidden) {
-                form.classList.remove('hidden');
-                btn.classList.add('hidden');
+            // Toggle visibility using inline styles since we have no CSS classes
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+                btn.style.display = 'none';
             } else {
-                form.classList.add('hidden');
-                btn.classList.remove('hidden');
+                form.style.display = 'none';
+                btn.style.display = 'block';
             }
         }
 
         function renderDashboard(user, sites) {
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('mainInterface').classList.remove('hidden');
+            // Switch views using inline styles
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('mainInterface').style.display = 'block';
 
             document.getElementById('userEmail').value = user.email || "";
             document.getElementById('siteCount').textContent = sites.length;
@@ -240,14 +191,14 @@
 
             if(sites.length >= user.max_sites) {
                 document.getElementById('showAddBtn').style.display = 'none';
-                document.getElementById('addSiteCard').classList.add('hidden');
+                document.getElementById('addSiteCard').style.display = 'none';
             } else {
                 document.getElementById('showAddBtn').style.display = 'block';
             }
 
             const container = document.getElementById('sitesContainer');
             if(sites.length === 0) {
-                container.innerHTML = '<div style="text-align:center; padding: 40px; color:#666;">No sites found. Add one below!</div>';
+                container.innerHTML = '<p>No sites found. Add one below!</p>';
                 return;
             }
 
@@ -262,49 +213,30 @@
   <a href="${host}/api/ring?action=next&slug=${site.slug}">Next →</a>
 </div>`.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-                const badgeClass = site.status === 'verified' ? 'badge-verified' : 'badge-pending';
-
                 return `
-                <div class="card">
-                    <div style="display:flex; justify-content:space-between; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 15px;">
-                        <h3 style="margin:0">${site.title}</h3>
-                        <span class="badge ${badgeClass}">${site.status}</span>
-                    </div>
-
-                    <div class="grid">
-                        <div>
-                            <label>Site Title</label>
-                            <input type="text" id="title-${site.id}" value="${site.title}">
-                            <label>URL</label>
-                            <input type="url" id="url-${site.id}" value="${site.url}">
-                            <label>Slug (ID)</label>
-                            <input type="text" id="slug-${site.id}" value="${site.slug}">
-                            
-                            <div style="display:flex; gap:10px; margin-top:20px;">
-                                <button onclick="saveSite(${site.id})" class="btn-primary" style="flex:1">Save Changes</button>
-                                <button onclick="deleteSite(${site.id})" class="btn-danger">Delete</button>
-                            </div>
-                        </div>
-
-                        <div style="background: #111; padding: 15px; border-radius: 8px; border: 1px solid #333;">
-                            <h4 style="margin-top:0; color:#fff;">Code & Status</h4>
-                            <p style="font-size:0.85rem; color:#888; margin-bottom: 5px;">Paste into your site footer:</p>
-                            
-                            <div class="code-area"><pre>${snippet}</pre></div>
-
-                            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #333; padding-top: 15px;">
-                                <div>
-                                    <span style="font-size: 0.85rem; color: #888;">Current Status:</span>
-                                    <span class="badge ${badgeClass}" style="margin-left: 5px;">${site.status}</span>
-                                </div>
-                                
-                                ${site.status === 'pending' 
-                                    ? `<button id="verify-btn-${site.id}" onclick="verifySite('${site.slug}', 'verify-btn-${site.id}')" class="btn-secondary">Verify Now</button>`
-                                    : `<span style="color: #00C851; font-size: 1.2rem;">✓</span>`
-                                }
-                            </div>
-                        </div>
-                    </div>
+                <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px;">
+                    <h4 style="margin: 0;">${site.title} (Status: ${site.status.toUpperCase()})</h4>
+                    <br>
+                    
+                    <label>Title:</label> <input type="text" id="title-${site.id}" value="${site.title}"><br><br>
+                    <label>URL:</label> <input type="url" id="url-${site.id}" value="${site.url}"><br><br>
+                    <label>Slug:</label> <input type="text" id="slug-${site.id}" value="${site.slug}"><br><br>
+                    
+                    <button onclick="saveSite(${site.id})">Save Changes</button>
+                    <button onclick="deleteSite(${site.id})">Delete Site</button>
+                    
+                    <hr>
+                    
+                    <p><strong>Integration Code:</strong></p>
+                    <textarea rows="5" cols="50" readonly>${snippet}</textarea>
+                    
+                    <p>
+                        Current Status: <strong>${site.status}</strong> 
+                        ${site.status === 'pending' 
+                            ? `<button id="verify-btn-${site.id}" onclick="verifySite('${site.slug}', 'verify-btn-${site.id}')">Verify Now</button>`
+                            : `(Verified)`
+                        }
+                    </p>
                 </div>`;
             }).join('');
         }

@@ -6,7 +6,7 @@
     <title>WebSutra Admin</title>
     <style>
         :root { --bg: #0f0f0f; --card: #1a1a1a; --text: #eee; --accent: #ffd700; --danger: #ff4444; --success: #00C851; }
-        body { font-family: monospace; background: var(--bg); color: var(--text); padding: 20px; max-width: 900px; margin: 0 auto; }
+        body { font-family: monospace; background: var(--bg); color: var(--text); padding: 20px; max-width: 1000px; margin: 0 auto; }
         
         input, select { background: #333; border: 1px solid #555; color: white; padding: 5px; border-radius: 4px; }
         button { cursor: pointer; padding: 5px 10px; border: none; border-radius: 4px; font-weight: bold; }
@@ -22,7 +22,19 @@
         summary:hover { background: #2a2a2a; }
         
         .user-details { padding: 15px; border-top: 1px solid #333; }
-        .site-row { display: grid; grid-template-columns: 1fr 2fr 1fr 1fr auto; gap: 10px; padding: 10px; background: #111; margin-top: 5px; align-items: center; border-radius: 4px; }
+        
+        /* Site Row Grid */
+        .site-row { 
+            display: grid; 
+            grid-template-columns: 1.5fr 1fr 2fr 1fr 1fr auto; 
+            gap: 10px; 
+            padding: 10px; 
+            background: #111; 
+            margin-top: 5px; 
+            align-items: center; 
+            border-radius: 4px; 
+        }
+        .site-row input { width: 100%; box-sizing: border-box; }
         
         .status-verified { color: var(--success); }
         .status-pending { color: orange; }
@@ -92,20 +104,32 @@
                         </div>
 
                         <h4>Sites</h4>
+                        <div class="site-row" style="background:transparent; font-size:0.8rem; opacity:0.7;">
+                            <span>Title</span>
+                            <span>Slug (ID)</span>
+                            <span>URL</span>
+                            <span>Status</span>
+                            <span>Save</span>
+                            <span>Del</span>
+                        </div>
+
                         ${user.sites.map(site => `
                             <div class="site-row">
-                                <input id="slug-${site.id}" value="${site.slug}">
-                                <input id="url-${site.id}" value="${site.url}">
+                                <input id="title-${site.id}" value="${site.title}" placeholder="Site Title">
+                                <input id="slug-${site.id}" value="${site.slug}" placeholder="Slug">
+                                <input id="url-${site.id}" value="${site.url}" placeholder="URL">
+                                
                                 <select id="status-${site.id}" class="status-${site.status}">
                                     <option value="pending" ${site.status==='pending'?'selected':''}>Pending</option>
                                     <option value="verified" ${site.status==='verified'?'selected':''}>Verified</option>
                                     <option value="suspended" ${site.status==='suspended'?'selected':''}>Suspended</option>
                                 </select>
+                                
                                 <button class="btn-save" onclick="saveSite(${site.id})">💾</button>
                                 <button class="btn-del" onclick="deleteSite(${site.id})">🗑️</button>
                             </div>
                         `).join('')}
-                        ${user.sites.length === 0 ? '<div style="opacity:0.5">No sites added.</div>' : ''}
+                        ${user.sites.length === 0 ? '<div style="opacity:0.5; padding:10px;">No sites added.</div>' : ''}
                     </div>
                 </details>
             `).join('');
@@ -129,10 +153,13 @@
         }
 
         async function saveSite(id) {
+            // FIX IS HERE: We now grab the title from the input field
+            const titleInput = document.getElementById(`title-${id}`).value;
+            
             await api('update_site', {
                 siteId: id,
                 data: {
-                    title: "Updated via Admin", // simplified
+                    title: titleInput, // <--- No longer hardcoded!
                     slug: document.getElementById(`slug-${id}`).value,
                     url: document.getElementById(`url-${id}`).value,
                     status: document.getElementById(`status-${id}`).value

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+<div id="main">
     <header>
         <h1>WebSutra Dashboard</h1>
         <a href="/" onclick="logout(); return false;">Logout / Home</a>
@@ -61,7 +61,7 @@
         </div>
 
     </div>
-
+</div>
     <script>
         let sessionKey = localStorage.getItem('websutra_key') || '';
         let currentUser = null;

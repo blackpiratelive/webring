@@ -5,28 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebSutra Dashboard</title>
     <style>
-        :root { --bg: #121212; --card: #1e1e1e; --text: #e0e0e0; --accent: #ff8c42; --danger: #ff4444; --admin: #ffd700; }
+        /* (Keep your existing styles) */
+        :root { --bg: #121212; --card: #1e1e1e; --text: #e0e0e0; --accent: #ff8c42; --danger: #ff4444; }
         body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); max-width: 800px; margin: 0 auto; padding: 2rem; }
-        
         h1, h2, h3 { color: var(--accent); }
         input, select { width: 100%; padding: 10px; background: #2a2a2a; border: 1px solid #444; color: white; border-radius: 4px; box-sizing: border-box; margin-bottom: 10px; }
-        
-        button { padding: 10px 15px; cursor: pointer; border: none; border-radius: 4px; font-weight: bold; background: #333; color: white; }
+        button { padding: 8px 12px; cursor: pointer; border: none; border-radius: 4px; font-weight: bold; background: #333; color: white; }
         button:hover { opacity: 0.9; }
         .btn-primary { background: var(--accent); color: black; }
         .btn-danger { background: var(--danger); }
-        
         .hidden { display: none; }
         .card { background: var(--card); padding: 20px; border-radius: 8px; border: 1px solid #333; margin-bottom: 20px; }
-        
-        /* Grid for sites */
         .sites-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
-        
         .badge { padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; float: right; text-transform: uppercase; }
         .badge-pending { background: #555; }
         .badge-verified { background: #28a745; }
         
-        .admin-controls { border: 1px solid var(--admin); padding: 10px; margin-bottom: 20px; border-radius: 4px; background: rgba(255, 215, 0, 0.05); }
+        /* Modal Styles */
+        #codeModal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center; z-index: 100; }
+        .modal-content { background: #222; padding: 2rem; border-radius: 8px; border: 1px solid #444; max-width: 500px; width: 100%; }
+        pre { background: #000; padding: 10px; overflow-x: auto; color: #00ff00; }
     </style>
 </head>
 <body>
@@ -40,87 +38,67 @@
         <h3>Login</h3>
         <label>Your Secret Key</label>
         <input type="password" id="loginKey" placeholder="e.g. a1b2-c3d4...">
-        
-        <div id="adminLoginFields" class="hidden">
-            <label style="color: var(--admin)">Target User (Site Slug)</label>
-            <input type="text" id="targetSlug" placeholder="Enter a slug to find the user">
-        </div>
-
         <button onclick="login()" class="btn-primary" style="width: 100%">Access Dashboard</button>
-        <p style="text-align: center; font-size: 0.8rem; cursor: pointer; color: #666;" onclick="document.getElementById('adminLoginFields').classList.toggle('hidden')">Are you Admin?</p>
     </div>
 
     <div id="dashboardSection" class="hidden">
-        
         <div class="card">
-            <div style="display: flex; justify-content: space-between;">
-                <span>User: <strong id="userEmail"></strong></span>
-                <span>Sites Used: <strong id="siteCount">0</strong> / <strong id="maxSites">2</strong></span>
-            </div>
-
-            <div id="adminLimitBox" class="admin-controls hidden" style="margin-top: 15px;">
-                <label style="color: var(--admin)">⚡ Admin: Increase Limit</label>
-                <div style="display: flex; gap: 10px;">
-                    <input type="number" id="newLimitInput" style="margin: 0;">
-                    <button onclick="updateLimit()">Save</button>
-                </div>
-            </div>
+            <span>Logged in as: <strong id="userEmail"></strong></span>
         </div>
 
         <div id="addSiteBox" class="card hidden">
             <h3>+ Add New Site</h3>
-            <div style="display: grid; gap: 10px;">
-                <input type="text" id="newTitle" placeholder="Site Name">
-                <input type="url" id="newUrl" placeholder="URL (https://...)">
-                <input type="text" id="newSlug" placeholder="Unique ID (slug)">
-                <button onclick="addSite()" class="btn-primary">Add Site</button>
-            </div>
+            <input type="text" id="newTitle" placeholder="Site Name">
+            <input type="url" id="newUrl" placeholder="URL (https://...)">
+            <input type="text" id="newSlug" placeholder="Unique ID (slug)">
+            <button onclick="addSite()" class="btn-primary">Add Site</button>
         </div>
         <button id="showAddBtn" onclick="toggleAddForm()" style="width: 100%; margin-bottom: 20px;">+ Add Another Site</button>
 
         <div id="sitesList" class="sites-grid"></div>
+    </div>
 
+    <div id="codeModal" class="hidden">
+        <div class="modal-content">
+            <h3 style="margin-top:0">Installation & Verification</h3>
+            <p>1. Copy this code into your website's HTML:</p>
+            <pre id="snippetCode"></pre>
+            
+            <p>2. <strong>How to Verify:</strong></p>
+            <ul style="font-size: 0.9rem; opacity: 0.8; padding-left: 20px;">
+                <li>Deploy your website with the code above.</li>
+                <li>Go to your own website.</li>
+                <li>Click the <strong>Next &rarr;</strong> or <strong>&larr; Prev</strong> button in the widget.</li>
+                <li>Our system will detect the traffic coming from your URL and automatically mark you as <strong>VERIFIED</strong>.</li>
+            </ul>
+
+            <button onclick="document.getElementById('codeModal').classList.add('hidden')" style="width:100%">Close</button>
+        </div>
     </div>
 
     <script>
-        let session = { key: '', targetSlug: '', isAdmin: false };
+        let session = { key: '' };
 
         async function login() {
             session.key = document.getElementById('loginKey').value.trim();
-            session.targetSlug = document.getElementById('targetSlug').value.trim();
-
             if(!session.key) return alert("Enter Key");
 
             const res = await api({ action: 'login' });
-            if(res.success) {
-                renderDashboard(res);
-            } else {
-                alert(res.error);
-            }
+            if(res.success) renderDashboard(res);
+            else alert(res.error);
         }
 
         function renderDashboard(data) {
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('dashboardSection').classList.remove('hidden');
 
-            session.isAdmin = data.isAdmin;
             const { user, sites } = data;
+            document.getElementById('userEmail').textContent = user.email || "User";
 
-            // Update Stats
-            document.getElementById('userEmail').textContent = user.email || "No Email";
-            document.getElementById('siteCount').textContent = sites.length;
-            document.getElementById('maxSites').textContent = user.max_sites;
-
-            // Admin Logic
-            if(session.isAdmin) {
-                document.getElementById('adminLimitBox').classList.remove('hidden');
-                document.getElementById('newLimitInput').value = user.max_sites;
-            }
-
-            // "Add Site" Button Logic
+            // Limit Logic
             const addBtn = document.getElementById('showAddBtn');
-            if(sites.length >= user.max_sites && !session.isAdmin) {
-                addBtn.style.display = 'none'; // Hide if limit reached
+            if(sites.length >= user.max_sites) {
+                addBtn.style.display = 'none';
                 document.getElementById('addSiteBox').classList.add('hidden');
             } else {
                 addBtn.style.display = 'block';
@@ -130,33 +108,36 @@
             const container = document.getElementById('sitesList');
             container.innerHTML = sites.map(site => `
                 <div class="card">
-                    <div style="margin-bottom: 10px;">
+                    <div style="margin-bottom: 10px; display:flex; justify-content:space-between;">
                         <strong>${site.title}</strong>
                         <span class="badge badge-${site.status}">${site.status}</span>
                     </div>
                     
                     <label>URL</label>
                     <input type="text" value="${site.url}" id="url-${site.id}">
-                    
                     <label>Title</label>
                     <input type="text" value="${site.title}" id="title-${site.id}">
 
-                    ${session.isAdmin ? `
-                        <label style="color:var(--admin)">Status</label>
-                        <select id="status-${site.id}">
-                            <option value="pending" ${site.status==='pending'?'selected':''}>Pending</option>
-                            <option value="verified" ${site.status==='verified'?'selected':''}>Verified</option>
-                            <option value="suspended" ${site.status==='suspended'?'selected':''}>Suspended</option>
-                        </select>
-                    ` : ''}
-
                     <div style="display:flex; gap:10px; margin-top:10px;">
-                        <button onclick="updateSite(${site.id})" class="btn-primary" style="flex:1">Save</button>
-                        <button onclick="deleteSite(${site.id})" class="btn-danger">Delete</button>
+                        <button onclick="updateSite(${site.id})" style="flex:1; background:#444">Save</button>
+                        <button onclick="showCode('${site.slug}')" class="btn-primary" style="flex:1">Get Code</button>
                     </div>
-                    <div style="margin-top:10px; font-size:0.8rem; opacity:0.6;">ID: ${site.slug}</div>
+                    <button onclick="deleteSite(${site.id})" class="btn-danger" style="width:100%; margin-top:10px;">Delete Site</button>
                 </div>
             `).join('');
+        }
+
+        function showCode(slug) {
+            const host = window.location.origin;
+            const code = `
+<div id="websutra-ring">
+  <p>Member of <a href="${host}">WebSutra</a></p>
+  <a href="${host}/api/ring?action=prev&slug=${slug}">← Prev</a>
+  <a href="${host}/api/ring?action=random">Random</a>
+  <a href="${host}/api/ring?action=next&slug=${slug}">Next →</a>
+</div>`;
+            document.getElementById('snippetCode').textContent = code;
+            document.getElementById('codeModal').classList.remove('hidden');
         }
 
         async function addSite() {
@@ -166,39 +147,23 @@
                 newUrl: document.getElementById('newUrl').value,
                 newSlug: document.getElementById('newSlug').value
             });
-            if(res.success) { alert("Added!"); location.reload(); }
-            else alert(res.error);
+            if(res.success) location.reload(); else alert(res.error);
         }
 
         async function updateSite(id) {
-            const payload = {
+            const res = await api({
                 action: 'update_site',
                 siteId: id,
                 newTitle: document.getElementById(`title-${id}`).value,
                 newUrl: document.getElementById(`url-${id}`).value,
-            };
-            if(session.isAdmin) {
-                payload.newStatus = document.getElementById(`status-${id}`).value;
-            }
-            const res = await api(payload);
-            if(res.success) alert("Saved");
-            else alert(res.error);
+            });
+            if(res.success) alert("Saved"); else alert(res.error);
         }
 
         async function deleteSite(id) {
             if(!confirm("Delete this site?")) return;
             const res = await api({ action: 'delete_site', siteId: id });
-            if(res.success) { location.reload(); } 
-            else alert(res.error);
-        }
-
-        async function updateLimit() {
-            const res = await api({
-                action: 'update_limit',
-                newLimit: document.getElementById('newLimitInput').value
-            });
-            if(res.success) { alert("Limit Updated"); location.reload(); }
-            else alert(res.error);
+            if(res.success) location.reload(); else alert(res.error);
         }
 
         function toggleAddForm() {
@@ -206,10 +171,8 @@
             document.getElementById('showAddBtn').style.display = 'none';
         }
 
-        // Helper
         async function api(data) {
             data.key = session.key;
-            data.targetSlug = session.targetSlug; // Only needed for admin login
             try {
                 const req = await fetch('/api/manage', {
                     method: 'POST',

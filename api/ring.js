@@ -7,8 +7,8 @@ const db = createClient({
 });
 
 export default async function handler(req, res) {
-  const { action, slug } = req.query; 
-  const referer = req.headers.referer || ""; 
+  const { action, slug, url, json } = req.query;
+  const referer = req.headers.referer || "";
 
   try {
     // --- PART A: CLEVER VERIFICATION ---
@@ -67,27 +67,52 @@ export default async function handler(req, res) {
 
     if (action === 'random') {
       const randomSite = sites[Math.floor(Math.random() * sites.length)];
-      return res.redirect(randomSite.url);
+      targetUrl = randomSite.url;
+    } else {
+      let currentIndex = sites.findIndex((s) => s.slug === slug);
+
+      if (currentIndex === -1 && url) {
+        try {
+          const currentUrl = new URL(url);
+          currentIndex = sites.findIndex((s) => {
+            try {
+              const siteUrl = new URL(s.url);
+              return currentUrl.hostname === siteUrl.hostname || currentUrl.hostname.endsWith(siteUrl.hostname);
+            } catch (e) {
+              return false;
+            }
+          });
+        } catch (e) {
+          currentIndex = -1;
+        }
+      }
+
+      if (currentIndex === -1) {
+        targetUrl = action === 'prev' ? sites[sites.length - 1].url : sites[0].url;
+      } else {
+        let nextIndex = 0;
+        if (action === 'next') {
+          nextIndex = (currentIndex + 1) % sites.length;
+        } else if (action === 'prev') {
+          nextIndex = (currentIndex - 1 + sites.length) % sites.length;
+        }
+        targetUrl = sites[nextIndex].url;
+      }
     }
 
-    const currentIndex = sites.findIndex((s) => s.slug === slug);
-
-    if (currentIndex === -1) {
-      targetUrl = sites[0].url;
-    } else {
-      let nextIndex = 0;
-      if (action === 'next') {
-        nextIndex = (currentIndex + 1) % sites.length;
-      } else if (action === 'prev') {
-        nextIndex = (currentIndex - 1 + sites.length) % sites.length;
-      }
-      targetUrl = sites[nextIndex].url;
+    if (json === 'true') {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      return res.status(200).json({ targetUrl });
     }
 
     res.redirect(302, targetUrl);
 
   } catch (error) {
     console.error("Ring Error:", error);
+    if (json === 'true') {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      return res.status(500).json({ error: 'Ring Error' });
+    }
     res.redirect('https://webring.blackpiratex.com');
   }
 }

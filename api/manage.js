@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
   // "targetSlug" is used by Admin to find a user. "key" is used by everyone to login.
-  const { key, targetSlug, action, siteId, newTitle, newUrl, newSlug, newStatus, newLimit } = req.body;
+  const { key, targetSlug, action, siteId, newTitle, newUrl, newSlug, newStatus, newLimit, newEmail } = req.body;
 
   if (!key) return res.status(401).json({ error: "Missing Key" });
 
@@ -70,6 +70,15 @@ export default async function handler(req, res) {
             args: [user.id, newSlug, newUrl, newTitle, 'pending']
         });
         return res.json({ success: true, message: "Site added!" });
+    }
+
+    // ACTION: UPDATE PROFILE
+    if (action === 'update_profile') {
+        await db.execute({
+            sql: "UPDATE users SET email = ? WHERE id = ?",
+            args: [newEmail || null, user.id]
+        });
+        return res.json({ success: true, message: "Profile updated." });
     }
 
     // ACTION: UPDATE SITE

@@ -1,5 +1,5 @@
 // netlify/functions/webring.js
-// This is the serverless function that powers the webring.
+// Deprecated: DB-backed API at /api/ring is the source of truth.
 
 import { promises as fs } from 'fs';
 import path from 'path';

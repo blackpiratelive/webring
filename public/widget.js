@@ -73,10 +73,9 @@
       const action = event.target.getAttribute('data-action');
       
       try {
-        const apiUrl = new URL('/.netlify/functions/webring', apiBaseUrl);
+        const apiUrl = new URL('/api/ring', apiBaseUrl);
         apiUrl.searchParams.append('url', currentPageUrl);
         apiUrl.searchParams.append('action', action);
-        // NEW: Tell the API we want a JSON response
         apiUrl.searchParams.append('json', 'true');
 
         // Optional: Show a loading state

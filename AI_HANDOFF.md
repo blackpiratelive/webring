@@ -80,6 +80,11 @@ Admin Dashboard (public/admin.html -> api/admin.js)
 - action=update_site
 - action=delete_site
 
+Latest Sites API (api/latest.js)
+- GET /api/latest
+- Returns latest 10 verified sites (title + url)
+- CORS enabled for external use
+
 Config + Secrets
 - TURSO_DATABASE_URL
 - TURSO_AUTH_TOKEN
@@ -90,6 +95,7 @@ Operational Notes
 - DB-backed API is the single source of truth.
 - members.txt and netlify/functions/webring.js are deprecated and should not be used.
 - public/widget.js uses /api/ring with url + json=true.
+- /api/latest is cached (60s browser, 5m CDN, stale-while-revalidate 10m)
 
 Known Sharp Edges
 - Legacy Netlify flow is still present in the repo, but deprecated.

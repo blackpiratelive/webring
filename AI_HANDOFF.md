@@ -21,6 +21,7 @@ Repository Map
   - public/style.css
 - Docs:
   - API_DOCS.md
+  - public/api-docs.html
 - Legacy/alternate assets:
   - netlify/functions/webring.js (deprecated)
   - members.txt (deprecated)

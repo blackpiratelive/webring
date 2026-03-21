@@ -11,12 +11,15 @@ Repository Map
   - api/members.js
   - api/manage.js
   - api/admin.js
+  - api/latest.js
 - Static UI (public/):
   - public/index.html (landing + join + directory)
   - public/dashboard.html (member dashboard)
   - public/admin.html (admin dashboard)
   - public/widget.js (embed widget)
   - public/style.css
+- Docs:
+  - API_DOCS.md
 - Legacy/alternate assets:
   - netlify/functions/webring.js (deprecated)
   - members.txt (deprecated)

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebSutra API Docs</title>
+  <style>
+    :root {
+      --ink: #1f1b16;
+      --muted: #5b5248;
+      --paper: #f5f1e6;
+      --accent: #8b0000;
+      --code: #2f4f4f;
+    }
+    body {
+      margin: 0;
+      font-family: "Times New Roman", Times, serif;
+      background: linear-gradient(180deg, #fff7e6 0%, #efe3c6 100%);
+      color: var(--ink);
+    }
+    .wrap {
+      max-width: 860px;
+      margin: 40px auto;
+      background: var(--paper);
+      border: 3px solid #b18b5a;
+      padding: 28px 32px;
+      box-shadow: 8px 8px 0 #8b6b3f;
+    }
+    h1 {
+      font-size: 2.4rem;
+      margin: 0 0 12px;
+      color: var(--accent);
+    }
+    h2 {
+      margin: 24px 0 8px;
+      font-size: 1.4rem;
+    }
+    p, li {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+    code, pre {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95rem;
+    }
+    pre {
+      background: var(--code);
+      color: #f0e68c;
+      padding: 12px 14px;
+      overflow-x: auto;
+      border-radius: 6px;
+      border: 2px solid #b18b5a;
+    }
+    .badge {
+      display: inline-block;
+      background: #8b0000;
+      color: #fff7e6;
+      padding: 2px 8px;
+      font-size: 0.85rem;
+      border-radius: 999px;
+      margin-left: 8px;
+    }
+    a {
+      color: var(--accent);
+    }
+    .note {
+      background: #fff1c9;
+      border-left: 4px solid #8b0000;
+      padding: 10px 12px;
+      margin: 12px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>WebSutra API Docs <span class="badge">Public</span></h1>
+    <p>Simple JSON endpoints for external embeds and widgets.</p>
+
+    <h2>Base URL</h2>
+    <ul>
+      <li>Production: <code>https://webring.blackpiratex.com</code></li>
+    </ul>
+
+    <h2>Authentication</h2>
+    <p>None required for the public endpoints below.</p>
+
+    <h2>GET /api/latest</h2>
+    <p>Returns the latest 10 verified sites for external embeds.</p>
+
+    <h2>Response (200)</h2>
+    <pre><code>{
+  "count": 10,
+  "sites": [
+    {
+      "title": "Site Name",
+      "url": "https://example.com/"
+    }
+  ]
+}</code></pre>
+
+    <div class="note">
+      <strong>Notes</strong>
+      <ul>
+        <li>CORS: <code>Access-Control-Allow-Origin: *</code></li>
+        <li>Cache: <code>public, max-age=60, s-maxage=300, stale-while-revalidate=600</code></li>
+        <li>Only <code>status='verified'</code> sites are returned.</li>
+      </ul>
+    </div>
+
+    <h2>Example Usage</h2>
+    <pre><code>fetch('https://webring.blackpiratex.com/api/latest')
+  .then((res) => res.json())
+  .then((data) => {
+    data.sites.forEach((site) => {
+      console.log(site.title, site.url);
+    });
+  });</code></pre>
+
+    <p><a href="/">&larr; Back to homepage</a></p>
+  </div>
+</body>
+</html>

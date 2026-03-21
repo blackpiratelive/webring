@@ -16,6 +16,7 @@ Repository Map
   - public/index.html (landing + join + directory)
   - public/dashboard.html (member dashboard)
   - public/admin.html (admin dashboard)
+  - public/api-docs.html (API reference page)
   - public/widget.js (embed widget)
   - public/style.css
 - Docs:

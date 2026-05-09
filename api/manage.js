@@ -1,10 +1,13 @@
 import { createClient } from '@libsql/client';
-import { randomUUID } from 'crypto';
+import { hashSecretKey, removeSecretFields } from '../lib/secret-hash.mjs';
 
 const db = createClient({
   url: process.env.TURSO_DATABASE_URL,
   authToken: process.env.TURSO_AUTH_TOKEN,
 });
+
+const USER_COLUMNS = 'id, email, max_sites, created_at';
+const QUALIFIED_USER_COLUMNS = USER_COLUMNS.split(', ').map((column) => `u.${column}`).join(', ');
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
@@ -24,7 +27,7 @@ export default async function handler(req, res) {
         
         // Find user via one of their sites
         const userRes = await db.execute({
-            sql: `SELECT u.* FROM users u 
+            sql: `SELECT ${QUALIFIED_USER_COLUMNS} FROM users u 
                   JOIN sites s ON s.user_id = u.id 
                   WHERE s.slug = ?`,
             args: [targetSlug]
@@ -33,9 +36,10 @@ export default async function handler(req, res) {
         user = userRes.rows[0];
     } else {
         // Normal Login: Find user by Secret Key
+        const secretKeyHash = hashSecretKey(key);
         const userRes = await db.execute({
-            sql: "SELECT * FROM users WHERE secret_key = ?",
-            args: [key]
+            sql: `SELECT ${USER_COLUMNS} FROM users WHERE secret_key_hash = ?`,
+            args: [secretKeyHash]
         });
         if (userRes.rows.length === 0) return res.status(403).json({ error: "Invalid Secret Key" });
         user = userRes.rows[0];
@@ -54,7 +58,7 @@ export default async function handler(req, res) {
 
     // ACTION: LOGIN (Just return data)
     if (action === 'login') {
-        return res.json({ success: true, user, sites, isAdmin });
+        return res.json({ success: true, user: removeSecretFields(user), sites, isAdmin });
     }
 
     // ACTION: ADD SITE (User wants to add 2nd site)

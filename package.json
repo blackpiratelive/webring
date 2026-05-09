@@ -1,5 +1,8 @@
 {
   "name": "websutra-ring",
+  "scripts": {
+    "migrate:secret-hashes": "node scripts/migrate-secret-hashes.mjs"
+  },
   "dependencies": {
     "@libsql/client": "latest"
   }

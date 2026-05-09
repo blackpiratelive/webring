@@ -1,5 +1,6 @@
 import { createClient } from '@libsql/client';
 import { randomUUID } from 'crypto';
+import { hashSecretKey } from '../lib/secret-hash.mjs';
 
 const db = createClient({
   url: process.env.TURSO_DATABASE_URL,
@@ -15,11 +16,13 @@ export default async function handler(req, res) {
   const secretKey = randomUUID();
 
   try {
+    const secretKeyHash = hashSecretKey(secretKey);
+
     // 1. DATABASE TRANSACTION
     await db.batch([
         {
-            sql: "INSERT INTO users (secret_key, email) VALUES (?, ?)",
-            args: [secretKey, email || null]
+            sql: "INSERT INTO users (secret_key_hash, email) VALUES (?, ?)",
+            args: [secretKeyHash, email || null]
         },
         {
             sql: "INSERT INTO sites (user_id, slug, url, title, status) VALUES (last_insert_rowid(), ?, ?, ?, ?)",

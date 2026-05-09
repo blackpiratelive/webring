@@ -43,7 +43,7 @@ Architecture Overview
 Data Model (Inferred)
 - users
   - id (pk)
-  - secret_key (uuid)
+  - secret_key_hash (HMAC-SHA256, one-way member login token hash)
   - email (nullable)
   - max_sites (int, default 2)
   - created_at (used in admin list)
@@ -58,7 +58,7 @@ Data Model (Inferred)
 Critical Flows
 Join (public/index.html -> api/join.js)
 - POST { title, url, slug, email }
-- Creates user + site, returns snippet + secretKey
+- Creates user + site, stores secretKey hash, returns snippet + raw secretKey once
 - Optional Zapier webhook via ZAPIER_WEBHOOK_URL
 
 Verification (public/dashboard.html -> api/verify.js)
@@ -94,6 +94,7 @@ Config + Secrets
 - TURSO_DATABASE_URL
 - TURSO_AUTH_TOKEN
 - ADMIN_SECRET
+- SECRET_HASH_PEPPER
 - ZAPIER_WEBHOOK_URL (optional)
 
 Operational Notes
@@ -101,6 +102,8 @@ Operational Notes
 - members.txt and netlify/functions/webring.js are deprecated and should not be used.
 - public/widget.js uses /api/ring with url + json=true.
 - /api/latest is cached (60s browser, 5m CDN, stale-while-revalidate 10m)
+- Vercel build runs scripts/migrate-secret-hashes.mjs once to backfill users.secret_key_hash and drop users.secret_key.
+- SECRET_HASH_PEPPER must stay stable forever; rotating it invalidates member login keys.
 
 Known Sharp Edges
 - Legacy Netlify flow is still present in the repo, but deprecated.

@@ -5,6 +5,8 @@ const db = createClient({
   authToken: process.env.TURSO_AUTH_TOKEN,
 });
 
+const USER_COLUMNS = 'id, email, max_sites, created_at';
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
@@ -19,7 +21,7 @@ export default async function handler(req, res) {
     // --- LIST ALL (Users + Sites) ---
     if (action === 'list_all') {
       // Fetch Users
-      const usersRes = await db.execute("SELECT * FROM users ORDER BY created_at DESC");
+      const usersRes = await db.execute(`SELECT ${USER_COLUMNS} FROM users ORDER BY created_at DESC`);
       const users = usersRes.rows;
 
       // Fetch Sites

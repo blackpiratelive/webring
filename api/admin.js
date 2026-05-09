@@ -1,11 +1,4 @@
 import { createClient } from '@libsql/client';
-import {
-  createSecretResetToken,
-  ensureSecretResetTable,
-  getBaseUrl,
-  getSecretResetExpiry,
-  hashSecretResetToken,
-} from '../lib/secret-reset-tokens.mjs';
 
 const db = createClient({
   url: process.env.TURSO_DATABASE_URL,
@@ -18,9 +11,14 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
   const { key, action, userId, siteId, data } = req.body;
+  const adminSecret = process.env.ADMIN_SECRET ? process.env.ADMIN_SECRET.trim() : '';
 
   // 1. SECURITY CHECK
-  if (key !== process.env.ADMIN_SECRET) {
+  if (!adminSecret) {
+    return res.status(500).json({ error: "ADMIN_SECRET is not configured" });
+  }
+
+  if (typeof key !== 'string' || key.trim() !== adminSecret) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
@@ -58,6 +56,13 @@ export default async function handler(req, res) {
     // --- CREATE SECRET RESET LINK ---
     if (action === 'create_secret_reset_link') {
       if (!userId) return res.status(400).json({ error: "Missing userId" });
+      const {
+        createSecretResetToken,
+        ensureSecretResetTable,
+        getBaseUrl,
+        getSecretResetExpiry,
+        hashSecretResetToken,
+      } = await import('../lib/secret-reset-tokens.mjs');
 
       const userRes = await db.execute({
         sql: "SELECT id FROM users WHERE id = ?",
@@ -90,6 +95,7 @@ export default async function handler(req, res) {
     // --- DELETE USER (Cascades to sites usually, but we ensure it) ---
     if (action === 'delete_user') {
       // Delete sites first (manual cascade if DB doesn't support it)
+      const { ensureSecretResetTable } = await import('../lib/secret-reset-tokens.mjs');
       await ensureSecretResetTable(db);
       await db.execute({
         sql: "UPDATE secret_reset_tokens SET used_at = ? WHERE user_id = ? AND used_at IS NULL",

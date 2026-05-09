@@ -11,11 +11,13 @@ Repository Map
   - api/members.js
   - api/manage.js
   - api/admin.js
+  - api/reset-secret.js
   - api/latest.js
 - Static UI (public/):
   - public/index.html (landing + join + directory)
   - public/dashboard.html (member dashboard)
   - public/admin.html (admin dashboard)
+  - public/reset-secret.html (one-time secret reset page)
   - public/api-docs.html (API reference page)
   - public/widget.js (embed widget)
   - public/style.css
@@ -112,6 +114,7 @@ Operational Notes
 - Vercel build runs scripts/migrate-secret-hashes.mjs once to backfill users.secret_key_hash and drop users.secret_key.
 - SECRET_HASH_PEPPER must stay stable forever; rotating it invalidates member login keys.
 - Admin-generated reset links are one-time, store only token hashes in secret_reset_tokens, and rotate the member secret.
+- Vercel serverless functions may wrap api/*.js as CommonJS; use dynamic import() for local .mjs helpers inside API handlers.
 
 Known Sharp Edges
 - Legacy Netlify flow is still present in the repo, but deprecated.

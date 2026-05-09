@@ -1,6 +1,5 @@
 import { createClient } from '@libsql/client';
 import { randomUUID } from 'crypto';
-import { hashSecretKey } from '../lib/secret-hash.mjs';
 
 const db = createClient({
   url: process.env.TURSO_DATABASE_URL,
@@ -16,6 +15,7 @@ export default async function handler(req, res) {
   const secretKey = randomUUID();
 
   try {
+    const { hashSecretKey } = await import('../lib/secret-hash.mjs');
     const secretKeyHash = hashSecretKey(secretKey);
 
     // 1. DATABASE TRANSACTION

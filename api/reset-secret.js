@@ -1,10 +1,5 @@
 import { createClient } from '@libsql/client';
 import { randomUUID } from 'crypto';
-import { hashSecretKey } from '../lib/secret-hash.mjs';
-import {
-  ensureSecretResetTable,
-  hashSecretResetToken,
-} from '../lib/secret-reset-tokens.mjs';
 
 const db = createClient({
   url: process.env.TURSO_DATABASE_URL,
@@ -20,6 +15,14 @@ export default async function handler(req, res) {
   }
 
   try {
+    const [
+      { hashSecretKey },
+      { ensureSecretResetTable, hashSecretResetToken },
+    ] = await Promise.all([
+      import('../lib/secret-hash.mjs'),
+      import('../lib/secret-reset-tokens.mjs'),
+    ]);
+
     await ensureSecretResetTable(db);
 
     const tokenHash = hashSecretResetToken(token);

@@ -1,5 +1,4 @@
 import { createClient } from '@libsql/client';
-import { hashSecretKey, removeSecretFields } from '../lib/secret-hash.mjs';
 
 const db = createClient({
   url: process.env.TURSO_DATABASE_URL,
@@ -36,6 +35,7 @@ export default async function handler(req, res) {
         user = userRes.rows[0];
     } else {
         // Normal Login: Find user by Secret Key
+        const { hashSecretKey } = await import('../lib/secret-hash.mjs');
         const secretKeyHash = hashSecretKey(key);
         const userRes = await db.execute({
             sql: `SELECT ${USER_COLUMNS} FROM users WHERE secret_key_hash = ?`,
@@ -58,7 +58,7 @@ export default async function handler(req, res) {
 
     // ACTION: LOGIN (Just return data)
     if (action === 'login') {
-        return res.json({ success: true, user: removeSecretFields(user), sites, isAdmin });
+        return res.json({ success: true, user, sites, isAdmin });
     }
 
     // ACTION: ADD SITE (User wants to add 2nd site)

@@ -62,18 +62,18 @@
         let SECRET = '';
 
         async function loadAdmin() {
-            const keyInput = document.getElementById('adminKey').value;
+            const keyInput = document.getElementById('adminKey').value.trim();
             if(!keyInput) return alert("Enter key");
             SECRET = keyInput;
 
             try {
                 const res = await api('list_all');
-                if(!res.success) throw new Error("Invalid Key");
+                if(!res.success) throw new Error(res.error || "Invalid Key");
                 
                 document.getElementById('loginOverlay').style.display = 'none';
                 render(res.data);
             } catch(e) {
-                alert("Auth Failed");
+                alert(`Auth Failed: ${e.message}`);
             }
         }
 

@@ -159,6 +159,7 @@
 
 <script>
     let allSites = [];
+    let galleryRenderId = 0;
 
     // 1. Fetch Members
     async function loadMembers() {
@@ -206,27 +207,52 @@
         return `Member for ${totalDays} days`;
     }
 
-    function updateGalleryEmptyState() {
+    function hasScreenshot(imagePath) {
+        return new Promise(resolve => {
+            const image = new Image();
+            image.onload = () => resolve(true);
+            image.onerror = () => resolve(false);
+            image.src = imagePath;
+        });
+    }
+
+    function createScreenshotCard(site, imagePath) {
+        const card = document.createElement('article');
+        card.className = 'screenshot-card';
+
+        const imageLink = document.createElement('a');
+        imageLink.href = site.url;
+        imageLink.target = '_blank';
+        imageLink.rel = 'noopener noreferrer';
+
+        const image = document.createElement('img');
+        image.src = imagePath;
+        image.alt = `Screenshot of ${site.title}`;
+        image.loading = 'lazy';
+
+        const title = document.createElement('h3');
+        title.textContent = site.title;
+
+        const urlText = document.createElement('p');
+        const urlLink = document.createElement('a');
+        urlLink.href = site.url;
+        urlLink.target = '_blank';
+        urlLink.rel = 'noopener noreferrer';
+        urlLink.textContent = site.url;
+
+        const memberDays = document.createElement('p');
+        memberDays.textContent = formatMemberDays(site.member_days);
+
+        imageLink.appendChild(image);
+        urlText.appendChild(urlLink);
+        card.append(imageLink, title, urlText, memberDays);
+
+        return card;
+    }
+
+    async function renderScreenshotGallery() {
         const gallery = document.getElementById('screenshot-gallery');
-        const cards = gallery.querySelectorAll('.screenshot-card');
-        if (cards.length === 0) {
-            gallery.innerHTML = '<p>No screenshots added yet.</p>';
-        }
-    }
-
-    function handleScreenshotLoad(cardId) {
-        const card = document.getElementById(cardId);
-        if (card) card.style.display = 'block';
-    }
-
-    function handleScreenshotError(cardId) {
-        const card = document.getElementById(cardId);
-        if (card) card.remove();
-        updateGalleryEmptyState();
-    }
-
-    function renderScreenshotGallery() {
-        const gallery = document.getElementById('screenshot-gallery');
+        const renderId = ++galleryRenderId;
         const verifiedSites = allSites.filter(site => site.status === 'verified');
 
         if (verifiedSites.length === 0) {
@@ -234,24 +260,25 @@
             return;
         }
 
-        gallery.innerHTML = verifiedSites.map((site, index) => {
-            const cardId = `screenshot-card-${index}`;
-            const imagePath = `/screenshots/${encodeURIComponent(site.slug)}.png`;
-            const title = escapeHtml(site.title);
-            const url = escapeHtml(site.url);
-            const memberDays = escapeHtml(formatMemberDays(site.member_days));
+        gallery.innerHTML = '<p>Loading screenshot gallery...</p>';
 
-            return `
-                <article class="screenshot-card" id="${cardId}" style="display:none;">
-                    <a href="${url}" target="_blank">
-                        <img src="${imagePath}" alt="Screenshot of ${title}" loading="lazy" onload="handleScreenshotLoad('${cardId}')" onerror="handleScreenshotError('${cardId}')">
-                    </a>
-                    <h3>${title}</h3>
-                    <p><a href="${url}" target="_blank">${url}</a></p>
-                    <p>${memberDays}</p>
-                </article>
-            `;
-        }).join('');
+        const galleryItems = await Promise.all(verifiedSites.map(async site => {
+            const imagePath = `/screenshots/${encodeURIComponent(site.slug)}.png`;
+            const screenshotExists = await hasScreenshot(imagePath);
+            return screenshotExists ? { site, imagePath } : null;
+        }));
+
+        if (renderId !== galleryRenderId) return;
+
+        const visibleItems = galleryItems.filter(Boolean);
+        if (visibleItems.length === 0) {
+            gallery.innerHTML = '<p>No screenshots added yet.</p>';
+            return;
+        }
+
+        gallery.replaceChildren(...visibleItems.map(({ site, imagePath }) => {
+            return createScreenshotCard(site, imagePath);
+        }));
     }
 
     // 2. Filter Logic

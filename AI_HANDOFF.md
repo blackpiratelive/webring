@@ -20,6 +20,7 @@ Repository Map
   - public/reset-secret.html (one-time secret reset page)
   - public/api-docs.html (API reference page)
   - public/widget.js (embed widget)
+  - public/screenshots/ (optional committed member screenshots named <slug>.png)
   - public/style.css
 - Docs:
   - API_DOCS.md
@@ -98,6 +99,11 @@ Latest Sites API (api/latest.js)
 - GET /api/latest
 - Returns latest 10 verified sites (title + url)
 - CORS enabled for external use
+
+Homepage Member Gallery
+- public/index.html renders verified sites with screenshots from /screenshots/<slug>.png.
+- api/members.js includes member_days from users.created_at.
+- If a matching committed PNG does not exist, that site is hidden from the gallery.
 
 Config + Secrets
 - TURSO_DATABASE_URL

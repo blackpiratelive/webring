@@ -10,9 +10,21 @@ export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
   
   try {
-    // 2. Select specific columns including STATUS
+    // 2. Select public site fields plus membership age from the owning user
     const result = await db.execute({
-        sql: 'SELECT title, url, slug, status FROM sites ORDER BY id DESC',
+        sql: `SELECT
+                s.title,
+                s.url,
+                s.slug,
+                s.status,
+                u.created_at AS member_since,
+                CASE
+                  WHEN u.created_at IS NULL THEN NULL
+                  ELSE MAX(0, CAST(julianday('now') - julianday(u.created_at) AS INTEGER))
+                END AS member_days
+              FROM sites s
+              LEFT JOIN users u ON u.id = s.user_id
+              ORDER BY s.id DESC`,
         args: []
     });
     

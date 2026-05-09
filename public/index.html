@@ -32,6 +32,12 @@
 </ul>
 <h2>Privacy</h2>
 <p>Your site name, email, and website url are saved in the db. Your token is saved as a one-way hash, so it cannot be recovered if you lose it. Email is purely optional and for me to contact you, if necessary. </p>
+<h2>Webring Updates</h2>
+<ul>
+<li><strong>May 9, 2026:</strong> Member secret keys are now saved as one-way hashes instead of readable text in the database.</li>
+<li><strong>May 9, 2026:</strong> If you lose your dashboard key, I can now generate a one-time reset link that creates a new secret key for you.</li>
+<li><strong>May 9, 2026:</strong> The database migration now safely moves existing members to hashed keys and removes the old plain token column.</li>
+</ul>
 <h2>FAQS</h2>
 <details>
 <summary>I am not an Indian can I join? </summary>
@@ -67,6 +73,15 @@
         </form>
 
         <div id="result"></div>
+    </section>
+
+    <hr>
+
+    <section id="gallery-section">
+        <h2>Member Gallery</h2>
+        <div id="screenshot-gallery" class="screenshot-gallery">
+            <p>Loading screenshot gallery...</p>
+        </div>
     </section>
 
     <hr>
@@ -157,14 +172,86 @@
             
             if (allSites.length === 0) {
                 tableBody.innerHTML = "<tr><td colspan='4'>No members yet.</td></tr>";
+                renderScreenshotGallery();
                 return;
             }
+            renderScreenshotGallery();
             filterSites();
 
         } catch (e) {
             console.error(e);
             tableBody.innerHTML = "<tr><td colspan='4'>Error loading directory.</td></tr>";
+            document.getElementById('screenshot-gallery').innerHTML = "<p>Error loading screenshot gallery.</p>";
         }
+    }
+
+    function escapeHtml(value) {
+        return String(value ?? '').replace(/[&<>"']/g, char => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        }[char]));
+    }
+
+    function formatMemberDays(days) {
+        if (days === null || days === undefined || Number.isNaN(Number(days))) {
+            return 'Member since unknown';
+        }
+
+        const totalDays = Number(days);
+        if (totalDays <= 0) return 'Joined today';
+        if (totalDays === 1) return 'Member for 1 day';
+        return `Member for ${totalDays} days`;
+    }
+
+    function updateGalleryEmptyState() {
+        const gallery = document.getElementById('screenshot-gallery');
+        const cards = gallery.querySelectorAll('.screenshot-card');
+        if (cards.length === 0) {
+            gallery.innerHTML = '<p>No screenshots added yet.</p>';
+        }
+    }
+
+    function handleScreenshotLoad(cardId) {
+        const card = document.getElementById(cardId);
+        if (card) card.style.display = 'block';
+    }
+
+    function handleScreenshotError(cardId) {
+        const card = document.getElementById(cardId);
+        if (card) card.remove();
+        updateGalleryEmptyState();
+    }
+
+    function renderScreenshotGallery() {
+        const gallery = document.getElementById('screenshot-gallery');
+        const verifiedSites = allSites.filter(site => site.status === 'verified');
+
+        if (verifiedSites.length === 0) {
+            gallery.innerHTML = '<p>No screenshots added yet.</p>';
+            return;
+        }
+
+        gallery.innerHTML = verifiedSites.map((site, index) => {
+            const cardId = `screenshot-card-${index}`;
+            const imagePath = `/screenshots/${encodeURIComponent(site.slug)}.png`;
+            const title = escapeHtml(site.title);
+            const url = escapeHtml(site.url);
+            const memberDays = escapeHtml(formatMemberDays(site.member_days));
+
+            return `
+                <article class="screenshot-card" id="${cardId}" style="display:none;">
+                    <a href="${url}" target="_blank">
+                        <img src="${imagePath}" alt="Screenshot of ${title}" loading="lazy" onload="handleScreenshotLoad('${cardId}')" onerror="handleScreenshotError('${cardId}')">
+                    </a>
+                    <h3>${title}</h3>
+                    <p><a href="${url}" target="_blank">${url}</a></p>
+                    <p>${memberDays}</p>
+                </article>
+            `;
+        }).join('');
     }
 
     // 2. Filter Logic

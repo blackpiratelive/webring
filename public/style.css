@@ -6,6 +6,33 @@ margin: auto;
 max-width: 700px;
 margin: auto;
 }
+.screenshot-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+}
+.screenshot-card {
+    border: 1px solid #333;
+    padding: 8px;
+    background: #fff;
+}
+.screenshot-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border: 1px solid #999;
+    background: #eee;
+    display: block;
+}
+.screenshot-card h3 {
+    font-size: 1rem;
+    margin: 8px 0 4px;
+}
+.screenshot-card p {
+    margin: 4px 0;
+    overflow-wrap: anywhere;
+}
 img {
 }
 /* Target the specific image using its source */

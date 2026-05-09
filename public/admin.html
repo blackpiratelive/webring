@@ -12,6 +12,10 @@
         button { cursor: pointer; padding: 5px 10px; border: none; border-radius: 4px; font-weight: bold; }
         .btn-save { background: var(--accent); color: black; }
         .btn-del { background: var(--danger); color: white; }
+        .btn-reset { background: #3b82f6; color: white; }
+        .reset-link-box { display: none; margin-top: 10px; padding: 10px; background: #111; border: 1px solid #333; border-radius: 4px; }
+        .reset-link-box input { width: 100%; box-sizing: border-box; margin-top: 6px; }
+        .reset-link-box small { color: #bbb; display: block; margin-top: 6px; }
 
         /* Login Modal */
         #loginOverlay { position: fixed; inset: 0; background: var(--bg); display: flex; justify-content: center; align-items: center; z-index: 10; }
@@ -100,7 +104,14 @@
                             Email: <input id="email-${user.id}" value="${user.email || ''}">
                             Limit: <input id="limit-${user.id}" type="number" value="${user.max_sites}" style="width: 50px">
                             <button class="btn-save" onclick="saveUser(${user.id})">Save User</button>
+                            <button class="btn-reset" onclick="createResetLink(${user.id})">Generate Reset Link</button>
                             <button class="btn-del" onclick="deleteUser(${user.id})">Delete User</button>
+                            <div class="reset-link-box" id="reset-link-box-${user.id}">
+                                <strong>Secret reset link</strong>
+                                <input id="reset-link-${user.id}" readonly>
+                                <button class="btn-save" onclick="copyResetLink(${user.id})">Copy Link</button>
+                                <small id="reset-link-expiry-${user.id}"></small>
+                            </div>
                         </div>
 
                         <h4>Sites</h4>
@@ -144,6 +155,35 @@
                 }
             });
             alert("User Updated");
+        }
+
+        async function createResetLink(id) {
+            const res = await api('create_secret_reset_link', { userId: id });
+            if(!res.success) return alert(res.error || "Could not create reset link");
+
+            const box = document.getElementById(`reset-link-box-${id}`);
+            const input = document.getElementById(`reset-link-${id}`);
+            const expiry = document.getElementById(`reset-link-expiry-${id}`);
+
+            input.value = res.resetLink;
+            expiry.textContent = `Expires: ${new Date(res.expiresAt).toLocaleString()}`;
+            box.style.display = 'block';
+            input.focus();
+            input.select();
+        }
+
+        async function copyResetLink(id) {
+            const input = document.getElementById(`reset-link-${id}`);
+            input.focus();
+            input.select();
+
+            try {
+                await navigator.clipboard.writeText(input.value);
+                alert("Reset link copied");
+            } catch(e) {
+                document.execCommand('copy');
+                alert("Reset link copied");
+            }
         }
 
         async function deleteUser(id) {

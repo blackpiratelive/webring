@@ -54,6 +54,11 @@ Data Model (Inferred)
   - url
   - title
   - status (pending | verified | suspended)
+- secret_reset_tokens
+  - user_id
+  - token_hash (one-way reset token hash)
+  - expires_at
+  - used_at
 
 Critical Flows
 Join (public/index.html -> api/join.js)
@@ -81,9 +86,11 @@ Member Dashboard (public/dashboard.html -> api/manage.js)
 Admin Dashboard (public/admin.html -> api/admin.js)
 - action=list_all
 - action=update_user
+- action=create_secret_reset_link
 - action=delete_user
 - action=update_site
 - action=delete_site
+- Secret reset links point to public/reset-secret.html and are consumed by api/reset-secret.js.
 
 Latest Sites API (api/latest.js)
 - GET /api/latest
@@ -104,6 +111,7 @@ Operational Notes
 - /api/latest is cached (60s browser, 5m CDN, stale-while-revalidate 10m)
 - Vercel build runs scripts/migrate-secret-hashes.mjs once to backfill users.secret_key_hash and drop users.secret_key.
 - SECRET_HASH_PEPPER must stay stable forever; rotating it invalidates member login keys.
+- Admin-generated reset links are one-time, store only token hashes in secret_reset_tokens, and rotate the member secret.
 
 Known Sharp Edges
 - Legacy Netlify flow is still present in the repo, but deprecated.

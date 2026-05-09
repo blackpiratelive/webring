@@ -3,6 +3,7 @@ import {
   hashSecretKey,
   isSecretKeyHash,
 } from '../lib/secret-hash.mjs';
+import { ensureSecretResetTable } from '../lib/secret-reset-tokens.mjs';
 
 const MIGRATION_ID = '2026-05-09_hash_user_secret_keys';
 const REQUIRED_ENV = ['TURSO_DATABASE_URL', 'TURSO_AUTH_TOKEN', 'SECRET_HASH_PEPPER'];
@@ -158,6 +159,7 @@ async function runMigration() {
     await tx.execute(
       'CREATE TABLE IF NOT EXISTS app_migrations (id TEXT PRIMARY KEY, applied_at TEXT NOT NULL)'
     );
+    await ensureSecretResetTable(tx);
 
     const markerExists = await migrationMarkerExists(tx);
     let columns = await getUserColumns(tx);

@@ -1,4 +1,11 @@
 import { createClient } from '@libsql/client';
+import {
+  createSecretResetToken,
+  ensureSecretResetTable,
+  getBaseUrl,
+  getSecretResetExpiry,
+  hashSecretResetToken,
+} from '../lib/secret-reset-tokens.mjs';
 
 const db = createClient({
   url: process.env.TURSO_DATABASE_URL,
@@ -48,9 +55,46 @@ export default async function handler(req, res) {
       return res.json({ success: true });
     }
 
+    // --- CREATE SECRET RESET LINK ---
+    if (action === 'create_secret_reset_link') {
+      if (!userId) return res.status(400).json({ error: "Missing userId" });
+
+      const userRes = await db.execute({
+        sql: "SELECT id FROM users WHERE id = ?",
+        args: [userId]
+      });
+      if (userRes.rows.length === 0) return res.status(404).json({ error: "User not found" });
+
+      await ensureSecretResetTable(db);
+
+      const token = createSecretResetToken();
+      const tokenHash = hashSecretResetToken(token);
+      const now = new Date().toISOString();
+      const expiresAt = getSecretResetExpiry();
+
+      await db.batch([
+        {
+          sql: "UPDATE secret_reset_tokens SET used_at = ? WHERE user_id = ? AND used_at IS NULL",
+          args: [now, userId]
+        },
+        {
+          sql: "INSERT INTO secret_reset_tokens (user_id, token_hash, expires_at) VALUES (?, ?, ?)",
+          args: [userId, tokenHash, expiresAt]
+        }
+      ]);
+
+      const resetLink = `${getBaseUrl(req)}/reset-secret.html?token=${encodeURIComponent(token)}`;
+      return res.json({ success: true, resetLink, expiresAt });
+    }
+
     // --- DELETE USER (Cascades to sites usually, but we ensure it) ---
     if (action === 'delete_user') {
       // Delete sites first (manual cascade if DB doesn't support it)
+      await ensureSecretResetTable(db);
+      await db.execute({
+        sql: "UPDATE secret_reset_tokens SET used_at = ? WHERE user_id = ? AND used_at IS NULL",
+        args: [new Date().toISOString(), userId]
+      });
       await db.execute({ sql: "DELETE FROM sites WHERE user_id = ?", args: [userId] });
       await db.execute({ sql: "DELETE FROM users WHERE id = ?", args: [userId] });
       return res.json({ success: true });

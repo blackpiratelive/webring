@@ -24,9 +24,38 @@ function quoteIdentifier(identifier) {
   return `"${String(identifier).replaceAll('"', '""')}"`;
 }
 
+function buildColumnDefinition(column) {
+  const name = quoteIdentifier(column.name);
+  const type = String(column.type || '').trim();
+  const parts = [name];
+
+  if (type) {
+    parts.push(type);
+  }
+
+  if (Number(column.pk) > 0) {
+    parts.push('PRIMARY KEY');
+  }
+
+  if (Number(column.notnull) === 1 && Number(column.pk) === 0) {
+    parts.push('NOT NULL');
+  }
+
+  if (column.dflt_value !== null && column.dflt_value !== undefined) {
+    parts.push(`DEFAULT ${column.dflt_value}`);
+  }
+
+  return parts.join(' ');
+}
+
 async function getUserColumns(tx) {
   const result = await tx.execute('PRAGMA table_info(users)');
   return new Set(result.rows.map((row) => String(row.name)));
+}
+
+async function getUserColumnInfo(tx) {
+  const result = await tx.execute('PRAGMA table_info(users)');
+  return result.rows;
 }
 
 function assertFinalSchema(columns) {
@@ -134,12 +163,43 @@ async function dropSecretKeyIndexes(tx) {
     }
 
     if (indexName.startsWith('sqlite_autoindex') || indexOrigin === 'u' || indexOrigin === 'pk') {
-      throw new Error(
-        'users.secret_key is part of an inline table constraint. Remove that constraint before this migration can drop the plaintext column.'
-      );
+      continue;
     }
 
     await tx.execute(`DROP INDEX ${quoteIdentifier(indexName)}`);
+  }
+}
+
+async function recreateUsersTableWithoutSecretKey(tx) {
+  const columns = await getUserColumnInfo(tx);
+  const keptColumns = columns.filter((column) => column.name !== 'secret_key');
+
+  if (keptColumns.length === columns.length) {
+    return;
+  }
+
+  if (!keptColumns.some((column) => column.name === 'secret_key_hash')) {
+    throw new Error('Cannot rebuild users table without secret_key_hash');
+  }
+
+  const tempTable = `users_without_secret_key_${Date.now()}`;
+  const columnDefinitions = keptColumns.map(buildColumnDefinition).join(', ');
+  const columnList = keptColumns.map((column) => quoteIdentifier(column.name)).join(', ');
+
+  await tx.execute(`CREATE TABLE ${quoteIdentifier(tempTable)} (${columnDefinitions})`);
+  await tx.execute(`INSERT INTO ${quoteIdentifier(tempTable)} (${columnList}) SELECT ${columnList} FROM users`);
+  await tx.execute('DROP TABLE users');
+  await tx.execute(`ALTER TABLE ${quoteIdentifier(tempTable)} RENAME TO users`);
+}
+
+async function removeSecretKeyColumn(tx) {
+  await dropSecretKeyIndexes(tx);
+
+  try {
+    await tx.execute('ALTER TABLE users DROP COLUMN secret_key');
+  } catch (error) {
+    console.log(`Direct DROP COLUMN failed; rebuilding users table instead: ${error.message}`);
+    await recreateUsersTableWithoutSecretKey(tx);
   }
 }
 
@@ -154,6 +214,7 @@ async function runMigration() {
   let tx;
 
   try {
+    await db.execute('PRAGMA foreign_keys = OFF');
     tx = await db.transaction('write');
 
     await tx.execute(
@@ -182,17 +243,16 @@ async function runMigration() {
     await ensureHashesHaveExpectedFormat(tx);
     await ensureNoDuplicateHashes(tx);
 
-    await tx.execute(
-      'CREATE UNIQUE INDEX IF NOT EXISTS users_secret_key_hash_unique ON users(secret_key_hash)'
-    );
-
     if (columns.has('secret_key')) {
-      await dropSecretKeyIndexes(tx);
-      await tx.execute('ALTER TABLE users DROP COLUMN secret_key');
+      await removeSecretKeyColumn(tx);
       columns = await getUserColumns(tx);
     }
 
     assertFinalSchema(columns);
+
+    await tx.execute(
+      'CREATE UNIQUE INDEX IF NOT EXISTS users_secret_key_hash_unique ON users(secret_key_hash)'
+    );
 
     await tx.execute({
       sql: 'INSERT INTO app_migrations (id, applied_at) VALUES (?, ?)',
@@ -213,6 +273,11 @@ async function runMigration() {
   } finally {
     if (tx && !tx.closed) {
       tx.close();
+    }
+    try {
+      await db.execute('PRAGMA foreign_keys = ON');
+    } catch (error) {
+      console.error('Could not re-enable foreign key checks:', error.message);
     }
     db.close?.();
   }

@@ -349,6 +349,11 @@
 </div>`.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
             const statusClass = site.status === 'verified' ? 'verified' : (site.status === 'pending' ? 'pending' : 'suspended');
+            
+            const memberSince = user.created_at ? new Date(user.created_at) : new Date();
+            const daysActive = Math.max(0, Math.floor((new Date() - memberSince) / (1000 * 60 * 60 * 24)));
+            const totalXP = 500 + (daysActive * 100);
+            const level = Math.max(1, Math.floor(Math.sqrt(totalXP / 20)));
 
             const stateOptionsHtml = '<option value="">-- None / Outside India --</option>' + INDIAN_STATES.map(s => 
                 `<option value="${s}" ${site.state === s ? 'selected' : ''}>${s}</option>`
@@ -358,7 +363,7 @@
             <div style="background: var(--rpg-wood-dark); border: 2px solid var(--rpg-gold); border-radius: 6px; padding: 18px; margin-bottom: 22px; box-shadow: 0 4px 12px rgba(0,0,0,0.6);">
                 <h4 style="margin: 0 0 14px 0; font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-gold-light);">
                     🛡️ ${site.title} 
-                    <span class="status-pill ${statusClass}" style="vertical-align: middle; margin-left: 10px;">LEVEL 99 ${site.status.toUpperCase()}</span>
+                    <span class="status-pill ${statusClass}" style="vertical-align: middle; margin-left: 10px;">LVL ${level} (${totalXP.toLocaleString()} XP) — ${site.status.toUpperCase()}</span>
                 </h4>
                 
                 <div style="margin-bottom: 12px;">

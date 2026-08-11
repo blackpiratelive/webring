@@ -361,13 +361,21 @@
         if (stateMembers.length > 0) {
             membersListHtml = `
                 <div style="margin-bottom: 16px;">
-                    ${stateMembers.map(s => `
+                    ${stateMembers.map(s => {
+                        const days = Math.max(0, parseInt(s.member_days) || 0);
+                        const totalXP = 500 + (days * 100);
+                        const level = Math.max(1, Math.floor(Math.sqrt(totalXP / 20)));
+
+                        return `
                         <div style="background: #fdf6e2; color: var(--rpg-parchment-text); border: 2px solid var(--rpg-wood-border); border-radius: 4px; padding: 12px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
                             <div style="font-family: var(--font-fantasy); font-size: 18px; color: var(--rpg-wood-dark); font-weight: bold;">🛡️ ${escapeHtml(s.title)}</div>
                             <div style="margin: 4px 0;"><a href="${escapeHtml(s.url)}" target="_blank" style="color: var(--rpg-wood-dark);">${escapeHtml(s.url)}</a></div>
-                            <span class="status-pill ${s.status === 'verified' ? 'verified' : 'pending'}">LEVEL 99 ${s.status.toUpperCase()} CHAMPION</span>
+                            <div style="display: flex; gap: 8px; align-items: center; margin-top: 6px;">
+                                <span class="status-pill ${s.status === 'verified' ? 'verified' : 'pending'}">LVL ${level} (${totalXP.toLocaleString()} XP)</span>
+                                <span style="font-size: 12px; font-weight: bold; color: #78350f;">⏳ ${days} Day(s) Active</span>
+                            </div>
                         </div>
-                    `).join('')}
+                    `}).join('')}
                 </div>
             `;
         } else {

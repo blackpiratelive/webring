@@ -1,5 +1,5 @@
 /* WebSutra: Classic Fantasy RPG World Map & Questbook Design System */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@600;700;900&family=MedievalSharp&family=Press+Start+2P&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Press+Start+2P&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
   --rpg-bg-dark: #090706;
@@ -50,9 +50,9 @@
   --font-pixel: 'Press Start 2P', monospace;
   --font-fantasy: 'Cinzel Decorative', 'Cinzel', serif;
   --font-heading: 'Cinzel', serif;
-  --font-body: 'MedievalSharp', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-mono: 'Courier Prime', monospace;
-  --font-retro: 'MedievalSharp', Georgia, serif;
+  --font-retro: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
 * {

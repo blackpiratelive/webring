@@ -3,60 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSutra Admin</title>
+    <title>WebSutra Super Admin ⚡</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        :root { --bg: #0f0f0f; --card: #1a1a1a; --text: #eee; --accent: #ffd700; --danger: #ff4444; --success: #00C851; }
-        body { font-family: monospace; background: var(--bg); color: var(--text); padding: 20px; max-width: 1000px; margin: 0 auto; }
-        
-        input, select { background: #333; border: 1px solid #555; color: white; padding: 5px; border-radius: 4px; }
-        button { cursor: pointer; padding: 5px 10px; border: none; border-radius: 4px; font-weight: bold; }
-        .btn-save { background: var(--accent); color: black; }
-        .btn-del { background: var(--danger); color: white; }
-        .btn-reset { background: #3b82f6; color: white; }
-        .reset-link-box { display: none; margin-top: 10px; padding: 10px; background: #111; border: 1px solid #333; border-radius: 4px; }
-        .reset-link-box input { width: 100%; box-sizing: border-box; margin-top: 6px; }
-        .reset-link-box small { color: #bbb; display: block; margin-top: 6px; }
-
-        /* Login Modal */
-        #loginOverlay { position: fixed; inset: 0; background: var(--bg); display: flex; justify-content: center; align-items: center; z-index: 10; }
-        
-        /* Layout */
-        .user-card { background: var(--card); border: 1px solid #333; margin-bottom: 10px; border-radius: 8px; overflow: hidden; }
-        summary { padding: 15px; cursor: pointer; background: #222; display: flex; justify-content: space-between; align-items: center; }
-        summary:hover { background: #2a2a2a; }
-        
-        .user-details { padding: 15px; border-top: 1px solid #333; }
-        
-        /* Site Row Grid */
+        .user-card { margin-bottom: 14px; }
+        summary { cursor: pointer; background: linear-gradient(90deg, #180829, #09152b); color: var(--neon-yellow); padding: 12px 16px; font-family: var(--font-pixel); font-size: 22px; font-weight: bold; border: 1.5px solid var(--neon-cyan); border-radius: 4px; user-select: none; }
+        summary:hover { background: linear-gradient(90deg, #260a40, #0f2347); }
+        .user-details { background: rgba(5, 8, 16, 0.95); color: var(--text-main); padding: 18px; border: 1.5px solid var(--neon-cyan); border-top: none; border-radius: 0 0 4px 4px; }
         .site-row { 
             display: grid; 
-            grid-template-columns: 1.5fr 1fr 2fr 1fr 1fr auto; 
+            grid-template-columns: 1.5fr 1fr 2fr 1fr auto auto; 
             gap: 10px; 
             padding: 10px; 
-            background: #111; 
-            margin-top: 5px; 
+            background: rgba(18, 26, 42, 0.6); 
+            margin-top: 8px; 
             align-items: center; 
-            border-radius: 4px; 
+            border: 1px solid #1a2c44; 
+            border-radius: 3px;
         }
-        .site-row input { width: 100%; box-sizing: border-box; }
-        
-        .status-verified { color: var(--success); }
-        .status-pending { color: orange; }
-        .status-suspended { color: var(--danger); }
+        .site-row input, .site-row select { font-size: 12px; }
+        .reset-link-box { display: none; margin-top: 12px; padding: 12px; background: #03050a; color: var(--neon-lime); border: 1.5px solid var(--neon-saffron); border-radius: 4px; }
+        #loginOverlay { position: fixed; inset: 0; background: rgba(5, 7, 12, 0.95); display: flex; justify-content: center; align-items: center; z-index: 100; }
     </style>
 </head>
 <body>
 
+    <!-- ADMIN LOGIN OVERLAY -->
     <div id="loginOverlay">
-        <div style="text-align: center;">
-            <h2 style="color: var(--accent);">ADMIN ACCESS</h2>
-            <input type="password" id="adminKey" placeholder="Enter Admin Secret">
-            <button onclick="loadAdmin()">Login</button>
-        </div>
+        <fieldset class="cyber-box alt-saffron" style="width: 380px;">
+            <legend class="cyber-legend">⚡ SUPER_ADMIN_AUTH</legend>
+            <div style="text-align: center;">
+                <h2 style="font-family: var(--font-pixel); font-size: 26px; color: var(--neon-yellow); margin-top: 0;">ADMIN ACCESS</h2>
+                <div style="margin-bottom: 18px;">
+                    <input type="password" id="adminKey" placeholder="Enter Admin Secret Password">
+                </div>
+                <button onclick="loadAdmin()" class="cyber-btn cyber-btn-saffron" style="width: 100%;">Unlock Admin Dashboard</button>
+            </div>
+        </fieldset>
     </div>
 
-    <h1>⚡ WebSutra Super Admin</h1>
-    <div id="content">Loading...</div>
+    <div id="container">
+        
+        <header class="hero-header">
+            <div class="header-top-nav">
+                <div>
+                    <img src="graphics/flag.gif" alt="Indian Flag" height="24" style="vertical-align: middle;">
+                    <span style="font-family: var(--font-pixel); font-size: 22px; color: var(--neon-saffron); margin-left: 8px; font-weight: bold;">ADMIN_CONSOLE.SYS</span>
+                </div>
+                <div>
+                    <a href="/" class="cyber-btn">🏠 Return Home</a>
+                </div>
+            </div>
+
+            <div class="hero-title-group">
+                <img src="graphics/moving-rocket.gif" alt="Moving Rocket" height="48">
+                <div>
+                    <h1 style="font-size: 44px;">WebSutra Super Admin</h1>
+                    <div class="hero-subtitle">Manage users, website statuses, and security tokens</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="retro-divider">
+            <img src="graphics/divider-blood.gif" alt="--- divider ---">
+        </div>
+
+        <fieldset class="cyber-box">
+            <legend class="cyber-legend">👥 ALL_USERS_DATABASE</legend>
+            <div id="content">Loading users and sites from database...</div>
+        </fieldset>
+
+        <footer class="cyber-box" style="text-align: center;">
+            <a href="/" class="cyber-btn">&larr; Return to Homepage</a>
+        </footer>
+
+    </div> <!-- END CONTAINER -->
 
     <script>
         let SECRET = '';
@@ -92,30 +113,37 @@
                 <details class="user-card">
                     <summary>
                         <span>
-                            <strong>ID: ${user.id}</strong> | ${user.email || 'No Email'} 
-                            <span style="opacity:0.6">(${user.sites.length}/${user.max_sites} sites)</span>
+                            ID: ${user.id} | ${user.email || 'No Email Registered'} 
+                            <span style="font-size: 15px; opacity: 0.8;">(${user.sites.length}/${user.max_sites} sites)</span>
                         </span>
-                        <span>Secret protected</span>
+                        <span style="font-size: 14px; color: var(--neon-cyan);">Secret Protected</span>
                     </summary>
                     
                     <div class="user-details">
-                        <div style="margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px;">
-                            <h4>User Settings</h4>
-                            Email: <input id="email-${user.id}" value="${user.email || ''}">
-                            Limit: <input id="limit-${user.id}" type="number" value="${user.max_sites}" style="width: 50px">
-                            <button class="btn-save" onclick="saveUser(${user.id})">Save User</button>
-                            <button class="btn-reset" onclick="createResetLink(${user.id})">Generate Reset Link</button>
-                            <button class="btn-del" onclick="deleteUser(${user.id})">Delete User</button>
+                        <div style="margin-bottom: 18px; border-bottom: 1px dashed rgba(0, 240, 255, 0.4); padding-bottom: 14px;">
+                            <h4 style="font-family: var(--font-pixel); font-size: 22px; margin-top: 0; color: var(--neon-yellow);">User Settings</h4>
+                            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                                <div>
+                                    Email: <input id="email-${user.id}" value="${user.email || ''}" style="width: 220px;">
+                                </div>
+                                <div>
+                                    Max Sites: <input id="limit-${user.id}" type="number" value="${user.max_sites}" style="width: 60px;">
+                                </div>
+                                <button class="cyber-btn cyber-btn-saffron" onclick="saveUser(${user.id})">💾 Save User</button>
+                                <button class="cyber-btn" onclick="createResetLink(${user.id})">🔑 Secret Reset Link</button>
+                                <button class="cyber-btn cyber-btn-pink" onclick="deleteUser(${user.id})">🗑️ Delete User</button>
+                            </div>
+                            
                             <div class="reset-link-box" id="reset-link-box-${user.id}">
-                                <strong>Secret reset link</strong>
-                                <input id="reset-link-${user.id}" readonly>
-                                <button class="btn-save" onclick="copyResetLink(${user.id})">Copy Link</button>
-                                <small id="reset-link-expiry-${user.id}"></small>
+                                <strong>One-Time Secret Reset Link:</strong>
+                                <input id="reset-link-${user.id}" readonly style="margin-top: 6px;">
+                                <button class="cyber-btn cyber-btn-saffron" style="margin-top: 8px;" onclick="copyResetLink(${user.id})">Copy Link</button>
+                                <small id="reset-link-expiry-${user.id}" style="display: block; margin-top: 6px; color: var(--neon-yellow);"></small>
                             </div>
                         </div>
 
-                        <h4>Sites</h4>
-                        <div class="site-row" style="background:transparent; font-size:0.8rem; opacity:0.7;">
+                        <h4 style="font-family: var(--font-pixel); font-size: 22px; color: var(--neon-yellow); margin-bottom: 8px;">Associated Websites</h4>
+                        <div class="site-row" style="background: linear-gradient(90deg, #180829, #09152b); color: var(--neon-cyan); font-weight: bold;">
                             <span>Title</span>
                             <span>Slug (ID)</span>
                             <span>URL</span>
@@ -130,17 +158,17 @@
                                 <input id="slug-${site.id}" value="${site.slug}" placeholder="Slug">
                                 <input id="url-${site.id}" value="${site.url}" placeholder="URL">
                                 
-                                <select id="status-${site.id}" class="status-${site.status}">
+                                <select id="status-${site.id}">
                                     <option value="pending" ${site.status==='pending'?'selected':''}>Pending</option>
                                     <option value="verified" ${site.status==='verified'?'selected':''}>Verified</option>
                                     <option value="suspended" ${site.status==='suspended'?'selected':''}>Suspended</option>
                                 </select>
                                 
-                                <button class="btn-save" onclick="saveSite(${site.id})">💾</button>
-                                <button class="btn-del" onclick="deleteSite(${site.id})">🗑️</button>
+                                <button class="cyber-btn cyber-btn-saffron" onclick="saveSite(${site.id})">💾</button>
+                                <button class="cyber-btn cyber-btn-pink" onclick="deleteSite(${site.id})">🗑️</button>
                             </div>
                         `).join('')}
-                        ${user.sites.length === 0 ? '<div style="opacity:0.5; padding:10px;">No sites added.</div>' : ''}
+                        ${user.sites.length === 0 ? '<div style="opacity:0.6; padding:10px;">No sites registered for this user.</div>' : ''}
                     </div>
                 </details>
             `).join('');
@@ -189,17 +217,16 @@
         async function deleteUser(id) {
             if(!confirm("Delete user and ALL their sites?")) return;
             await api('delete_user', { userId: id });
-            loadAdmin(); // Reload list
+            loadAdmin();
         }
 
         async function saveSite(id) {
-            // FIX IS HERE: We now grab the title from the input field
             const titleInput = document.getElementById(`title-${id}`).value;
             
             await api('update_site', {
                 siteId: id,
                 data: {
-                    title: titleInput, // <--- No longer hardcoded!
+                    title: titleInput,
                     slug: document.getElementById(`slug-${id}`).value,
                     url: document.getElementById(`url-${id}`).value,
                     status: document.getElementById(`status-${id}`).value

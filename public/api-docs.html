@@ -3,77 +3,106 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebSutra API Docs</title>
+  <title>WebSutra API Docs 📖 | IndieWeb Documentation</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      padding: 1rem;
-    }
-    .doc-card {
-      border: 2px solid #000;
-      padding: 16px;
-      margin: 20px 0;
-    }
-    pre {
-      padding: 12px 14px;
-      overflow-x: auto;
-      border: 2px solid #000;
-    }
-    code {
-      font-family: "Courier New", Courier, monospace;
-    }
-  </style>
 </head>
 <body>
-  <div id="container">
-    <header>
-      <h1>WebSutra API Docs (Public)</h1>
-      <p>Simple JSON endpoints for external embeds and widgets.</p>
+
+<div class="top-marquee">
+    <marquee scrollamount="6" behavior="scroll">
+        ★ WEBSUTRA PUBLIC API REFERENCE ★ EASY JSON ENDPOINTS FOR EXTERNAL EMBEDS AND BADGES ★ NO AUTH REQUIRED ★
+    </marquee>
+</div>
+
+<div id="container">
+
+    <header class="hero-header">
+        <div class="header-top-nav">
+            <div>
+                <img src="graphics/flag.gif" alt="Indian Flag" height="24" style="vertical-align: middle;">
+                <span style="font-family: var(--font-pixel); font-size: 22px; color: var(--neon-saffron); margin-left: 8px; font-weight: bold;">WEBSUTRA_API.MAN</span>
+            </div>
+            <div>
+                <a href="/" class="cyber-btn">🏠 Return Home</a>
+                <a href="dashboard.html" class="cyber-btn cyber-btn-saffron">🔑 Dashboard</a>
+            </div>
+        </div>
+
+        <div class="hero-title-group">
+            <img src="graphics/moving-rocket.gif" alt="Moving Rocket" height="48">
+            <div>
+                <h1 style="font-size: 44px;">WebSutra API Docs</h1>
+                <div class="hero-subtitle">Simple JSON endpoints for external embeds &amp; widgets</div>
+            </div>
+        </div>
     </header>
 
-    <div class="doc-card">
-      <h2>Base URL</h2>
-      <ul>
-        <li>Production: <code>https://webring.blackpiratex.com</code></li>
-      </ul>
-
-      <h2>Authentication</h2>
-      <p>None required for the public endpoints below.</p>
+    <div class="retro-divider">
+        <img src="graphics/divider-blood.gif" alt="--- divider ---">
     </div>
 
-    <div class="doc-card">
-      <h2>GET /api/latest</h2>
-      <p>Returns the latest 10 verified sites for external embeds.</p>
+    <!-- API BASE INFO -->
+    <fieldset class="cyber-box">
+        <legend class="cyber-legend">⚡ BASE_CONFIG.SYS</legend>
+        
+        <h2 style="font-family: var(--font-pixel); font-size: 26px; color: var(--neon-cyan); margin-top: 0;">Base URL</h2>
+        <div style="background: #000; color: var(--neon-lime); font-family: var(--font-mono); padding: 12px; border: 1px solid var(--neon-cyan); border-radius: 4px;">
+            https://webring.blackpiratex.com
+        </div>
 
-      <h2>Response (200)</h2>
-      <pre><code>{
+        <h2 style="font-family: var(--font-pixel); font-size: 26px; color: var(--neon-cyan);">Authentication</h2>
+        <p>None required for public endpoints below. Open to all webmasters.</p>
+    </fieldset>
+
+    <div class="retro-divider">
+        <img src="graphics/divider-blood.gif" alt="--- divider ---">
+    </div>
+
+    <!-- ENDPOINTS -->
+    <fieldset class="cyber-box alt-pink">
+        <legend class="cyber-legend">📡 ENDPOINT_LATEST.JSON</legend>
+
+        <h2 style="font-family: var(--font-pixel); font-size: 26px; color: var(--neon-cyan); margin-top: 0;">GET /api/latest</h2>
+        <p>Returns the latest 10 verified sites for external embeds or community feeds.</p>
+
+        <h3 style="font-family: var(--font-pixel); font-size: 22px; color: var(--neon-yellow);">Sample Response (200 OK)</h3>
+        <pre style="background: #000; color: var(--neon-yellow); font-family: var(--font-mono); padding: 14px; border: 1px solid var(--neon-magenta); border-radius: 4px; overflow-x: auto;"><code>{
   "count": 10,
   "sites": [
     {
-      "title": "Site Name",
-      "url": "https://example.com/"
+      "title": "Rohit's Garden",
+      "url": "https://rohit.me"
     }
   ]
 }</code></pre>
 
-      <h3>Notes</h3>
-      <ul>
-        <li>CORS: <code>Access-Control-Allow-Origin: *</code></li>
-        <li>Cache: <code>public, max-age=60, s-maxage=300, stale-while-revalidate=600</code></li>
-        <li>Only <code>status='verified'</code> sites are returned.</li>
-      </ul>
+        <h3 style="font-family: var(--font-pixel); font-size: 22px; color: var(--neon-yellow);">Headers &amp; Caching</h3>
+        <ul style="background: rgba(3, 5, 10, 0.8); border: 1px solid var(--neon-cyan); border-radius: 4px; padding: 12px 12px 12px 30px;">
+            <li>CORS Header: <code>Access-Control-Allow-Origin: *</code></li>
+            <li>Cache Control: <code>public, max-age=60, s-maxage=300, stale-while-revalidate=600</code></li>
+            <li>Returns only verified sites (<code>status='verified'</code>).</li>
+        </ul>
 
-      <h2>Example Usage</h2>
-      <pre><code>fetch('https://webring.blackpiratex.com/api/latest')
-  .then((res) => res.json())
-  .then((data) => {
-    data.sites.forEach((site) => {
+        <h3 style="font-family: var(--font-pixel); font-size: 22px; color: var(--neon-yellow);">Example JavaScript Embed</h3>
+        <pre style="background: #000; color: var(--neon-lime); font-family: var(--font-mono); padding: 14px; border: 1px solid var(--neon-lime); border-radius: 4px; overflow-x: auto;"><code>fetch('https://webring.blackpiratex.com/api/latest')
+  .then(res => res.json())
+  .then(data => {
+    data.sites.forEach(site => {
       console.log(site.title, site.url);
     });
   });</code></pre>
+    </fieldset>
+
+    <div class="retro-divider">
+        <img src="graphics/divider-blood.gif" alt="--- divider ---">
     </div>
 
-    <p><a href="/">&larr; Back to homepage</a></p>
-  </div>
+    <!-- FOOTER -->
+    <fieldset class="cyber-box" style="text-align: center;">
+        <a href="/" class="cyber-btn cyber-btn-saffron">&larr; Return to WebSutra Homepage</a>
+    </fieldset>
+
+</div> <!-- END CONTAINER -->
+
 </body>
 </html>

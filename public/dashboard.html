@@ -3,210 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSutra Dashboard</title>
+    <title>WebSutra Member Dashboard 🇮🇳</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="main">
-    <header>
-        <h1>WebSutra Dashboard</h1>
-        <a href="/" onclick="logout(); return false;">Logout / Home</a>
+
+<!-- TOP SCROLLING MARQUEE BANNER -->
+<div class="top-marquee">
+    <marquee scrollamount="6" behavior="scroll">
+        ★ WEBSUTRA MEMBER DASHBOARD ★ VERIFY YOUR SITES ★ MANAGE SLUGS &amp; PROFILE ★ INDIEWEB RULEZ ★
+    </marquee>
+</div>
+
+<div id="container">
+
+    <header class="hero-header">
+        <div class="header-top-nav">
+            <div>
+                <img src="graphics/flag.gif" alt="Indian Flag" height="24" style="vertical-align: middle;">
+                <span style="font-family: var(--font-pixel); font-size: 22px; color: var(--neon-saffron); margin-left: 8px; font-weight: bold;">WEBSUTRA_PORTAL.CFG</span>
+            </div>
+            <div>
+                <a href="/" class="cyber-btn">🏠 Return Home</a>
+                <a href="/" onclick="logout(); return false;" class="cyber-btn cyber-btn-pink">Logout</a>
+            </div>
+        </div>
+
+        <div class="hero-title-group">
+            <img src="graphics/moving-rocket.gif" alt="Moving Rocket" height="48">
+            <div>
+                <h1 style="font-size: 44px;">WebSutra Dashboard</h1>
+                <div class="hero-subtitle">Manage your webring sites &amp; verify widget placement</div>
+            </div>
+        </div>
     </header>
 
-    <hr>
-
-    <div id="loginSection">
-        <h2>Member Login</h2>
-        <label for="loginKey">Secret Key:</label>
-        <input type="password" id="loginKey" placeholder="Paste your key here...">
-        <br><br>
-        <button onclick="login()">Access Dashboard</button>
-        <p><small>Use the key you received during signup.</small></p>
+    <div class="retro-divider">
+        <img src="graphics/divider-blood.gif" alt="--- divider ---">
     </div>
 
+    <!-- LOGIN SECTION WINDOW -->
+    <fieldset id="loginSection" class="cyber-box">
+        <legend class="cyber-legend">🔐 MEMBER LOGIN</legend>
+        <h2 style="font-family: var(--font-pixel); font-size: 28px; color: var(--neon-cyan); margin-top: 0;">Access Dashboard</h2>
+        <p>Paste the secret key token you received when registering your site below:</p>
+        
+        <div style="margin-bottom: 18px;">
+            <label for="loginKey" style="font-weight: bold; color: var(--neon-cyan); display: block; margin-bottom: 6px;">Secret Key Token:</label>
+            <input type="password" id="loginKey" placeholder="Paste your secret key here...">
+        </div>
+
+        <button onclick="login()" class="cyber-btn cyber-btn-saffron" style="font-size: 22px; width: 100%;">
+            🔑 Access Member Dashboard
+        </button>
+        <p style="font-size: 12px; color: var(--text-dim); margin-top: 12px;">
+            <em>Lost your key? Ask an administrator to generate a secret reset link for your account.</em>
+        </p>
+    </fieldset>
+
+    <!-- MAIN INTERFACE WINDOW (HIDDEN BEFORE LOGIN) -->
     <div id="mainInterface" style="display: none;">
         
-        <div>
-            <h3>Profile Settings</h3>
-            <p>Usage: <strong id="siteCount">0</strong> / <span id="maxSites">2</span> sites</p>
-            
-            <label for="userEmail">Registered Email:</label>
-            <input type="email" id="userEmail">
-            <button onclick="saveProfile()">Update Email</button>
+        <!-- PROFILE SETTINGS WINDOW -->
+        <fieldset class="cyber-box">
+            <legend class="cyber-legend">👤 USER_PROFILE.CFG</legend>
+            <div style="background: rgba(3, 5, 10, 0.8); border: 1px solid var(--neon-cyan); border-radius: 4px; padding: 12px; margin-bottom: 16px;">
+                <p style="margin: 0; font-family: var(--font-pixel); font-size: 22px; color: var(--neon-yellow);">
+                    Site Usage: <strong id="siteCount" style="color: var(--neon-magenta);">0</strong> / <span id="maxSites">2</span> sites allowed
+                </p>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label for="userEmail" style="font-weight: bold; color: var(--neon-cyan);">Registered Email Address:</label>
+                <input type="email" id="userEmail" placeholder="your-email@example.com">
+            </div>
+
+            <button onclick="saveProfile()" class="cyber-btn" style="font-size: 16px;">💾 Update Email Profile</button>
+        </fieldset>
+
+        <div class="retro-divider">
+            <img src="graphics/divider-blood.gif" alt="--- divider ---">
         </div>
 
-        <hr>
+        <!-- SITES MANAGEMENT SECTION -->
+        <fieldset class="cyber-box alt-saffron">
+            <legend class="cyber-legend">🌐 YOUR_WEBSITES.DAT</legend>
+            <div id="sitesContainer"></div>
 
-        <h3>Your Sites</h3>
-        <div id="sitesContainer"></div>
+            <button id="showAddBtn" onclick="toggleAddForm()" class="cyber-btn cyber-btn-saffron" style="font-size: 18px; margin-top: 10px;">
+                ➕ Add Another Website
+            </button>
 
-        <hr>
+            <!-- ADD SITE CARD -->
+            <div id="addSiteCard" style="display: none; background: rgba(3, 5, 10, 0.95); border: 1.5px solid var(--neon-saffron); border-radius: 4px; padding: 16px; margin-top: 16px;">
+                <h3 style="font-family: var(--font-pixel); font-size: 26px; color: var(--neon-yellow); margin-top: 0;">Add New Website</h3>
+                
+                <div style="margin-bottom: 12px;">
+                    <label style="font-weight: bold; color: var(--neon-cyan);">Site Title:</label>
+                    <input type="text" id="newTitle" placeholder="e.g. My Creative Corner">
+                </div>
 
-        <button id="showAddBtn" onclick="toggleAddForm()">+ Add Another Site</button>
+                <div style="margin-bottom: 12px;">
+                    <label style="font-weight: bold; color: var(--neon-cyan);">URL:</label>
+                    <input type="url" id="newUrl" placeholder="https://example.com">
+                </div>
 
-        <div id="addSiteCard" style="display: none; border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
-            <h3>Add New Site</h3>
-            
-            <label>Site Title:</label><br>
-            <input type="text" id="newTitle" placeholder="My Awesome Blog"><br><br>
-            
-            <label>URL:</label><br>
-            <input type="url" id="newUrl" placeholder="https://..."><br><br>
-            
-            <label>Unique Slug (ID):</label><br>
-            <input type="text" id="newSlug" placeholder="my-blog"><br><br>
-            
-            <button onclick="addSite()">Create Site</button>
-            <button onclick="toggleAddForm()">Cancel</button>
-        </div>
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: bold; color: var(--neon-cyan);">Unique Slug (ID):</label>
+                    <input type="text" id="newSlug" placeholder="my-creative-corner">
+                </div>
 
+                <div>
+                    <button onclick="addSite()" class="cyber-btn cyber-btn-saffron">Create Site</button>
+                    <button onclick="toggleAddForm()" class="cyber-btn">Cancel</button>
+                </div>
+            </div>
+        </fieldset>
+
+    </div> <!-- END MAIN INTERFACE -->
+
+    <div class="retro-divider">
+        <img src="graphics/divider-blood.gif" alt="--- divider ---">
     </div>
-</div>
-    <script>
-        let sessionKey = localStorage.getItem('websutra_key') || '';
-        let currentUser = null;
 
-        // Auto-fill and login if key exists
-        if(sessionKey) {
-            document.getElementById('loginKey').value = sessionKey;
-            login();
+    <!-- FOOTER -->
+    <fieldset class="cyber-box" style="text-align: center;">
+        <div style="margin-bottom: 10px;">
+            <img src="graphics/email-me.gif" alt="Email Me" style="vertical-align: middle; margin-right: 8px;">
+            <span>Need support? Contact <a href="mailto:sudip@blackpiratex.com">sudip@blackpiratex.com</a></span>
+        </div>
+        <p style="font-size: 13px; color: var(--text-dim); margin: 0;">
+            WebSutra Webring &copy; 2026 | <a href="/">Return to Homepage</a>
+        </p>
+    </fieldset>
+
+</div> <!-- END CONTAINER -->
+
+<script>
+    let sessionKey = localStorage.getItem('websutra_key') || '';
+    let currentUser = null;
+
+    if(sessionKey) {
+        document.getElementById('loginKey').value = sessionKey;
+        login();
+    }
+
+    async function api(endpoint, data) {
+        if(endpoint.includes('manage') && !data.key) {
+            data.key = sessionKey;
         }
+        
+        try {
+            const req = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            return await req.json();
+        } catch(e) { return { error: "Network Error" }; }
+    }
 
-        async function api(endpoint, data) {
-            // Attach sessionKey if not present
-            if(endpoint.includes('manage') && !data.key) {
-                data.key = sessionKey;
-            }
-            
-            try {
-                const req = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                return await req.json();
-            } catch(e) { return { error: "Network Error" }; }
-        }
+    async function login() {
+        const keyInput = document.getElementById('loginKey').value.trim();
+        if(!keyInput) return alert("Please enter your key");
+        
+        const data = await api('/api/manage', { action: 'login', key: keyInput });
 
-        async function login() {
-            const keyInput = document.getElementById('loginKey').value.trim();
-            if(!keyInput) return alert("Please enter your key");
-            
-            const data = await api('/api/manage', { action: 'login', key: keyInput });
-
-            if(data.success) {
-                sessionKey = keyInput;
-                localStorage.setItem('websutra_key', sessionKey);
-                currentUser = data.user;
-                renderDashboard(data.user, data.sites);
-            } else {
-                alert(data.error || "Login failed");
-                localStorage.removeItem('websutra_key');
-            }
-        }
-
-        function logout() {
+        if(data.success) {
+            sessionKey = keyInput;
+            localStorage.setItem('websutra_key', sessionKey);
+            currentUser = data.user;
+            renderDashboard(data.user, data.sites);
+        } else {
+            alert(data.error || "Login failed");
             localStorage.removeItem('websutra_key');
-            location.href = '/';
+        }
+    }
+
+    function logout() {
+        localStorage.removeItem('websutra_key');
+        location.href = '/';
+    }
+
+    async function verifySite(slug, btnId) {
+        const btn = document.getElementById(btnId);
+        const originalText = btn.textContent;
+        btn.textContent = "Scanning...";
+        btn.disabled = true;
+
+        const res = await api('/api/verify', { slug: slug });
+
+        if (res.success) {
+            btn.textContent = "✓ Success";
+            setTimeout(() => login(), 1000); 
+        } else {
+            alert(res.error);
+            btn.textContent = originalText;
+            btn.disabled = false;
+        }
+    }
+
+    async function saveProfile() {
+        const newEmail = document.getElementById('userEmail').value;
+        const res = await api('/api/manage', { action: 'update_profile', newEmail });
+        if(res.success) alert("Email updated."); else alert(res.error);
+    }
+
+    async function saveSite(id) {
+        const res = await api('/api/manage', {
+            action: 'update_site',
+            siteId: id,
+            newTitle: document.getElementById(`title-${id}`).value,
+            newUrl: document.getElementById(`url-${id}`).value,
+            newSlug: document.getElementById(`slug-${id}`).value
+        });
+        if(res.success) alert("Site details updated."); else alert(res.error);
+    }
+
+    async function deleteSite(id) {
+        if(!confirm("Permanently delete this site?")) return;
+        const res = await api('/api/manage', { action: 'delete_site', siteId: id });
+        if(res.success) login(); else alert(res.error);
+    }
+
+    async function addSite() {
+        const res = await api('/api/manage', {
+            action: 'add_site',
+            newTitle: document.getElementById('newTitle').value,
+            newUrl: document.getElementById('newUrl').value,
+            newSlug: document.getElementById('newSlug').value
+        });
+        if(res.success) {
+            toggleAddForm();
+            login(); 
+        } else {
+            alert(res.error);
+        }
+    }
+
+    function toggleAddForm() {
+        const form = document.getElementById('addSiteCard');
+        const btn = document.getElementById('showAddBtn');
+        
+        if (form.style.display === 'none') {
+            form.style.display = 'block';
+            btn.style.display = 'none';
+        } else {
+            form.style.display = 'none';
+            btn.style.display = 'block';
+        }
+    }
+
+    function renderDashboard(user, sites) {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('mainInterface').style.display = 'block';
+
+        document.getElementById('userEmail').value = user.email || "";
+        document.getElementById('siteCount').textContent = sites.length;
+        document.getElementById('maxSites').textContent = user.max_sites;
+
+        if(sites.length >= user.max_sites) {
+            document.getElementById('showAddBtn').style.display = 'none';
+            document.getElementById('addSiteCard').style.display = 'none';
+        } else {
+            document.getElementById('showAddBtn').style.display = 'block';
         }
 
-        // --- VERIFICATION LOGIC ---
-        async function verifySite(slug, btnId) {
-            const btn = document.getElementById(btnId);
-            const originalText = btn.textContent;
-            btn.textContent = "Scanning...";
-            btn.disabled = true;
-
-            const res = await api('/api/verify', { slug: slug });
-
-            if (res.success) {
-                btn.textContent = "✓ Success";
-                setTimeout(() => login(), 1000); 
-            } else {
-                alert(res.error);
-                btn.textContent = originalText;
-                btn.disabled = false;
-            }
+        const container = document.getElementById('sitesContainer');
+        if(sites.length === 0) {
+            container.innerHTML = '<p>No sites found on your account. Click Add Another Website below!</p>';
+            return;
         }
 
-        async function saveProfile() {
-            const newEmail = document.getElementById('userEmail').value;
-            const res = await api('/api/manage', { action: 'update_profile', newEmail });
-            if(res.success) alert("Email updated."); else alert(res.error);
-        }
+        const host = "https://webring.blackpiratex.com"; 
 
-        async function saveSite(id) {
-            const res = await api('/api/manage', {
-                action: 'update_site',
-                siteId: id,
-                newTitle: document.getElementById(`title-${id}`).value,
-                newUrl: document.getElementById(`url-${id}`).value,
-                newSlug: document.getElementById(`slug-${id}`).value
-            });
-            if(res.success) alert("Site details updated."); else alert(res.error);
-        }
-
-        async function deleteSite(id) {
-            if(!confirm("Permanently delete this site?")) return;
-            const res = await api('/api/manage', { action: 'delete_site', siteId: id });
-            if(res.success) login(); else alert(res.error);
-        }
-
-        async function addSite() {
-            const res = await api('/api/manage', {
-                action: 'add_site',
-                newTitle: document.getElementById('newTitle').value,
-                newUrl: document.getElementById('newUrl').value,
-                newSlug: document.getElementById('newSlug').value
-            });
-            if(res.success) {
-                toggleAddForm();
-                login(); 
-            } else {
-                alert(res.error);
-            }
-        }
-
-        function toggleAddForm() {
-            const form = document.getElementById('addSiteCard');
-            const btn = document.getElementById('showAddBtn');
-            
-            // Toggle visibility using inline styles since we have no CSS classes
-            if (form.style.display === 'none') {
-                form.style.display = 'block';
-                btn.style.display = 'none';
-            } else {
-                form.style.display = 'none';
-                btn.style.display = 'block';
-            }
-        }
-
-        function renderDashboard(user, sites) {
-            // Switch views using inline styles
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('mainInterface').style.display = 'block';
-
-            document.getElementById('userEmail').value = user.email || "";
-            document.getElementById('siteCount').textContent = sites.length;
-            document.getElementById('maxSites').textContent = user.max_sites;
-
-            if(sites.length >= user.max_sites) {
-                document.getElementById('showAddBtn').style.display = 'none';
-                document.getElementById('addSiteCard').style.display = 'none';
-            } else {
-                document.getElementById('showAddBtn').style.display = 'block';
-            }
-
-            const container = document.getElementById('sitesContainer');
-            if(sites.length === 0) {
-                container.innerHTML = '<p>No sites found. Add one below!</p>';
-                return;
-            }
-
-            const host = "https://webring.blackpiratex.com"; 
-
-            container.innerHTML = sites.map(site => {
-                const snippet = `
+        container.innerHTML = sites.map(site => {
+            const snippet = `
 <div id="websutra-ring">
   <p>Member of <a href="${host}">WebSutra</a></p>
   <a href="${host}/api/ring?action=prev&slug=${site.slug}">← Prev</a>
@@ -214,33 +286,50 @@
   <a href="${host}/api/ring?action=next&slug=${site.slug}">Next →</a>
 </div>`.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-                return `
-                <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px;">
-                    <h4 style="margin: 0;">${site.title} (Status: ${site.status.toUpperCase()})</h4>
-                    <br>
-                    
-                    <label>Title:</label> <input type="text" id="title-${site.id}" value="${site.title}"><br><br>
-                    <label>URL:</label> <input type="url" id="url-${site.id}" value="${site.url}"><br><br>
-                    <label>Slug:</label> <input type="text" id="slug-${site.id}" value="${site.slug}"><br><br>
-                    
-                    <button onclick="saveSite(${site.id})">Save Changes</button>
-                    <button onclick="deleteSite(${site.id})">Delete Site</button>
-                    
-                    <hr>
-                    
-                    <p><strong>Integration Code:</strong></p>
-                    <textarea rows="5" cols="50" readonly>${snippet}</textarea>
-                    
-                    <p>
-                        Current Status: <strong>${site.status}</strong> 
-                        ${site.status === 'pending' 
-                            ? `<button id="verify-btn-${site.id}" onclick="verifySite('${site.slug}', 'verify-btn-${site.id}')">Verify Now</button>`
-                            : `(Verified)`
-                        }
-                    </p>
-                </div>`;
-            }).join('');
-        }
-    </script>
+            const statusClass = site.status === 'verified' ? 'verified' : (site.status === 'pending' ? 'pending' : 'suspended');
+
+            return `
+            <div style="background: rgba(3, 5, 10, 0.95); border: 1.5px solid var(--neon-cyan); border-radius: 4px; padding: 16px; margin-bottom: 22px;">
+                <h4 style="margin: 0 0 12px 0; font-family: var(--font-pixel); font-size: 24px; color: var(--neon-yellow);">
+                    ${site.title} 
+                    <span class="status-pill ${statusClass}" style="vertical-align: middle; font-size: 13px; margin-left: 10px;">STATUS: ${site.status.toUpperCase()}</span>
+                </h4>
+                
+                <div style="margin-bottom: 10px;">
+                    <label style="font-weight: bold; color: var(--neon-cyan);">Title:</label>
+                    <input type="text" id="title-${site.id}" value="${site.title}">
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-weight: bold; color: var(--neon-cyan);">URL:</label>
+                    <input type="url" id="url-${site.id}" value="${site.url}">
+                </div>
+
+                <div style="margin-bottom: 14px;">
+                    <label style="font-weight: bold; color: var(--neon-cyan);">Slug:</label>
+                    <input type="text" id="slug-${site.id}" value="${site.slug}">
+                </div>
+                
+                <div style="margin-bottom: 16px;">
+                    <button onclick="saveSite(${site.id})" class="cyber-btn cyber-btn-saffron">💾 Save Changes</button>
+                    <button onclick="deleteSite(${site.id})" class="cyber-btn cyber-btn-pink">🗑️ Delete Site</button>
+                </div>
+                
+                <hr style="border: 0; border-top: 1px dashed rgba(0, 240, 255, 0.4);">
+                
+                <p style="font-weight: bold; margin-bottom: 6px; color: var(--neon-cyan);">HTML Integration Snippet:</p>
+                <textarea rows="5" readonly style="background: #000; color: var(--neon-yellow);">${snippet}</textarea>
+                
+                <div style="margin-top: 14px; font-weight: bold;">
+                    Verification Status: <strong>${site.status}</strong> 
+                    ${site.status === 'pending' 
+                        ? `<button id="verify-btn-${site.id}" onclick="verifySite('${site.slug}', 'verify-btn-${site.id}')" class="cyber-btn cyber-btn-saffron" style="margin-left: 12px;">🔍 Verify Now</button>`
+                        : `<span style="color: var(--neon-lime); margin-left: 10px;">✓ Verified</span>`
+                    }
+                </div>
+            </div>`;
+        }).join('');
+    }
+</script>
 </body>
 </html>

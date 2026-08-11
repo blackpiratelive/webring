@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join WebSutra Webring 🇮🇳 | Register Your Site</title>
+    <title>Join WebSutra Guild 🇮🇳 | Register Your Realm</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- TOP MARQUEE BANNER -->
+<!-- TOP SCROLLING FANTASY GUILD MARQUEE BANNER -->
 <div class="top-marquee">
     <marquee scrollamount="6" behavior="scroll">
-        ★ JOIN WEBSUTRA WEBRING ★ REGISTER YOUR HANDMADE WEBSITE OR BLOG ★ FREE TRAFFIC FOR DESI SITES 🇮🇳 ★
+        ★ JOIN THE WEBSUTRA GUILD HALL ★ REGISTER YOUR REALM OR DIGITAL GARDEN ★ DISCOVER HANDMADE WEBMSTERS ACROSS INDIA 🇮🇳 ★
     </marquee>
 </div>
 
@@ -21,57 +21,56 @@
     <header class="hero-header">
         <div class="header-top-nav">
             <div style="display: flex; align-items: center; gap: 8px;">
-                <img src="graphics/flag.gif" alt="Indian Flag" height="24">
-                <span style="font-family: var(--font-pixel); font-size: 20px; color: var(--color-saffron); font-weight: bold;">WEBSUTRA NETWORK</span>
+                <span style="font-size: 24px;">🛡️</span>
+                <span style="font-family: var(--font-fantasy); font-size: 18px; color: var(--rpg-gold-light); font-weight: bold;">WEBSUTRA GUILD HALL</span>
             </div>
             <div>
-                <a href="index.html" class="btn">🏠 Return to Main Page</a>
-                <a href="dashboard.html" class="btn btn-cyan">🔑 Member Login</a>
+                <a href="index.html" class="btn">🏠 World Map</a>
+                <a href="members.html" class="btn btn-saffron">🎒 Members Gallery</a>
+                <a href="dashboard.html" class="btn btn-cyan">🔑 Key Login</a>
             </div>
         </div>
 
         <div class="hero-title-group">
-            <div>
-                <h1>Join WebSutra Webring 🇮🇳</h1>
-                <div class="hero-subtitle">Register your site, receive your secret key, and embed the ring widget!</div>
-            </div>
+            <h1>⚔️ Join The WebSutra Guild 🇮🇳</h1>
+            <div class="hero-subtitle">Register your realm homepage, claim your Secret Rune Key, and embed the Guild Widget!</div>
         </div>
     </header>
 
     <!-- JOIN FORM CARD -->
     <main class="card-panel">
         <div class="card-header">
-            <h2>📝 Webring Join Form</h2>
+            <h2>📜 Adventurer Guild Charter Form</h2>
         </div>
 
-        <p style="color: var(--text-muted); margin-bottom: 20px;">
-            Fill in your website details below to join the ring. Save your secret key securely after submitting!
+        <p style="color: var(--text-muted); margin-bottom: 24px;">
+            Inscribe your realm details below to claim your place in the WebSutra Webring. Store your Secret Rune Key securely!
         </p>
 
         <form id="joinForm">
-            <div style="margin-bottom: 18px;">
-                <label for="title">Site Title (Required):</label>
+            <div style="margin-bottom: 20px;">
+                <label for="title">Realm / Site Title (Required):</label>
                 <input type="text" id="title" placeholder="e.g. Rohit's Digital Garden" required>
             </div>
 
-            <div style="margin-bottom: 18px;">
-                <label for="url">Website URL (Required):</label>
+            <div style="margin-bottom: 20px;">
+                <label for="url">Realm Homepage URL (Required):</label>
                 <input type="url" id="url" placeholder="e.g. https://rohit.me" required>
             </div>
 
-            <div style="margin-bottom: 18px;">
-                <label for="slug">Unique Slug / ID (Required):</label>
+            <div style="margin-bottom: 20px;">
+                <label for="slug">Unique Guild Slug / ID (Required):</label>
                 <input type="text" id="slug" placeholder="e.g. rohit-notes" required pattern="[a-zA-Z0-9-]+">
-                <small style="color: var(--text-muted); display: block; margin-top: 4px;">(Letters, numbers, and hyphens only)</small>
+                <small style="color: var(--text-muted); display: block; margin-top: 6px;">(Letters, numbers, and hyphens only)</small>
             </div>
 
-            <div style="margin-bottom: 24px;">
-                <label for="email">Email Address (Optional):</label>
+            <div style="margin-bottom: 28px;">
+                <label for="email">Raven Address / Email (Optional):</label>
                 <input type="email" id="email" placeholder="Private, used for secret key recovery only">
             </div>
 
-            <button type="submit" class="btn btn-saffron" style="width: 100%; padding: 10px; font-size: 22px;">
-                🚀 Register Site &amp; Get Secret Code
+            <button type="submit" class="btn btn-saffron" style="width: 100%; padding: 14px; font-size: 15px;">
+                🚀 Inscribe Charter &amp; Unlock Secret Rune Key
             </button>
         </form>
 
@@ -81,12 +80,11 @@
     <!-- FOOTER -->
     <footer class="card-panel" style="text-align: center;">
         <div style="margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-            <img src="graphics/email-me.gif" alt="Email Me" height="24">
-            <span>Questions? Email <a href="mailto:sudip@blackpiratex.com">sudip@blackpiratex.com</a></span>
+            <span>📬 Guild Master Raven: <a href="mailto:sudip@blackpiratex.com">sudip@blackpiratex.com</a></span>
         </div>
 
         <p style="color: var(--text-muted); font-size: 13px; margin: 0;">
-            WebSutra Webring &copy; 2026 | <a href="index.html">Return to Main Page</a>
+            WebSutra Realm &copy; 2026 | <a href="index.html">Return to World Map</a>
         </p>
     </footer>
 
@@ -97,7 +95,7 @@
         e.preventDefault();
         const btn = e.target.querySelector('button');
         const originalText = btn.innerHTML;
-        btn.innerHTML = "Registering...";
+        btn.innerHTML = "Inscribing Charter...";
         btn.disabled = true;
 
         const payload = {
@@ -118,16 +116,16 @@
             if (data.success) {
                 const resultDiv = document.getElementById('result');
                 resultDiv.innerHTML = `
-                    <div style="background: #000080; color: #ffffff; border: 2px ridge var(--color-saffron); border-radius: 4px; padding: 20px; margin-top: 24px; box-shadow: 4px 4px 0px #000;">
-                        <h3 style="font-family: var(--font-pixel); font-size: 26px; color: var(--color-yellow); margin-top: 0;">🎉 Registered Successfully!</h3>
-                        <p><strong>⚠️ SAVE THIS SECRET KEY SECURELY:</strong></p>
-                        <div style="background: #000; color: var(--color-pink); padding: 12px; border: 2px inset #ffffff; font-family: var(--font-mono); font-size: 18px; font-weight: bold; margin: 10px 0; word-break: break-all; user-select: all;">${data.secretKey}</div>
-                        <p style="font-size: 13px; color: var(--color-yellow);"><em>You need this secret key to log into your Member Dashboard. It is shown only once!</em></p>
-                        <hr style="border: 0; border-top: 1px dashed var(--color-saffron); margin: 16px 0;">
-                        <p><strong>HTML Integration Code:</strong> Paste this snippet into your website footer:</p>
-                        <textarea rows="5" readonly style="background: #ffffff; color: #000000; font-family: var(--font-mono); border: 2px inset #404040;">${data.snippet}</textarea>
-                        <div style="margin-top: 16px;">
-                            <a href="dashboard.html" class="btn btn-saffron" style="font-size: 20px;">Go to Member Dashboard &rarr;</a>
+                    <div style="background: var(--rpg-wood-dark); color: var(--rpg-gold-light); border: 3px solid var(--rpg-gold); border-radius: 6px; padding: 24px; margin-top: 28px; box-shadow: 0 8px 20px rgba(0,0,0,0.8);">
+                        <h3 style="font-family: var(--font-fantasy); font-size: 24px; color: var(--rpg-gold); margin-top: 0;">🎉 Charter Inscribed Successfully!</h3>
+                        <p><strong>⚠️ SAVE THIS SECRET RUNE KEY SECURELY:</strong></p>
+                        <div style="background: #000; color: #fbbf24; padding: 14px; border: 2px solid var(--rpg-gold); border-radius: 4px; font-family: var(--font-mono); font-size: 18px; font-weight: bold; margin: 12px 0; word-break: break-all; user-select: all;">${data.secretKey}</div>
+                        <p style="font-size: 13px; color: var(--text-muted);"><em>You require this key to access your Hero Keep. It is revealed only once!</em></p>
+                        <hr style="border: 0; border-top: 1px dashed var(--rpg-gold-dark); margin: 18px 0;">
+                        <p><strong>Guild Rune Integration Code:</strong> Embed this snippet into your website footer:</p>
+                        <textarea rows="5" readonly style="background: var(--rpg-parchment-light); color: var(--rpg-parchment-text); font-family: var(--font-mono); border: 2px solid var(--rpg-wood-border); border-radius: 4px; padding: 10px; width: 100%;">${data.snippet}</textarea>
+                        <div style="margin-top: 20px;">
+                            <a href="dashboard.html" class="btn btn-saffron" style="font-size: 15px;">Enter Hero Keep Dashboard &rarr;</a>
                         </div>
                     </div>
                 `;
@@ -135,7 +133,7 @@
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             } else {
-                alert(data.error || "Error joining webring");
+                alert(data.error || "Error joining webring guild");
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             }

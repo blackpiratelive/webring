@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebSutra API Docs 📖 | IndieWeb Documentation</title>
+  <title>WebSutra Oracle API Docs 🔮 | Guild Documentation</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="top-marquee">
     <marquee scrollamount="6" behavior="scroll">
-        ★ WEBSUTRA PUBLIC API REFERENCE ★ EASY JSON ENDPOINTS FOR EXTERNAL EMBEDS AND BADGES ★ NO AUTH REQUIRED ★
+        ★ WEBSUTRA ORACLE API REFERENCE ★ JSON ENDPOINTS FOR EXTERNAL REALM EMBEDS & BADGES ★ OPEN ACCESS ★
     </marquee>
 </div>
 
@@ -19,21 +19,19 @@
     <header class="hero-header">
         <div class="header-top-nav">
             <div>
-                <img src="graphics/flag.gif" alt="Indian Flag" height="24" style="vertical-align: middle;">
-                <span style="font-family: var(--font-pixel); font-size: 22px; color: var(--neon-saffron); margin-left: 8px; font-weight: bold;">WEBSUTRA_API.MAN</span>
+                <span style="font-size: 24px;">🔮</span>
+                <span style="font-family: var(--font-fantasy); font-size: 18px; color: var(--rpg-gold-light); font-weight: bold; margin-left: 8px;">WEBSUTRA_API.MAN</span>
             </div>
             <div>
-                <a href="/" class="cyber-btn">🏠 Return Home</a>
-                <a href="dashboard.html" class="cyber-btn cyber-btn-saffron">🔑 Dashboard</a>
+                <a href="/" class="btn">🏠 World Map</a>
+                <a href="members.html" class="btn btn-saffron">🎒 Members Gallery</a>
+                <a href="dashboard.html" class="btn btn-cyan">🔑 Hero Keep</a>
             </div>
         </div>
 
         <div class="hero-title-group">
-            <img src="graphics/moving-rocket.gif" alt="Moving Rocket" height="48">
-            <div>
-                <h1 style="font-size: 44px;">WebSutra API Docs</h1>
-                <div class="hero-subtitle">Simple JSON endpoints for external embeds &amp; widgets</div>
-            </div>
+            <h1>🔮 Oracle API Reference</h1>
+            <div class="hero-subtitle">Simple JSON endpoints for external realm embeds &amp; widgets</div>
         </div>
     </header>
 
@@ -42,16 +40,18 @@
     </div>
 
     <!-- API BASE INFO -->
-    <fieldset class="cyber-box">
-        <legend class="cyber-legend">⚡ BASE_CONFIG.SYS</legend>
+    <fieldset class="retro-box">
+        <div class="card-header">
+            <h2>⚡ BASE REALM CONFIGURATION</h2>
+        </div>
         
-        <h2 style="font-family: var(--font-pixel); font-size: 26px; color: var(--neon-cyan); margin-top: 0;">Base URL</h2>
-        <div style="background: #000; color: var(--neon-lime); font-family: var(--font-mono); padding: 12px; border: 1px solid var(--neon-cyan); border-radius: 4px;">
+        <h2 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-gold-light); margin-top: 0;">Base Guild URL</h2>
+        <div style="background: #000; color: #fbbf24; font-family: var(--font-mono); padding: 14px; border: 2px solid var(--rpg-gold); border-radius: 4px;">
             https://webring.blackpiratex.com
         </div>
 
-        <h2 style="font-family: var(--font-pixel); font-size: 26px; color: var(--neon-cyan);">Authentication</h2>
-        <p>None required for public endpoints below. Open to all webmasters.</p>
+        <h2 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-gold-light);">Authentication</h2>
+        <p>None required for public endpoints below. Open to all webmasters across realms.</p>
     </fieldset>
 
     <div class="retro-divider">
@@ -59,14 +59,15 @@
     </div>
 
     <!-- ENDPOINTS -->
-    <fieldset class="cyber-box alt-pink">
-        <legend class="cyber-legend">📡 ENDPOINT_LATEST.JSON</legend>
+    <fieldset class="retro-box">
+        <div class="card-header">
+            <h2>📡 ENDPOINT: GET /api/latest</h2>
+        </div>
 
-        <h2 style="font-family: var(--font-pixel); font-size: 26px; color: var(--neon-cyan); margin-top: 0;">GET /api/latest</h2>
-        <p>Returns the latest 10 verified sites for external embeds or community feeds.</p>
+        <p>Returns the latest 10 verified champions for external feeds or webmaster guild portals.</p>
 
-        <h3 style="font-family: var(--font-pixel); font-size: 22px; color: var(--neon-yellow);">Sample Response (200 OK)</h3>
-        <pre style="background: #000; color: var(--neon-yellow); font-family: var(--font-mono); padding: 14px; border: 1px solid var(--neon-magenta); border-radius: 4px; overflow-x: auto;"><code>{
+        <h3 style="font-family: var(--font-fantasy); font-size: 20px; color: var(--rpg-gold-light);">Sample Response (200 OK)</h3>
+        <pre style="background: #000; color: #fbbf24; font-family: var(--font-mono); padding: 16px; border: 2px solid var(--rpg-gold); border-radius: 4px; overflow-x: auto;"><code>{
   "count": 10,
   "sites": [
     {
@@ -76,15 +77,15 @@
   ]
 }</code></pre>
 
-        <h3 style="font-family: var(--font-pixel); font-size: 22px; color: var(--neon-yellow);">Headers &amp; Caching</h3>
-        <ul style="background: rgba(3, 5, 10, 0.8); border: 1px solid var(--neon-cyan); border-radius: 4px; padding: 12px 12px 12px 30px;">
+        <h3 style="font-family: var(--font-fantasy); font-size: 20px; color: var(--rpg-gold-light);">Headers &amp; Caching</h3>
+        <ul style="background: var(--rpg-wood-dark); border: 2px solid var(--rpg-gold); border-radius: 4px; padding: 14px 14px 14px 32px;">
             <li>CORS Header: <code>Access-Control-Allow-Origin: *</code></li>
             <li>Cache Control: <code>public, max-age=60, s-maxage=300, stale-while-revalidate=600</code></li>
             <li>Returns only verified sites (<code>status='verified'</code>).</li>
         </ul>
 
-        <h3 style="font-family: var(--font-pixel); font-size: 22px; color: var(--neon-yellow);">Example JavaScript Embed</h3>
-        <pre style="background: #000; color: var(--neon-lime); font-family: var(--font-mono); padding: 14px; border: 1px solid var(--neon-lime); border-radius: 4px; overflow-x: auto;"><code>fetch('https://webring.blackpiratex.com/api/latest')
+        <h3 style="font-family: var(--font-fantasy); font-size: 20px; color: var(--rpg-gold-light);">Example JavaScript Embed</h3>
+        <pre style="background: #000; color: #34d399; font-family: var(--font-mono); padding: 16px; border: 2px solid #34d399; border-radius: 4px; overflow-x: auto;"><code>fetch('https://webring.blackpiratex.com/api/latest')
   .then(res => res.json())
   .then(data => {
     data.sites.forEach(site => {
@@ -98,8 +99,8 @@
     </div>
 
     <!-- FOOTER -->
-    <fieldset class="cyber-box" style="text-align: center;">
-        <a href="/" class="cyber-btn cyber-btn-saffron">&larr; Return to WebSutra Homepage</a>
+    <fieldset class="retro-box" style="text-align: center;">
+        <a href="/" class="btn btn-saffron">&larr; Return to World Map</a>
     </fieldset>
 
 </div> <!-- END CONTAINER -->

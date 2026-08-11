@@ -9,17 +9,28 @@
 </head>
 <body>
 
-<!-- FLOATING TOP TITLE BAR OVERLAY -->
+<!-- FLOATING TOP TITLE BAR OVERLAY (HERO GUILD HUD) -->
 <div class="map-top-bar">
-    <img src="graphics/flag.gif" alt="Indian Flag" height="24">
-    <h1>WebSutra: Indian Webring 🇮🇳</h1>
+    <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-size: 26px;">🛡️</span>
+        <div>
+            <h1>WEBSUTRA: REALM MAP 🇮🇳</h1>
+            <div class="rpg-stat-bar" style="margin-top: 4px;">
+                <span>HP</span>
+                <div class="rpg-bar-track"><div class="rpg-bar-fill rpg-bar-hp"></div></div>
+                <span style="margin-left: 8px;">MP</span>
+                <div class="rpg-bar-track"><div class="rpg-bar-fill rpg-bar-mp"></div></div>
+            </div>
+        </div>
+    </div>
+    <button onclick="toggleAudioSFX()" id="sfx-toggle-btn" class="btn" style="font-size: 10px; padding: 4px 8px;">🔊 SFX ON</button>
 </div>
 
 <!-- FLOATING HUD TOOLTIP -->
 <div id="map-hud">
-    <div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">SELECTED STATE:</div>
-    <div id="hud-state-name" style="font-size: 20px; font-weight: bold;">HOVER OVER MAP</div>
-    <div id="hud-action-name" style="font-size: 13px; color: var(--color-cyan);">Click state to explore</div>
+    <div style="font-size: 10px; color: var(--rpg-gold); text-transform: uppercase; letter-spacing: 1px;">📍 TARGET REALM:</div>
+    <div id="hud-state-name" style="font-size: 18px; font-weight: bold; color: var(--rpg-gold-light); margin: 2px 0;">HOVER OVER MAP</div>
+    <div id="hud-action-name" style="font-size: 12px; color: var(--text-muted);">Click realm to inspect Champions</div>
 </div>
 
 <!-- PROMINENT NEON INDIA MAP VIEWPORT (FOREGROUND) -->
@@ -66,24 +77,24 @@
     </div>
 </div>
 
-<!-- GOOGLE MAPS STYLE ZOOM CONTROL BUTTONS -->
+<!-- RPG RUNIC ZOOM CONTROLS -->
 <div class="zoom-controls-stack">
-    <button onclick="zoomIn()" class="zoom-btn" title="Zoom In">+</button>
-    <button onclick="zoomOut()" class="zoom-btn" title="Zoom Out">−</button>
-    <button onclick="resetZoom()" class="zoom-btn" title="Center & Reset View" style="font-size: 18px;">🎯</button>
+    <button onclick="zoomIn(); rpgAudio.playClick();" class="zoom-btn" title="Magical Zoom In">➕</button>
+    <button onclick="zoomOut(); rpgAudio.playClick();" class="zoom-btn" title="Magical Zoom Out">➖</button>
+    <button onclick="resetZoom(); rpgAudio.playClick();" class="zoom-btn" title="Reset Realm Compass" style="font-size: 18px;">🧭</button>
 </div>
 
-<!-- FLOATING ? FAB BUTTON -->
-<button onclick="openInfoDrawer('about')" class="fab-help-btn" title="Open WebSutra Info & Menu">
-    ?
+<!-- FLOATING QUEST SCROLL FAB BUTTON -->
+<button onclick="openInfoDrawer('about'); rpgAudio.playOpen();" class="fab-help-btn" title="Open Quest Log & Menu">
+    📜
 </button>
 
 <!-- UNIFIED STATE MEMBER POPUP MODAL -->
 <div id="stateModalOverlay" class="modal-overlay">
     <div class="modal-card">
         <div class="modal-header">
-            <h3 id="stateModalTitle">State Members</h3>
-            <button onclick="closeStateModal()" class="modal-close-btn">X</button>
+            <h3 id="stateModalTitle">⚔️ Realm Guild Roster</h3>
+            <button onclick="closeStateModal(); rpgAudio.playClick();" class="modal-close-btn">✖ CLOSE</button>
         </div>
         <div id="stateModalBody" style="padding-top: 10px;">
             <!-- STATE MEMBERS CONTENT -->
@@ -93,23 +104,23 @@
 
 <!-- FLOATING INFO & MENU DRAWER MODAL -->
 <div id="infoDrawerOverlay" class="modal-overlay">
-    <div class="modal-card" style="max-width: 780px;">
+    <div class="modal-card" style="max-width: 820px;">
         <div class="modal-header">
-            <h3 id="drawerModalTitle">ℹ️ WebSutra Information &amp; Navigation</h3>
-            <button onclick="closeInfoDrawer()" class="modal-close-btn">X</button>
+            <h3 id="drawerModalTitle">📜 WebSutra Quest Tome &amp; Guild Codex</h3>
+            <button onclick="closeInfoDrawer(); rpgAudio.playClick();" class="modal-close-btn">✖ CLOSE</button>
         </div>
         <div class="drawer-content">
             <!-- DRAWER TAB BUTTONS -->
             <div class="drawer-tab-bar">
-                <button onclick="switchDrawerTab('about')" class="btn btn-saffron">ℹ️ About</button>
-                <a href="join.html" class="btn btn-saffron">🚀 Join Webring</a>
-                <button onclick="switchDrawerTab('directory')" class="btn">📂 Directory</button>
-                <button onclick="switchDrawerTab('gallery')" class="btn">📸 Gallery</button>
-                <button onclick="switchDrawerTab('faq')" class="btn">❓ FAQ</button>
-                <button onclick="switchDrawerTab('manifesto')" class="btn">📜 Manifesto</button>
-                <button onclick="switchDrawerTab('guidelines')" class="btn">📋 Guidelines</button>
-                <button onclick="switchDrawerTab('privacy')" class="btn">🔒 Privacy</button>
-                <a href="dashboard.html" class="btn btn-cyan">🔑 Login</a>
+                <button onclick="switchDrawerTab('about'); rpgAudio.playClick();" class="btn btn-saffron">📜 Overview</button>
+                <a href="join.html" onclick="rpgAudio.playClick();" class="btn btn-saffron">⚔️ Join Guild</a>
+                <a href="members.html" onclick="rpgAudio.playClick();" class="btn btn-saffron">🎒 Members Gallery</a>
+                <button onclick="switchDrawerTab('directory'); rpgAudio.playClick();" class="btn">📜 Directory</button>
+                <button onclick="switchDrawerTab('faq'); rpgAudio.playClick();" class="btn">🔮 Oracle FAQ</button>
+                <button onclick="switchDrawerTab('manifesto'); rpgAudio.playClick();" class="btn">📜 Manifesto</button>
+                <button onclick="switchDrawerTab('guidelines'); rpgAudio.playClick();" class="btn">🛡️ Codex</button>
+                <button onclick="switchDrawerTab('privacy'); rpgAudio.playClick();" class="btn">🔒 Privacy</button>
+                <a href="dashboard.html" onclick="rpgAudio.playClick();" class="btn btn-cyan">🔑 Key Login</a>
             </div>
 
             <!-- DRAWER TAB BODY -->
@@ -121,7 +132,83 @@
 </div>
 
 <script>
-    // 1. LIGHTWEIGHT HIGH-PERFORMANCE CONSTELLATION ANIMATED BACKGROUND (HTML5 CANVAS)
+    // 0. FANTASY RPG AUDIO SYNTHESIZER (WEB AUDIO API)
+    class RPGAudioEngine {
+        constructor() {
+            this.enabled = true;
+            this.ctx = null;
+        }
+        init() {
+            if (!this.ctx) {
+                this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+        playClick() {
+            if (!this.enabled) return;
+            try {
+                this.init();
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(350, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(700, this.ctx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.08);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.08);
+            } catch(e) {}
+        }
+        playOpen() {
+            if (!this.enabled) return;
+            try {
+                this.init();
+                const now = this.ctx.currentTime;
+                [440, 554.37, 659.25, 880].forEach((freq, i) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.08, now + i * 0.05);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.05 + 0.18);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(now + i * 0.05);
+                    osc.stop(now + i * 0.05 + 0.18);
+                });
+            } catch(e) {}
+        }
+        playHover() {
+            if (!this.enabled) return;
+            try {
+                this.init();
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(280, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(420, this.ctx.currentTime + 0.05);
+                gain.gain.setValueAtTime(0.03, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.05);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.05);
+            } catch(e) {}
+        }
+    }
+    const rpgAudio = new RPGAudioEngine();
+
+    function toggleAudioSFX() {
+        rpgAudio.enabled = !rpgAudio.enabled;
+        const btn = document.getElementById('sfx-toggle-btn');
+        if (btn) {
+            btn.textContent = rpgAudio.enabled ? "🔊 SFX ON" : "🔇 SFX OFF";
+        }
+        if (rpgAudio.enabled) rpgAudio.playClick();
+    }
+
+    // 1. LIGHTWEIGHT HIGH-PERFORMANCE MANA EMBER ANIMATED BACKGROUND (HTML5 CANVAS)
     function initConstellationBackground() {
         const canvas = document.createElement('canvas');
         canvas.id = 'constellations-bg';
@@ -134,25 +221,27 @@
         document.body.prepend(canvas);
 
         const ctx = canvas.getContext('2d');
-        let width, height, stars = [];
+        let width, height, embers = [];
 
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
-            createStars();
+            createEmbers();
         }
 
-        function createStars() {
-            stars = [];
-            const count = Math.floor((width * height) / 12000);
+        function createEmbers() {
+            embers = [];
+            const count = Math.floor((width * height) / 10000);
             for (let i = 0; i < count; i++) {
-                stars.push({
+                embers.push({
                     x: Math.random() * width,
                     y: Math.random() * height,
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: (Math.random() - 0.5) * 0.4,
-                    radius: Math.random() * 1.5 + 0.5,
-                    alpha: Math.random() * 0.7 + 0.3
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: -Math.random() * 0.8 - 0.2,
+                    radius: Math.random() * 2 + 0.5,
+                    hue: Math.random() > 0.3 ? 45 : 190,
+                    alpha: Math.random() * 0.8 + 0.2,
+                    pulse: Math.random() * 0.05 + 0.01
                 });
             }
         }
@@ -160,40 +249,23 @@
         function animate() {
             ctx.clearRect(0, 0, width, height);
 
-            // Connect nearby stars with constellation lines
-            for (let i = 0; i < stars.length; i++) {
-                for (let j = i + 1; j < stars.length; j++) {
-                    const dx = stars[i].x - stars[j].x;
-                    const dy = stars[i].y - stars[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
+            for (let i = 0; i < embers.length; i++) {
+                const e = embers[i];
+                e.x += e.vx;
+                e.y += e.vy;
+                e.alpha += Math.sin(Date.now() * e.pulse) * 0.02;
 
-                    if (dist < 110) {
-                        ctx.beginPath();
-                        ctx.moveTo(stars[i].x, stars[i].y);
-                        ctx.lineTo(stars[j].x, stars[j].y);
-                        ctx.strokeStyle = `rgba(0, 240, 255, ${0.18 * (1 - dist / 110)})`;
-                        ctx.lineWidth = 0.6;
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            // Draw glowing star nodes
-            for (let i = 0; i < stars.length; i++) {
-                const s = stars[i];
-                s.x += s.vx;
-                s.y += s.vy;
-
-                if (s.x < 0) s.x = width;
-                if (s.x > width) s.x = 0;
-                if (s.y < 0) s.y = height;
-                if (s.y > height) s.y = 0;
+                if (e.y < 0) e.y = height;
+                if (e.x < 0) e.x = width;
+                if (e.x > width) e.x = 0;
 
                 ctx.beginPath();
-                ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
-                ctx.shadowBlur = 4;
-                ctx.shadowColor = '#00f0ff';
+                ctx.arc(e.x, e.y, e.radius, 0, Math.PI * 2);
+                ctx.fillStyle = e.hue === 45 
+                    ? `rgba(244, 196, 48, ${Math.max(0.1, Math.min(1, e.alpha))})`
+                    : `rgba(56, 189, 248, ${Math.max(0.1, Math.min(1, e.alpha))})`;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = e.hue === 45 ? '#f4c430' : '#38bdf8';
                 ctx.fill();
             }
 
@@ -205,13 +277,10 @@
         animate();
     }
 
-    // VIBRANT NEON COLOR PALETTE FOR MAP HOVER (DIFFERENT NEON COLOR PER STATE)
+    // GOLDEN FANTASY REALM MAP HOVER PALETTE
     const stateColors = [
-        '#ff007f', '#00ff66', '#ff9933', '#00f0ff', '#ffff00',
-        '#a855f7', '#ec4899', '#10b981', '#3b82f6', '#ff3333',
-        '#f97316', '#8b5cf6', '#14b8a6', '#eab308', '#06b6d4',
-        '#f43f5e', '#84cc16', '#d946ef', '#0284c7', '#ff6600',
-        '#10b981', '#ffd700', '#6366f1', '#ff00aa', '#00ffcc'
+        '#f4c430', '#fbbf24', '#eab308', '#d97706', '#b45309',
+        '#10b981', '#059669', '#38bdf8', '#0284c7', '#a855f7'
     ];
 
     let allSites = [];
@@ -235,10 +304,11 @@
             const hoverColor = getStateColor(stateName);
 
             path.addEventListener('mouseenter', () => {
+                rpgAudio.playHover();
                 path.style.fill = hoverColor;
                 path.style.stroke = '#ffffff';
                 path.style.strokeWidth = '2.5px';
-                path.style.filter = `drop-shadow(0 0 18px ${hoverColor})`;
+                path.style.filter = `drop-shadow(0 0 20px ${hoverColor})`;
                 
                 hudState.textContent = stateName.toUpperCase();
                 hudState.style.color = hoverColor;
@@ -249,35 +319,36 @@
                 );
                 
                 hudAction.textContent = stateMembers.length 
-                    ? `📍 ${stateMembers.length} member(s) found` 
-                    : `Click to view state hub & join`;
+                    ? `📍 ${stateMembers.length} Champion(s) in Realm` 
+                    : `Click to inspect Realm & Join`;
             });
 
             path.addEventListener('mouseleave', () => {
-                path.style.fill = '#0e1628';
-                path.style.stroke = 'var(--color-cyan)';
+                path.style.fill = '#1a120b';
+                path.style.stroke = 'var(--rpg-gold)';
                 path.style.strokeWidth = '1.8px';
-                path.style.filter = 'drop-shadow(0 0 8px rgba(0, 240, 255, 0.4))';
+                path.style.filter = 'drop-shadow(0 0 8px rgba(244, 196, 48, 0.3))';
                 
                 hudState.textContent = 'HOVER OVER MAP';
-                hudState.style.color = 'var(--color-saffron)';
-                hudAction.textContent = 'Click state to explore';
+                hudState.style.color = 'var(--rpg-gold-light)';
+                hudAction.textContent = 'Click realm to inspect Champions';
             });
 
             path.addEventListener('click', () => {
+                rpgAudio.playOpen();
                 openStatePopup(stateName);
             });
         });
     }
 
-    // UNIFIED STATE POPUP
+    // UNIFIED REALM POPUP
     function openStatePopup(stateName) {
         const modal = document.getElementById('stateModalOverlay');
         const title = document.getElementById('stateModalTitle');
         const body = document.getElementById('stateModalBody');
         const color = getStateColor(stateName);
 
-        title.innerHTML = `<span style="color: ${color}; font-family: var(--font-pixel); font-size: 24px;">📍 ${escapeHtml(stateName)}</span> Webmasters`;
+        title.innerHTML = `⚔️ Realm Roster: <span style="color: ${color}; font-family: var(--font-fantasy);">${escapeHtml(stateName)}</span>`;
 
         const stateMembers = allSites.filter(s => 
             (s.title && s.title.toLowerCase().includes(stateName.toLowerCase())) ||
@@ -289,28 +360,28 @@
             membersListHtml = `
                 <div style="margin-bottom: 16px;">
                     ${stateMembers.map(s => `
-                        <div style="background: #ffffff; color: #000; border: 1px solid #808080; padding: 10px; margin-bottom: 10px;">
-                            <div style="font-family: var(--font-pixel); font-size: 20px; color: #000080;">${escapeHtml(s.title)}</div>
-                            <div><a href="${escapeHtml(s.url)}" target="_blank" style="color:#0000ee;">${escapeHtml(s.url)}</a></div>
-                            <span class="status-pill ${s.status === 'verified' ? 'verified' : 'pending'}" style="margin-top:4px;">${s.status}</span>
+                        <div style="background: #fdf6e2; color: var(--rpg-parchment-text); border: 2px solid var(--rpg-wood-border); border-radius: 4px; padding: 12px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+                            <div style="font-family: var(--font-fantasy); font-size: 18px; color: var(--rpg-wood-dark); font-weight: bold;">🛡️ ${escapeHtml(s.title)}</div>
+                            <div style="margin: 4px 0;"><a href="${escapeHtml(s.url)}" target="_blank" style="color: var(--rpg-wood-dark);">${escapeHtml(s.url)}</a></div>
+                            <span class="status-pill ${s.status === 'verified' ? 'verified' : 'pending'}">LEVEL 99 ${s.status.toUpperCase()} CHAMPION</span>
                         </div>
                     `).join('')}
                 </div>
             `;
         } else {
             membersListHtml = `
-                <div style="background: #ffffff; color: #000; border: 2px inset #404040; padding: 16px; text-align: center; margin-bottom: 16px;">
-                    <p style="margin-top: 0;">No verified webmasters registered from <strong>${escapeHtml(stateName)}</strong> yet.</p>
-                    <p style="font-weight: bold;">Be the first webmaster to represent ${escapeHtml(stateName)} in the ring!</p>
+                <div style="background: #fdf6e2; color: var(--rpg-parchment-text); border: 2px dashed var(--rpg-wood-border); border-radius: 4px; padding: 20px; text-align: center; margin-bottom: 16px;">
+                    <p style="margin-top: 0; font-family: var(--font-fantasy); font-size: 18px; color: var(--rpg-wood-dark);">No Webmasters registered from the <strong>${escapeHtml(stateName)}</strong> realm yet.</p>
+                    <p style="font-weight: bold;">Be the first Champion to represent ${escapeHtml(stateName)} in the WebSutra Webring!</p>
                 </div>
             `;
         }
 
         body.innerHTML = `
             ${membersListHtml}
-            <div style="text-align: center; margin-top: 15px; border-top: 1px dashed #808080; padding-top: 14px;">
-                <a href="join.html" class="btn btn-saffron" style="font-size: 20px;">
-                    🚀 Register Your Site &amp; Represent ${escapeHtml(stateName)}
+            <div style="text-align: center; margin-top: 15px; border-top: 2px solid var(--rpg-parchment-dark); padding-top: 14px;">
+                <a href="join.html" onclick="rpgAudio.playClick()" class="btn btn-saffron" style="font-size: 16px;">
+                    🚀 Register Realm Charter &amp; Represent ${escapeHtml(stateName)}
                 </a>
             </div>
         `;
@@ -338,75 +409,77 @@
         if (tab === 'about') {
             body.innerHTML = `
                 <img src="india.png" alt="India Map Graphic">
-                <h3 style="font-family: var(--font-pixel); font-size: 22px; color: #000080; margin-top: 0;">What?</h3>
-                <p>A <strong>webring</strong> is a list of websites linked together. It helps you find handmade amateur websites! This webring is made specifically for Indian hobbyist and amateur webmasters to showcase their sites.</p>
+                <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-wood-dark); margin-top: 0;">📜 What is WebSutra?</h3>
+                <p>A <strong>webring</strong> is an ancient network of handcrafted personal homepages linked together by honor and magic! It helps adventurers discover handmade personal blogs and hobbyist websites without corporate algorithm traps.</p>
 
-                <h3 style="font-family: var(--font-pixel); font-size: 22px; color: #000080;">Why?</h3>
-                <p>I have found a lot of cool people from my country (India) who run their own personal site or blog. I want to build a directory for others to find cool personal sites!</p>
+                <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-wood-dark);">⚔️ The Webmaster Quest</h3>
+                <p>There are countless talented creators across India running personal blogs, digital gardens, and indie homepages. WebSutra is the central Guild Hall to showcase their realms!</p>
 
-                <h3 style="font-family: var(--font-pixel); font-size: 22px; color: #000080;">Eligibility</h3>
-                <ul style="background: #ffffff; border: 1px inset #404040; padding: 10px 10px 10px 30px;">
-                    <li>Handmade personal sites only. No ads, no commercial sites!</li>
-                    <li>Must have respectable amount of content (writing, project logs, or art).</li>
-                    <li>Must embed the WebSutra widget link on your homepage.</li>
+                <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-wood-dark);">🛡️ Guild Membership Requirements</h3>
+                <ul style="background: #fdf6e2; border: 2px solid var(--rpg-wood-border); border-radius: 4px; padding: 12px 12px 12px 28px;">
+                    <li>Handmade personal homepages only. No commercial ads or corporate clickbait!</li>
+                    <li>Must contain genuine content (writing, artwork, code logs, or digital gardens).</li>
+                    <li>Must embed the official WebSutra Rune Widget snippet on your homepage.</li>
                 </ul>
 
-                <div style="margin-top: 15px;">
-                    <a href="join.html" class="btn btn-saffron">🚀 Register Your Website Now</a>
+                <div style="margin-top: 18px;">
+                    <a href="join.html" onclick="rpgAudio.playClick()" class="btn btn-saffron" style="font-size: 16px;">
+                        🚀 Register Your Realm &amp; Join The Guild
+                    </a>
                 </div>
             `;
         } else if (tab === 'directory') {
             body.innerHTML = `
-                <h3 style="font-family: var(--font-pixel); font-size: 22px; color: #000080; margin-top: 0;">Members Directory</h3>
+                <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-wood-dark); margin-top: 0;">🎒 Champions Directory Ledger</h3>
                 <div class="table-responsive">
                     <table class="retro-table">
-                        <thead><tr><th>Site Name</th><th>URL</th><th>Status</th></tr></thead>
+                        <thead><tr><th>Realm / Site Name</th><th>URL</th><th>Guild Rank</th></tr></thead>
                         <tbody>${allSites.length ? allSites.map(s => `
                             <tr>
-                                <td><strong>${escapeHtml(s.title)}</strong></td>
-                                <td><a href="${escapeHtml(s.url)}" target="_blank">${escapeHtml(s.url)}</a></td>
-                                <td><span class="status-pill ${s.status === 'verified' ? 'verified' : 'pending'}">${s.status}</span></td>
+                                <td><strong>🛡️ ${escapeHtml(s.title)}</strong></td>
+                                <td><a href="${escapeHtml(s.url)}" target="_blank" style="color: var(--rpg-wood-dark);">${escapeHtml(s.url)}</a></td>
+                                <td><span class="status-pill ${s.status === 'verified' ? 'verified' : 'pending'}">${s.status.toUpperCase()}</span></td>
                             </tr>
-                        `).join('') : '<tr><td colspan="3">Loading directory...</td></tr>'}</tbody>
+                        `).join('') : '<tr><td colspan="3">Consulting the scroll ledger...</td></tr>'}</tbody>
                     </table>
                 </div>
             `;
         } else if (tab === 'gallery') {
             const verified = allSites.filter(s => s.status === 'verified');
             body.innerHTML = `
-                <h3 style="font-family: var(--font-pixel); font-size: 22px; color: #000080; margin-top: 0;">Member Gallery</h3>
-                <p style="margin-top: 0;">Verified homepages (${verified.length} in database):</p>
+                <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-wood-dark); margin-top: 0;">🖼️ Champions Homepage Gallery</h3>
+                <p style="margin-top: 0;">Verified homepages (${verified.length} in database scroll):</p>
                 <div id="drawer-gallery" class="screenshot-gallery">Loading gallery...</div>
             `;
             renderDrawerGallery();
         } else if (tab === 'faq') {
             body.innerHTML = `
-                <h3 style="font-family: var(--font-pixel); font-size: 22px; color: #000080; margin-top: 0;">Frequently Asked Questions</h3>
-                <h4>I am not an Indian, can I join?</h4>
-                <p>Nope, but if your site contains India or Indian culture related content then you can submit here.</p>
-                <h4>How do you verify location?</h4>
-                <p>I don't. We verify that your website contains the WebSutra widget code!</p>
-                <h4>Questions?</h4>
-                <p>Email me at <a href="mailto:sudip@blackpiratex.com">sudip@blackpiratex.com</a></p>
+                <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-wood-dark); margin-top: 0;">🔮 Oracle FAQ</h3>
+                <h4>Can non-Indian webmasters enter the realm?</h4>
+                <p>Only if your website features content or art related to Indian culture and tech!</p>
+                <h4>How do you verify my guild status?</h4>
+                <p>Our automated scryer scrapes your homepage to verify the presence of the WebSutra widget rune snippet.</p>
+                <h4>Guild Master Contact?</h4>
+                <p>Dispatch a raven to <a href="mailto:sudip@blackpiratex.com" style="color: var(--rpg-wood-dark);">sudip@blackpiratex.com</a></p>
             `;
         } else if (tab === 'manifesto') {
             body.innerHTML = `
-                <h3 style="font-family: var(--font-pixel); font-size: 22px; color: #000080; margin-top: 0;">WebSutra Manifesto</h3>
-                <p>We believe in the <strong>handmade personal web</strong>—websites made by real human hobbyists, bloggers, and artists, free from ad traps and corporate tracking.</p>
+                <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-wood-dark); margin-top: 0;">📜 WebSutra Grand Manifesto</h3>
+                <p>We champion the <strong>handmade personal web</strong>—homepages built by human webmasters, free from commercial bloat and corporate surveillance.</p>
             `;
         } else if (tab === 'guidelines') {
             body.innerHTML = `
-                <h3 style="font-family: var(--font-pixel); font-size: 22px; color: #000080; margin-top: 0;">Eligibility Guidelines</h3>
+                <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-wood-dark); margin-top: 0;">🛡️ Guild Codex Rules</h3>
                 <ul>
-                    <li>Handmade personal sites only. No ads, no commercial sites.</li>
-                    <li>Must have respectable amount of content.</li>
+                    <li>Personal sites only. No corporate or referral portals.</li>
+                    <li>Must feature substantial human-crafted content.</li>
                     <li>Must embed the WebSutra widget code on your homepage.</li>
                 </ul>
             `;
         } else if (tab === 'privacy') {
             body.innerHTML = `
-                <h3 style="font-family: var(--font-pixel); font-size: 22px; color: #000080; margin-top: 0;">Privacy Policy</h3>
-                <p>Your site name, email, and website URL are saved in the DB. Your dashboard secret key is saved as a one-way SHA-256 hash.</p>
+                <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-wood-dark); margin-top: 0;">🔒 Privacy Shield</h3>
+                <p>Your site details are preserved securely in our database. Dashboard secret keys are hashed with HMAC-SHA256.</p>
             `;
         }
     }
@@ -416,7 +489,7 @@
         if (!gallery) return;
         const verified = allSites.filter(s => s.status === 'verified');
         if (!verified.length) {
-            gallery.innerHTML = '<p>No verified screenshots found.</p>';
+            gallery.innerHTML = '<p>No verified screenshots found in the archives.</p>';
             return;
         }
         gallery.innerHTML = verified.map(s => `
@@ -424,7 +497,7 @@
                 <a href="${escapeHtml(s.url)}" target="_blank">
                     <img src="/screenshots/${encodeURIComponent(s.slug)}.png" alt="${escapeHtml(s.title)}" onerror="this.src='india.png'">
                 </a>
-                <h3>${escapeHtml(s.title)}</h3>
+                <h3>🛡️ ${escapeHtml(s.title)}</h3>
             </div>
         `).join('');
     }

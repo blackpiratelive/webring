@@ -3,42 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSutra Super Admin ⚡</title>
+    <title>WebSutra High Wizard Citadel ⚡ | Super Admin</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .user-card { margin-bottom: 14px; }
-        summary { cursor: pointer; background: linear-gradient(90deg, #180829, #09152b); color: var(--neon-yellow); padding: 12px 16px; font-family: var(--font-pixel); font-size: 22px; font-weight: bold; border: 1.5px solid var(--neon-cyan); border-radius: 4px; user-select: none; }
-        summary:hover { background: linear-gradient(90deg, #260a40, #0f2347); }
-        .user-details { background: rgba(5, 8, 16, 0.95); color: var(--text-main); padding: 18px; border: 1.5px solid var(--neon-cyan); border-top: none; border-radius: 0 0 4px 4px; }
+        .user-card { margin-bottom: 16px; }
+        summary { 
+            cursor: pointer; 
+            background: linear-gradient(180deg, #3d2716 0%, #1a0e06 100%); 
+            color: var(--rpg-gold-light); 
+            padding: 12px 18px; 
+            font-family: var(--font-fantasy); 
+            font-size: 18px; 
+            font-weight: bold; 
+            border: 2px solid var(--rpg-gold); 
+            border-radius: 6px; 
+            user-select: none; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        summary:hover { background: linear-gradient(180deg, #5c3b22 0%, #2e1a0b 100%); color: #fff; }
+        .user-details { background: var(--rpg-wood-dark); color: var(--text-main); padding: 20px; border: 2px solid var(--rpg-gold); border-top: none; border-radius: 0 0 6px 6px; box-shadow: inset 0 0 12px rgba(0,0,0,0.6); }
         .site-row { 
             display: grid; 
             grid-template-columns: 1.5fr 1fr 2fr 1fr auto auto; 
             gap: 10px; 
             padding: 10px; 
-            background: rgba(18, 26, 42, 0.6); 
+            background: #24170c; 
             margin-top: 8px; 
             align-items: center; 
-            border: 1px solid #1a2c44; 
-            border-radius: 3px;
+            border: 1px solid var(--rpg-wood-border); 
+            border-radius: 4px;
         }
-        .site-row input, .site-row select { font-size: 12px; }
-        .reset-link-box { display: none; margin-top: 12px; padding: 12px; background: #03050a; color: var(--neon-lime); border: 1.5px solid var(--neon-saffron); border-radius: 4px; }
-        #loginOverlay { position: fixed; inset: 0; background: rgba(5, 7, 12, 0.95); display: flex; justify-content: center; align-items: center; z-index: 100; }
+        .site-row input, .site-row select { font-size: 13px; padding: 6px; }
+        .reset-link-box { display: none; margin-top: 14px; padding: 14px; background: #0e0804; color: var(--rpg-gold-light); border: 2px solid var(--rpg-gold); border-radius: 4px; }
+        #loginOverlay { position: fixed; inset: 0; background: rgba(8, 5, 3, 0.92); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 100; }
     </style>
 </head>
 <body>
 
     <!-- ADMIN LOGIN OVERLAY -->
     <div id="loginOverlay">
-        <fieldset class="cyber-box alt-saffron" style="width: 380px;">
-            <legend class="cyber-legend">⚡ SUPER_ADMIN_AUTH</legend>
-            <div style="text-align: center;">
-                <h2 style="font-family: var(--font-pixel); font-size: 26px; color: var(--neon-yellow); margin-top: 0;">ADMIN ACCESS</h2>
-                <div style="margin-bottom: 18px;">
-                    <input type="password" id="adminKey" placeholder="Enter Admin Secret Password">
-                </div>
-                <button onclick="loadAdmin()" class="cyber-btn cyber-btn-saffron" style="width: 100%;">Unlock Admin Dashboard</button>
+        <fieldset class="retro-box" style="width: 420px; text-align: center;">
+            <div class="card-header">
+                <h2>⚡ High Wizard Citadel</h2>
             </div>
+            <h2 style="font-family: var(--font-fantasy); font-size: 24px; color: var(--rpg-gold-light); margin-top: 0;">ADMINISTRATOR AUTH</h2>
+            <div style="margin-bottom: 20px;">
+                <input type="password" id="adminKey" placeholder="Enter High Wizard Password">
+            </div>
+            <button onclick="loadAdmin()" class="btn btn-saffron" style="width: 100%; padding: 12px; font-size: 14px;">
+                🔑 Unlock Citadel Controls
+            </button>
         </fieldset>
     </div>
 
@@ -47,20 +64,17 @@
         <header class="hero-header">
             <div class="header-top-nav">
                 <div>
-                    <img src="graphics/flag.gif" alt="Indian Flag" height="24" style="vertical-align: middle;">
-                    <span style="font-family: var(--font-pixel); font-size: 22px; color: var(--neon-saffron); margin-left: 8px; font-weight: bold;">ADMIN_CONSOLE.SYS</span>
+                    <span style="font-size: 24px;">👑</span>
+                    <span style="font-family: var(--font-fantasy); font-size: 18px; color: var(--rpg-gold-light); font-weight: bold; margin-left: 8px;">ADMIN_CONSOLE.SYS</span>
                 </div>
                 <div>
-                    <a href="/" class="cyber-btn">🏠 Return Home</a>
+                    <a href="/" class="btn">🏠 World Map</a>
                 </div>
             </div>
 
             <div class="hero-title-group">
-                <img src="graphics/moving-rocket.gif" alt="Moving Rocket" height="48">
-                <div>
-                    <h1 style="font-size: 44px;">WebSutra Super Admin</h1>
-                    <div class="hero-subtitle">Manage users, website statuses, and security tokens</div>
-                </div>
+                <h1>⚡ High Wizard Citadel</h1>
+                <div class="hero-subtitle">Manage webmaster charters, realm statuses, and rune reset tokens</div>
             </div>
         </header>
 
@@ -68,13 +82,15 @@
             <img src="graphics/divider-blood.gif" alt="--- divider ---">
         </div>
 
-        <fieldset class="cyber-box">
-            <legend class="cyber-legend">👥 ALL_USERS_DATABASE</legend>
-            <div id="content">Loading users and sites from database...</div>
+        <fieldset class="retro-box">
+            <div class="card-header">
+                <h2>👥 ALL GUILD WEBMSTERS LEDGER</h2>
+            </div>
+            <div id="content">Consulting database archives...</div>
         </fieldset>
 
-        <footer class="cyber-box" style="text-align: center;">
-            <a href="/" class="cyber-btn">&larr; Return to Homepage</a>
+        <footer class="retro-box" style="text-align: center;">
+            <a href="/" class="btn">&larr; Return to World Map</a>
         </footer>
 
     </div> <!-- END CONTAINER -->
@@ -113,37 +129,37 @@
                 <details class="user-card">
                     <summary>
                         <span>
-                            ID: ${user.id} | ${user.email || 'No Email Registered'} 
-                            <span style="font-size: 15px; opacity: 0.8;">(${user.sites.length}/${user.max_sites} sites)</span>
+                            🛡️ ID: ${user.id} | ${user.email || 'No Raven Address Registered'} 
+                            <span style="font-size: 14px; opacity: 0.85; margin-left: 8px;">(${user.sites.length}/${user.max_sites} realms)</span>
                         </span>
-                        <span style="font-size: 14px; color: var(--neon-cyan);">Secret Protected</span>
+                        <span style="font-size: 12px; color: var(--rpg-gold);">SECRET PROTECTED</span>
                     </summary>
                     
                     <div class="user-details">
-                        <div style="margin-bottom: 18px; border-bottom: 1px dashed rgba(0, 240, 255, 0.4); padding-bottom: 14px;">
-                            <h4 style="font-family: var(--font-pixel); font-size: 22px; margin-top: 0; color: var(--neon-yellow);">User Settings</h4>
+                        <div style="margin-bottom: 20px; border-bottom: 1px dashed var(--rpg-gold-dark); padding-bottom: 16px;">
+                            <h4 style="font-family: var(--font-fantasy); font-size: 20px; margin-top: 0; color: var(--rpg-gold-light);">Webmaster Settings</h4>
                             <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
                                 <div>
                                     Email: <input id="email-${user.id}" value="${user.email || ''}" style="width: 220px;">
                                 </div>
                                 <div>
-                                    Max Sites: <input id="limit-${user.id}" type="number" value="${user.max_sites}" style="width: 60px;">
+                                    Max Sites: <input id="limit-${user.id}" type="number" value="${user.max_sites}" style="width: 70px;">
                                 </div>
-                                <button class="cyber-btn cyber-btn-saffron" onclick="saveUser(${user.id})">💾 Save User</button>
-                                <button class="cyber-btn" onclick="createResetLink(${user.id})">🔑 Secret Reset Link</button>
-                                <button class="cyber-btn cyber-btn-pink" onclick="deleteUser(${user.id})">🗑️ Delete User</button>
+                                <button class="btn btn-saffron" onclick="saveUser(${user.id})">💾 Save</button>
+                                <button class="btn" onclick="createResetLink(${user.id})">🔑 Secret Reset Link</button>
+                                <button class="btn btn-pink" onclick="deleteUser(${user.id})">🗑️ Delete</button>
                             </div>
                             
                             <div class="reset-link-box" id="reset-link-box-${user.id}">
-                                <strong>One-Time Secret Reset Link:</strong>
+                                <strong>One-Time Secret Reset Rune Link:</strong>
                                 <input id="reset-link-${user.id}" readonly style="margin-top: 6px;">
-                                <button class="cyber-btn cyber-btn-saffron" style="margin-top: 8px;" onclick="copyResetLink(${user.id})">Copy Link</button>
-                                <small id="reset-link-expiry-${user.id}" style="display: block; margin-top: 6px; color: var(--neon-yellow);"></small>
+                                <button class="btn btn-saffron" style="margin-top: 8px;" onclick="copyResetLink(${user.id})">Copy Link</button>
+                                <small id="reset-link-expiry-${user.id}" style="display: block; margin-top: 6px; color: var(--rpg-gold-light);"></small>
                             </div>
                         </div>
 
-                        <h4 style="font-family: var(--font-pixel); font-size: 22px; color: var(--neon-yellow); margin-bottom: 8px;">Associated Websites</h4>
-                        <div class="site-row" style="background: linear-gradient(90deg, #180829, #09152b); color: var(--neon-cyan); font-weight: bold;">
+                        <h4 style="font-family: var(--font-fantasy); font-size: 20px; color: var(--rpg-gold-light); margin-bottom: 10px;">Associated Realm Charters</h4>
+                        <div class="site-row" style="background: linear-gradient(180deg, #3d2716 0%, #1a0e06 100%); color: var(--rpg-gold-light); font-weight: bold; font-family: var(--font-pixel); font-size: 11px;">
                             <span>Title</span>
                             <span>Slug (ID)</span>
                             <span>URL</span>
@@ -164,11 +180,11 @@
                                     <option value="suspended" ${site.status==='suspended'?'selected':''}>Suspended</option>
                                 </select>
                                 
-                                <button class="cyber-btn cyber-btn-saffron" onclick="saveSite(${site.id})">💾</button>
-                                <button class="cyber-btn cyber-btn-pink" onclick="deleteSite(${site.id})">🗑️</button>
+                                <button class="btn btn-saffron" onclick="saveSite(${site.id})">💾</button>
+                                <button class="btn btn-pink" onclick="deleteSite(${site.id})">🗑️</button>
                             </div>
                         `).join('')}
-                        ${user.sites.length === 0 ? '<div style="opacity:0.6; padding:10px;">No sites registered for this user.</div>' : ''}
+                        ${user.sites.length === 0 ? '<div style="opacity:0.8; padding:12px;">No charters registered for this webmaster.</div>' : ''}
                     </div>
                 </details>
             `).join('');
@@ -182,7 +198,7 @@
                     max_sites: document.getElementById(`limit-${id}`).value
                 }
             });
-            alert("User Updated");
+            alert("Webmaster Settings Updated");
         }
 
         async function createResetLink(id) {
@@ -215,7 +231,7 @@
         }
 
         async function deleteUser(id) {
-            if(!confirm("Delete user and ALL their sites?")) return;
+            if(!confirm("Delete webmaster and ALL their charters?")) return;
             await api('delete_user', { userId: id });
             loadAdmin();
         }
@@ -232,11 +248,11 @@
                     status: document.getElementById(`status-${id}`).value
                 }
             });
-            alert("Site Updated");
+            alert("Site Charter Updated");
         }
 
         async function deleteSite(id) {
-            if(!confirm("Delete this site?")) return;
+            if(!confirm("Delete this site charter?")) return;
             await api('delete_site', { siteId: id });
             loadAdmin();
         }

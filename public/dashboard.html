@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSutra Member Dashboard 🇮🇳</title>
+    <title>WebSutra Hero Keep 🇮🇳 | Member Sanctuary</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- TOP SCROLLING MARQUEE BANNER -->
+<!-- TOP SCROLLING FANTASY MARQUEE BANNER -->
 <div class="top-marquee">
     <marquee scrollamount="6" behavior="scroll">
-        ★ WEBSUTRA MEMBER DASHBOARD ★ VERIFY YOUR SITES ★ MANAGE SLUGS &amp; PROFILE ★ INDIEWEB RULEZ ★
+        ★ WEBSUTRA HERO KEEP ★ MANAGE REALM CHARTERS ★ VERIFY RUNE WIDGET EMBEDS ★ LEVEL 99 WEBMSTERS 🇮🇳 ★
     </marquee>
 </div>
 
@@ -20,21 +20,19 @@
     <header class="hero-header">
         <div class="header-top-nav">
             <div>
-                <img src="graphics/flag.gif" alt="Indian Flag" height="24" style="vertical-align: middle;">
-                <span style="font-family: var(--font-pixel); font-size: 22px; color: var(--neon-saffron); margin-left: 8px; font-weight: bold;">WEBSUTRA_PORTAL.CFG</span>
+                <span style="font-size: 24px;">🛡️</span>
+                <span style="font-family: var(--font-fantasy); font-size: 18px; color: var(--rpg-gold-light); font-weight: bold; margin-left: 8px;">HERO_SANCTUARY.KEEP</span>
             </div>
             <div>
-                <a href="/" class="cyber-btn">🏠 Return Home</a>
-                <a href="/" onclick="logout(); return false;" class="cyber-btn cyber-btn-pink">Logout</a>
+                <a href="/" class="btn">🏠 World Map</a>
+                <a href="members.html" class="btn btn-saffron">🎒 Members Gallery</a>
+                <a href="/" onclick="logout(); return false;" class="btn btn-pink">Logout Sanctuary</a>
             </div>
         </div>
 
         <div class="hero-title-group">
-            <img src="graphics/moving-rocket.gif" alt="Moving Rocket" height="48">
-            <div>
-                <h1 style="font-size: 44px;">WebSutra Dashboard</h1>
-                <div class="hero-subtitle">Manage your webring sites &amp; verify widget placement</div>
-            </div>
+            <h1>🏰 WebSutra Hero Keep</h1>
+            <div class="hero-subtitle">Manage your realm charters &amp; verify rune widget embeds</div>
         </div>
     </header>
 
@@ -43,21 +41,23 @@
     </div>
 
     <!-- LOGIN SECTION WINDOW -->
-    <fieldset id="loginSection" class="cyber-box">
-        <legend class="cyber-legend">🔐 MEMBER LOGIN</legend>
-        <h2 style="font-family: var(--font-pixel); font-size: 28px; color: var(--neon-cyan); margin-top: 0;">Access Dashboard</h2>
-        <p>Paste the secret key token you received when registering your site below:</p>
+    <fieldset id="loginSection" class="retro-box">
+        <div class="card-header">
+            <h2>🔑 Enter Secret Rune Key</h2>
+        </div>
+        <h2 style="font-family: var(--font-fantasy); font-size: 24px; color: var(--rpg-gold-light); margin-top: 0;">Access Hero Keep</h2>
+        <p>Inscribe the secret key rune you received upon registering your charter below:</p>
         
-        <div style="margin-bottom: 18px;">
-            <label for="loginKey" style="font-weight: bold; color: var(--neon-cyan); display: block; margin-bottom: 6px;">Secret Key Token:</label>
+        <div style="margin-bottom: 20px;">
+            <label for="loginKey">Secret Rune Key:</label>
             <input type="password" id="loginKey" placeholder="Paste your secret key here...">
         </div>
 
-        <button onclick="login()" class="cyber-btn cyber-btn-saffron" style="font-size: 22px; width: 100%;">
-            🔑 Access Member Dashboard
+        <button onclick="login()" class="btn btn-saffron" style="font-size: 15px; width: 100%; padding: 12px;">
+            🔑 Unlock Hero Keep Sanctuary
         </button>
-        <p style="font-size: 12px; color: var(--text-dim); margin-top: 12px;">
-            <em>Lost your key? Ask an administrator to generate a secret reset link for your account.</em>
+        <p style="font-size: 13px; color: var(--text-muted); margin-top: 14px;">
+            <em>Lost your key? Request a High Wizard administrator to generate a secret reset link for your account.</em>
         </p>
     </fieldset>
 
@@ -65,20 +65,22 @@
     <div id="mainInterface" style="display: none;">
         
         <!-- PROFILE SETTINGS WINDOW -->
-        <fieldset class="cyber-box">
-            <legend class="cyber-legend">👤 USER_PROFILE.CFG</legend>
-            <div style="background: rgba(3, 5, 10, 0.8); border: 1px solid var(--neon-cyan); border-radius: 4px; padding: 12px; margin-bottom: 16px;">
-                <p style="margin: 0; font-family: var(--font-pixel); font-size: 22px; color: var(--neon-yellow);">
-                    Site Usage: <strong id="siteCount" style="color: var(--neon-magenta);">0</strong> / <span id="maxSites">2</span> sites allowed
+        <fieldset class="retro-box">
+            <div class="card-header">
+                <h2>👤 Webmaster Profile Scroll</h2>
+            </div>
+            <div style="background: var(--rpg-wood-dark); border: 2px solid var(--rpg-gold); border-radius: 4px; padding: 14px; margin-bottom: 18px;">
+                <p style="margin: 0; font-family: var(--font-pixel); font-size: 12px; color: var(--rpg-gold-light);">
+                    Realm Slotted: <strong id="siteCount" style="color: var(--rpg-gold);">0</strong> / <span id="maxSites">2</span> charters permitted
                 </p>
             </div>
 
-            <div style="margin-bottom: 12px;">
-                <label for="userEmail" style="font-weight: bold; color: var(--neon-cyan);">Registered Email Address:</label>
+            <div style="margin-bottom: 16px;">
+                <label for="userEmail">Registered Raven Address (Email):</label>
                 <input type="email" id="userEmail" placeholder="your-email@example.com">
             </div>
 
-            <button onclick="saveProfile()" class="cyber-btn" style="font-size: 16px;">💾 Update Email Profile</button>
+            <button onclick="saveProfile()" class="btn" style="font-size: 13px;">💾 Update Profile Scroll</button>
         </fieldset>
 
         <div class="retro-divider">
@@ -86,36 +88,38 @@
         </div>
 
         <!-- SITES MANAGEMENT SECTION -->
-        <fieldset class="cyber-box alt-saffron">
-            <legend class="cyber-legend">🌐 YOUR_WEBSITES.DAT</legend>
+        <fieldset class="retro-box">
+            <div class="card-header">
+                <h2>🌐 Realm Charters &amp; Inventory</h2>
+            </div>
             <div id="sitesContainer"></div>
 
-            <button id="showAddBtn" onclick="toggleAddForm()" class="cyber-btn cyber-btn-saffron" style="font-size: 18px; margin-top: 10px;">
-                ➕ Add Another Website
+            <button id="showAddBtn" onclick="toggleAddForm()" class="btn btn-saffron" style="font-size: 14px; margin-top: 12px;">
+                ➕ Charter Another Realm
             </button>
 
             <!-- ADD SITE CARD -->
-            <div id="addSiteCard" style="display: none; background: rgba(3, 5, 10, 0.95); border: 1.5px solid var(--neon-saffron); border-radius: 4px; padding: 16px; margin-top: 16px;">
-                <h3 style="font-family: var(--font-pixel); font-size: 26px; color: var(--neon-yellow); margin-top: 0;">Add New Website</h3>
+            <div id="addSiteCard" style="display: none; background: var(--rpg-wood-dark); border: 2px solid var(--rpg-gold); border-radius: 6px; padding: 20px; margin-top: 20px;">
+                <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-gold-light); margin-top: 0;">Add New Realm Charter</h3>
                 
-                <div style="margin-bottom: 12px;">
-                    <label style="font-weight: bold; color: var(--neon-cyan);">Site Title:</label>
+                <div style="margin-bottom: 14px;">
+                    <label>Realm / Site Title:</label>
                     <input type="text" id="newTitle" placeholder="e.g. My Creative Corner">
                 </div>
 
-                <div style="margin-bottom: 12px;">
-                    <label style="font-weight: bold; color: var(--neon-cyan);">URL:</label>
+                <div style="margin-bottom: 14px;">
+                    <label>Homepage URL:</label>
                     <input type="url" id="newUrl" placeholder="https://example.com">
                 </div>
 
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: bold; color: var(--neon-cyan);">Unique Slug (ID):</label>
+                <div style="margin-bottom: 18px;">
+                    <label>Unique Guild Slug (ID):</label>
                     <input type="text" id="newSlug" placeholder="my-creative-corner">
                 </div>
 
                 <div>
-                    <button onclick="addSite()" class="cyber-btn cyber-btn-saffron">Create Site</button>
-                    <button onclick="toggleAddForm()" class="cyber-btn">Cancel</button>
+                    <button onclick="addSite()" class="btn btn-saffron">Inscribe Charter</button>
+                    <button onclick="toggleAddForm()" class="btn">Cancel</button>
                 </div>
             </div>
         </fieldset>
@@ -127,13 +131,12 @@
     </div>
 
     <!-- FOOTER -->
-    <fieldset class="cyber-box" style="text-align: center;">
+    <fieldset class="retro-box" style="text-align: center;">
         <div style="margin-bottom: 10px;">
-            <img src="graphics/email-me.gif" alt="Email Me" style="vertical-align: middle; margin-right: 8px;">
-            <span>Need support? Contact <a href="mailto:sudip@blackpiratex.com">sudip@blackpiratex.com</a></span>
+            <span>Need assistance? Contact <a href="mailto:sudip@blackpiratex.com">sudip@blackpiratex.com</a></span>
         </div>
-        <p style="font-size: 13px; color: var(--text-dim); margin: 0;">
-            WebSutra Webring &copy; 2026 | <a href="/">Return to Homepage</a>
+        <p style="font-size: 13px; color: var(--text-muted); margin: 0;">
+            WebSutra Webring &copy; 2026 | <a href="/">Return to World Map</a>
         </p>
     </fieldset>
 
@@ -188,13 +191,13 @@
     async function verifySite(slug, btnId) {
         const btn = document.getElementById(btnId);
         const originalText = btn.textContent;
-        btn.textContent = "Scanning...";
+        btn.textContent = "Scrying Scraper...";
         btn.disabled = true;
 
         const res = await api('/api/verify', { slug: slug });
 
         if (res.success) {
-            btn.textContent = "✓ Success";
+            btn.textContent = "✓ Verified";
             setTimeout(() => login(), 1000); 
         } else {
             alert(res.error);
@@ -206,7 +209,7 @@
     async function saveProfile() {
         const newEmail = document.getElementById('userEmail').value;
         const res = await api('/api/manage', { action: 'update_profile', newEmail });
-        if(res.success) alert("Email updated."); else alert(res.error);
+        if(res.success) alert("Profile updated."); else alert(res.error);
     }
 
     async function saveSite(id) {
@@ -221,7 +224,7 @@
     }
 
     async function deleteSite(id) {
-        if(!confirm("Permanently delete this site?")) return;
+        if(!confirm("Permanently delete this realm charter?")) return;
         const res = await api('/api/manage', { action: 'delete_site', siteId: id });
         if(res.success) login(); else alert(res.error);
     }
@@ -271,7 +274,7 @@
 
         const container = document.getElementById('sitesContainer');
         if(sites.length === 0) {
-            container.innerHTML = '<p>No sites found on your account. Click Add Another Website below!</p>';
+            container.innerHTML = '<p>No chartered realms found. Click Charter Another Realm below!</p>';
             return;
         }
 
@@ -289,42 +292,42 @@
             const statusClass = site.status === 'verified' ? 'verified' : (site.status === 'pending' ? 'pending' : 'suspended');
 
             return `
-            <div style="background: rgba(3, 5, 10, 0.95); border: 1.5px solid var(--neon-cyan); border-radius: 4px; padding: 16px; margin-bottom: 22px;">
-                <h4 style="margin: 0 0 12px 0; font-family: var(--font-pixel); font-size: 24px; color: var(--neon-yellow);">
-                    ${site.title} 
-                    <span class="status-pill ${statusClass}" style="vertical-align: middle; font-size: 13px; margin-left: 10px;">STATUS: ${site.status.toUpperCase()}</span>
+            <div style="background: var(--rpg-wood-dark); border: 2px solid var(--rpg-gold); border-radius: 6px; padding: 18px; margin-bottom: 22px; box-shadow: 0 4px 12px rgba(0,0,0,0.6);">
+                <h4 style="margin: 0 0 14px 0; font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-gold-light);">
+                    🛡️ ${site.title} 
+                    <span class="status-pill ${statusClass}" style="vertical-align: middle; margin-left: 10px;">LEVEL 99 ${site.status.toUpperCase()}</span>
                 </h4>
                 
-                <div style="margin-bottom: 10px;">
-                    <label style="font-weight: bold; color: var(--neon-cyan);">Title:</label>
+                <div style="margin-bottom: 12px;">
+                    <label>Site Title:</label>
                     <input type="text" id="title-${site.id}" value="${site.title}">
                 </div>
 
-                <div style="margin-bottom: 10px;">
-                    <label style="font-weight: bold; color: var(--neon-cyan);">URL:</label>
+                <div style="margin-bottom: 12px;">
+                    <label>URL:</label>
                     <input type="url" id="url-${site.id}" value="${site.url}">
                 </div>
 
-                <div style="margin-bottom: 14px;">
-                    <label style="font-weight: bold; color: var(--neon-cyan);">Slug:</label>
+                <div style="margin-bottom: 16px;">
+                    <label>Guild Slug:</label>
                     <input type="text" id="slug-${site.id}" value="${site.slug}">
                 </div>
                 
-                <div style="margin-bottom: 16px;">
-                    <button onclick="saveSite(${site.id})" class="cyber-btn cyber-btn-saffron">💾 Save Changes</button>
-                    <button onclick="deleteSite(${site.id})" class="cyber-btn cyber-btn-pink">🗑️ Delete Site</button>
+                <div style="margin-bottom: 18px;">
+                    <button onclick="saveSite(${site.id})" class="btn btn-saffron">💾 Save Changes</button>
+                    <button onclick="deleteSite(${site.id})" class="btn btn-pink">🗑️ Delete Charter</button>
                 </div>
                 
-                <hr style="border: 0; border-top: 1px dashed rgba(0, 240, 255, 0.4);">
+                <hr style="border: 0; border-top: 1px dashed var(--rpg-gold-dark);">
                 
-                <p style="font-weight: bold; margin-bottom: 6px; color: var(--neon-cyan);">HTML Integration Snippet:</p>
-                <textarea rows="5" readonly style="background: #000; color: var(--neon-yellow);">${snippet}</textarea>
+                <p style="font-weight: bold; margin-bottom: 8px; color: var(--rpg-gold);">HTML Integration Snippet:</p>
+                <textarea rows="5" readonly style="background: var(--rpg-parchment-light); color: var(--rpg-parchment-text); font-family: var(--font-mono);">${snippet}</textarea>
                 
-                <div style="margin-top: 14px; font-weight: bold;">
-                    Verification Status: <strong>${site.status}</strong> 
+                <div style="margin-top: 16px; font-weight: bold; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+                    <span>Verification Status: <strong>${site.status}</strong></span>
                     ${site.status === 'pending' 
-                        ? `<button id="verify-btn-${site.id}" onclick="verifySite('${site.slug}', 'verify-btn-${site.id}')" class="cyber-btn cyber-btn-saffron" style="margin-left: 12px;">🔍 Verify Now</button>`
-                        : `<span style="color: var(--neon-lime); margin-left: 10px;">✓ Verified</span>`
+                        ? `<button id="verify-btn-${site.id}" onclick="verifySite('${site.slug}', 'verify-btn-${site.id}')" class="btn btn-saffron">🔍 Verify Widget Placement</button>`
+                        : `<span style="color: #22c55e;">✓ Guild Verified</span>`
                     }
                 </div>
             </div>`;

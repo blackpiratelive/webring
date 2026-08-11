@@ -1,5 +1,5 @@
 // public/widget.js
-// This script will be embedded on member sites to display the webring navigation.
+// Official WebSutra Classic Fantasy RPG Webring Widget
 
 (() => {
   const widgetContainer = document.getElementById('my-webring');
@@ -8,69 +8,76 @@
     return;
   }
 
-  const scriptSrc = document.currentScript.src;
-  const apiBaseUrl = new URL(scriptSrc).origin;
+  const scriptSrc = document.currentScript ? document.currentScript.src : 'https://webring.blackpiratex.com/widget.js';
+  const apiBaseUrl = new URL(scriptSrc, window.location.href).origin;
   const currentPageUrl = window.location.href;
 
-  // --- Create the Widget's HTML with Pirate Styling ---
   widgetContainer.innerHTML = `
     <style>
-      @keyframes widget-jiggle {
-        0%, 100% { transform: rotate(0); }
-        25% { transform: rotate(-3deg); }
-        75% { transform: rotate(3deg); }
-      }
-      .webring-pirate-widget {
-        background-color: #fdf5e6; /* Old Lace */
-        border: 4px solid #8B4513; /* SaddleBrown */
+      @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@600;700&display=swap');
+      
+      .websutra-rpg-widget {
+        background: linear-gradient(180deg, #1c120a 0%, #0d0804 100%);
+        border: 2px solid #f4c430;
         border-radius: 8px;
-        padding: 16px;
-        font-family: 'Gaegu', cursive, sans-serif;
+        padding: 16px 20px;
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
         text-align: center;
-        max-width: 320px;
-        margin: auto;
-        box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
+        max-width: 340px;
+        margin: 12px auto;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7), 0 0 10px rgba(244, 196, 48, 0.2);
+        color: #ffeb99;
       }
-      .webring-pirate-widget h3 {
-        font-family: 'IM Fell English SC', serif;
-        font-size: 1.5rem;
-        color: #8B0000; /* Dark Red */
-        margin: 0 0 12px 0;
-        padding-bottom: 5px;
-        border-bottom: 2px dashed #8B4513;
+      .websutra-rpg-widget h3 {
+        font-family: 'Cinzel', serif;
+        font-size: 1.15rem;
+        color: #f4c430;
+        margin: 0 0 10px 0;
+        padding-bottom: 6px;
+        border-bottom: 1px dashed #997514;
+        letter-spacing: 0.5px;
       }
-      .webring-pirate-widget nav {
+      .websutra-rpg-widget h3 a {
+        color: #f4c430;
+        text-decoration: none;
+      }
+      .websutra-rpg-widget nav {
         display: flex;
         justify-content: space-around;
         align-items: center;
+        gap: 8px;
       }
-      .webring-pirate-widget .webring-link {
+      .websutra-rpg-widget .webring-link {
         text-decoration: none;
-        color: #4a2c2a;
-        font-weight: bold;
-        font-size: 1.1rem;
-        transition: transform 0.2s ease-in-out;
+        color: #ffeb99;
+        font-weight: 700;
+        font-size: 0.85rem;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: all 0.15s ease-in-out;
       }
-      .webring-pirate-widget .webring-link:hover {
-        animation: widget-jiggle 0.4s;
-        color: #8B0000;
+      .websutra-rpg-widget .webring-link:hover {
+        background: rgba(244, 196, 48, 0.15);
+        color: #ffffff;
+        text-shadow: 0 0 6px rgba(244, 196, 48, 0.6);
       }
     </style>
-    <div class="webring-pirate-widget">
-      <h3>Cap'n blackpiratex's WebRing</h3>
+    <div class="websutra-rpg-widget">
+      <h3>🛡️ Member of <a href="${apiBaseUrl}" target="_blank">WebSutra Guild</a></h3>
       <nav>
-        <a href="#" data-action="previous" class="webring-link">&larr; Previous Port</a>
-        <a href="#" data-action="random" class="webring-link">Random Isle</a>
-        <a href="#" data-action="next" class="webring-link">Next Port &rarr;</a>
+        <a href="#" data-action="previous" class="webring-link">← Prev Realm</a>
+        <a href="#" data-action="random" class="webring-link">🎲 Random</a>
+        <a href="#" data-action="next" class="webring-link">Next Realm →</a>
       </nav>
     </div>
   `;
 
-  // --- Add Event Listeners ---
   widgetContainer.querySelectorAll('.webring-link').forEach(link => {
     link.addEventListener('click', async (event) => {
       event.preventDefault();
       const action = event.target.getAttribute('data-action');
+      const titleEl = widgetContainer.querySelector('h3');
+      const originalTitle = titleEl.innerHTML;
       
       try {
         const apiUrl = new URL('/api/ring', apiBaseUrl);
@@ -78,24 +85,23 @@
         apiUrl.searchParams.append('action', action);
         apiUrl.searchParams.append('json', 'true');
 
-        // Optional: Show a loading state
-        widgetContainer.querySelector('h3').textContent = 'Sailing the seas...';
+        titleEl.textContent = '🔮 Navigating Realm Portals...';
 
         const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error('Lost at sea!');
+        if (!response.ok) throw new Error('Portal Error');
         
         const data = await response.json();
 
         if (data.targetUrl) {
           window.location.href = data.targetUrl;
         } else {
-          throw new Error('No map to this island.');
+          throw new Error('No Portal Found');
         }
       } catch (error) {
         console.error('Webring Error:', error);
-        widgetContainer.querySelector('h3').textContent = 'Cursed Voyage!';
+        titleEl.textContent = '⚠️ Portal Sealed!';
         setTimeout(() => {
-             widgetContainer.querySelector('h3').textContent = "Cap'n blackpiratex's WebRing";
+          titleEl.innerHTML = originalTitle;
         }, 2000);
       }
     });

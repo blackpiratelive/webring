@@ -3,24 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WebSutra Responsive Banner</title>
+<title>WebSutra RPG Realm Banner</title>
 <style>
-    /* 1. RESET: Force no scrolling on the document level */
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@600;700&display=swap');
+    
     html, body {
         margin: 0;
         padding: 0;
         width: 100%;
         height: 100%;
-        overflow: hidden; /* CRITICAL: Kills scrollbars */
+        overflow: hidden;
         background-color: transparent;
-        font-family: sans-serif;
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     }
 
-    * {
-        box-sizing: border-box; /* Ensures padding/borders don't expand width */
-    }
+    * { box-sizing: border-box; }
 
-    /* Link Wrapper */
     .banner-link {
         text-decoration: none;
         display: block;
@@ -29,48 +27,40 @@
     }
 
     .banner-classic {
-        background-color: #ffff00; /* Bright Yellow */
-        border: 5px ridge #0000ff; /* Blue Ridge Border */
-        
-        /* Layout */
+        background: linear-gradient(180deg, #2a1b0d 0%, #150d06 100%);
+        border: 3px double #f4c430;
+        border-radius: 6px;
         display: flex;
-        flex-wrap: wrap; /* Allows wrapping */
+        flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        align-content: center; /* Vertically center content */
-        
-        padding: 4px 8px;
+        padding: 4px 10px;
         width: 100%;
-        height: 100%; /* Fill the iframe */
+        height: 100%;
+        box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 4px 10px rgba(0,0,0,0.5);
     }
 
-    /* Text Styles */
     .banner-classic h2 {
-        font-family: "Comic Sans MS", "Chalkboard SE", sans-serif;
-        color: #ff0000;
+        font-family: 'Cinzel', serif;
+        color: #f4c430;
         margin: 0;
-        font-size: 22px; /* Slightly smaller to be safe */
-        text-shadow: 2px 2px #00ff00;
+        font-size: 18px;
         line-height: 1;
         white-space: nowrap;
         flex-shrink: 0; 
     }
 
-    /* Marquee Box */
     .marquee-container {
         overflow: hidden;
         white-space: nowrap;
-        background: white;
-        border: 2px inset #ccc;
-        color: blue;
-        font-weight: bold;
-        font-size: 13px;
-        font-family: Arial, sans-serif;
-        height: 20px;
-        line-height: 20px;
-        position: relative;
-        
-        /* Flex magic: Grow to fill space, but don't get smaller than 100px */
+        background: #0d0804;
+        border: 1px solid #997514;
+        border-radius: 4px;
+        color: #ffeb99;
+        font-weight: 600;
+        font-size: 12px;
+        height: 22px;
+        line-height: 22px;
         flex: 1 1 120px; 
         margin: 0 10px;
     }
@@ -78,7 +68,7 @@
     .scrolling {
         display: inline-block;
         padding-left: 100%;
-        animation: scroll-left 6s linear infinite;
+        animation: scroll-left 7s linear infinite;
     }
 
     @keyframes scroll-left {
@@ -86,66 +76,39 @@
         100% { transform: translateX(-100%); }
     }
 
-    /* Button Style */
     .click-btn {
-        background: #cccccc;
-        border: 2px outset #ffffff;
+        background: linear-gradient(180deg, #d97706 0%, #78350f 100%);
+        border: 1px solid #fbbf24;
+        border-radius: 4px;
         font-size: 10px;
-        color: black;
+        color: #ffffff;
         font-weight: bold;
         text-align: center;
-        padding: 3px 6px;
-        font-family: Verdana, sans-serif;
+        padding: 4px 8px;
         flex-shrink: 0;
         white-space: nowrap;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
 
-    /* --- MOBILE BREAKPOINT --- */
-    /* Triggers when iframe width is small (typical mobile portrait) */
     @media (max-width: 450px) {
-        .banner-classic {
-            padding: 6px;
-            align-content: space-around; /* Space out rows */
-        }
-
-        /* Row 1: Logo and Button */
-        .banner-classic h2 {
-            order: 1;
-            font-size: 20px;
-        }
-        
-        .click-btn {
-            order: 2;
-        }
-
-        /* Row 2: Marquee drops down */
-        .marquee-container {
-            order: 3;
-            flex: 1 1 100%; /* Force full width */
-            margin: 6px 0 0 0; /* Add top margin */
-            width: 100%;
-        }
+        .banner-classic { padding: 4px 6px; }
+        .banner-classic h2 { font-size: 16px; }
+        .marquee-container { flex: 1 1 100%; margin: 4px 0 0 0; }
     }
 </style>
 </head>
 <body>
 
-    <!-- LINK: Change href="#" to your actual Join URL -->
     <a href="https://webring.blackpiratex.com" target="_blank" class="banner-link">
         <div class="banner-classic">
-            <!-- Logo -->
-            <div class="amateur-font">
-                <h2>WebSutra</h2>
-            </div>
+            <h2>🛡️ WebSutra</h2>
             
-            <!-- Marquee -->
             <div class="marquee-container">
-                <div class="scrolling">★ JOIN TODAY!!! ★ DESI LINKS ★ FREE TRAFFIC ★</div>
+                <div class="scrolling">★ JOIN THE GUILD ★ DISCOVER HANDMADE REALMS 🇮🇳 ★ LEVEL UP YOUR SITE ★</div>
             </div>
             
-            <!-- Button -->
             <div class="click-btn">
-                CLICK<br>HERE
+                ENTER<br>REALM
             </div>
         </div>
     </a>

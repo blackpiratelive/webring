@@ -2,106 +2,100 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>WebSutra Banner 250x250</title>
+<title>WebSutra RPG Square Banner 250x250</title>
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@600;700&display=swap');
+
     body {
         margin: 0;
         padding: 0;
         background-color: transparent;
-        font-family: "Arial Black", Gadget, sans-serif;
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     }
 
-    /* Link Wrapper */
     .banner-link {
         text-decoration: none;
         display: block;
         width: 250px;
         height: 250px;
-        /* To account for the drop shadow without cutting it off in strict iframes, 
-           you might need to reduce width slightly or set margin, 
-           but standard ad slots usually handle inner content. */
     }
 
     .banner-square {
-        width: 240px; /* Slightly smaller to fit shadow */
+        width: 240px;
         height: 240px;
-        background-color: #008080; /* Windows Teal */
-        border: 4px outset #ffffff;
-        padding: 5px;
+        background: linear-gradient(180deg, #1c120a 0%, #0d0804 100%);
+        border: 3px double #f4c430;
+        border-radius: 8px;
+        padding: 12px;
         text-align: center;
-        color: white;
+        color: #f3e5ca;
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
-        box-shadow: 8px 8px 0px #000000; /* Hard shadow */
+        justify-content: space-between;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.8), 0 0 10px rgba(244,196,48,0.2);
         box-sizing: border-box;
         cursor: pointer;
     }
 
-    /* Header Bar */
     .banner-square h2 {
-        background-color: navy;
-        color: yellow;
+        background: #2a1b0d;
+        color: #f4c430;
         margin: 0;
-        padding: 5px;
-        font-size: 16px;
-        border: 2px inset white;
-        text-transform: uppercase;
-    }
-
-    /* Content Area */
-    .banner-square .content {
-        font-family: "Times New Roman", serif;
-        font-size: 18px;
-        line-height: 1.2;
-    }
-
-    /* Animations */
-    .pulse-text {
-        animation: pulse 0.5s infinite alternate;
-        font-weight: bold;
-        font-size: 20px;
-        margin: 10px 0;
-        font-family: Arial, sans-serif;
-    }
-
-    @keyframes pulse {
-        from { color: #ff00ff; transform: scale(1); }
-        to { color: #ffffff; transform: scale(1.1); }
-    }
-
-    /* Button Style */
-    .click-btn {
-        background: #cccccc;
-        border: 2px outset #ffffff;
+        padding: 6px;
         font-size: 14px;
-        color: black;
+        font-family: 'Cinzel', serif;
+        border: 1px solid #997514;
+        border-radius: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .banner-square .content {
+        font-size: 14px;
+        line-height: 1.4;
+        color: #c5b293;
+    }
+
+    .pulse-text {
+        font-family: 'Cinzel', serif;
+        font-weight: bold;
+        font-size: 18px;
+        color: #f4c430;
+        margin: 8px 0;
+        text-shadow: 0 0 8px rgba(244, 196, 48, 0.4);
+    }
+
+    .click-btn {
+        background: linear-gradient(180deg, #d97706 0%, #78350f 100%);
+        border: 1px solid #fbbf24;
+        border-radius: 4px;
+        font-size: 13px;
+        color: #ffffff;
         font-weight: bold;
         text-align: center;
-        padding: 5px;
-        font-family: Verdana, sans-serif;
+        padding: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.6);
     }
 
-    .banner-square:active .click-btn {
-        border-style: inset;
+    .banner-square:hover .click-btn {
+        background: linear-gradient(180deg, #f59e0b 0%, #b45309 100%);
     }
 </style>
 </head>
 <body>
 
-    <!-- LINK: Change href="#" to your actual Join URL -->
-    <a href="#" target="_blank" class="banner-link">
+    <a href="https://webring.blackpiratex.com" target="_blank" class="banner-link">
         <div class="banner-square">
-            <h2>⚠ WEBMASTER ALERT ⚠</h2>
+            <h2>🛡️ WEBMSTERS GUILD</h2>
             
             <div class="content">
-                <p>Is your site<br><strong>LONELY?</strong> 😭</p>
-                <p class="pulse-text">JOIN WEBSUTRA!</p>
-                <p style="font-size: 14px; font-style: italic;">The #1 Ring for<br>Desi Sites 🇮🇳</p>
+                <p style="margin: 0;">Is your realm site<br><strong style="color:#fff;">ISOLATED?</strong> 🔮</p>
+                <div class="pulse-text">JOIN WEBSUTRA!</div>
+                <p style="margin: 0; font-size: 12px;">Handmade Homepages &amp; Indie Blogs 🇮🇳</p>
             </div>
             
             <div class="click-btn">
-                ENTER HERE
+                ENTER GUILD HALL
             </div>
         </div>
     </a>

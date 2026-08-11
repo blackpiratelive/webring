@@ -85,6 +85,7 @@ WebSutra is a static site + serverless API for an India-focused webring & direct
 ---
 
 ## Recent Accomplishments
+- **Active State Map Fills & Unique State HSL Palette**: States with at least 1 registered site automatically render with distinct, unique HSL fill colors and glowing neon drop-shadows across the world map.
 - **Button & UI Typography Upgrade**: Replaced blocky `Press Start 2P` pixel font on buttons, badges, and banners with crisp, clean **`Plus Jakarta Sans`**, solving illegibility on long button labels.
 - **Highly Legible Typography Upgrade**: Replaced cramped cursive fonts with Google Font `'Plus Jakarta Sans'`, providing crisp, modern, highly readable body text while preserving medieval `'Cinzel'` headings.
 - **Dynamic Map & Dashboard Level/XP Calculation**: Replaced hardcoded "LEVEL 99" badges with dynamic Level and XP calculations based on `member_days` across state popups and member dashboards.

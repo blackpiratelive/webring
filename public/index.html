@@ -277,21 +277,48 @@
         animate();
     }
 
-    // GOLDEN FANTASY REALM MAP HOVER PALETTE
-    const stateColors = [
-        '#f4c430', '#fbbf24', '#eab308', '#d97706', '#b45309',
-        '#10b981', '#059669', '#38bdf8', '#0284c7', '#a855f7'
-    ];
-
     let allSites = [];
 
+    // UNIQUE HSL FANTASY COLOR GENERATOR PER STATE
     function getStateColor(stateName) {
         let hash = 0;
         for (let i = 0; i < stateName.length; i++) {
             hash = stateName.charCodeAt(i) + ((hash << 5) - hash);
         }
-        const index = Math.abs(hash) % stateColors.length;
-        return stateColors[index];
+        const hue = Math.abs(hash * 47) % 360;
+        return `hsl(${hue}, 85%, 55%)`;
+    }
+
+    function updateMapStateFills() {
+        const paths = document.querySelectorAll('#svg-container path');
+        paths.forEach(path => {
+            const stateName = path.getAttribute('id');
+            if (!stateName) return;
+
+            const stateMembers = allSites.filter(s => 
+                (s.state && s.state.toLowerCase() === stateName.toLowerCase()) ||
+                (!s.state && ((s.title && s.title.toLowerCase().includes(stateName.toLowerCase())) ||
+                (s.slug && s.slug.toLowerCase().includes(stateName.toLowerCase()))))
+            );
+
+            const stateColor = getStateColor(stateName);
+
+            if (stateMembers.length > 0) {
+                path.setAttribute('data-active', 'true');
+                path.style.fill = stateColor;
+                path.style.fillOpacity = '0.75';
+                path.style.stroke = stateColor;
+                path.style.strokeWidth = '2px';
+                path.style.filter = `drop-shadow(0 0 12px ${stateColor})`;
+            } else {
+                path.setAttribute('data-active', 'false');
+                path.style.fill = '#1a120b';
+                path.style.fillOpacity = '1';
+                path.style.stroke = 'var(--rpg-gold)';
+                path.style.strokeWidth = '1.8px';
+                path.style.filter = 'drop-shadow(0 0 8px rgba(244, 196, 48, 0.3))';
+            }
+        });
     }
 
     function setupMapInteractivity() {
@@ -306,9 +333,10 @@
             path.addEventListener('mouseenter', () => {
                 rpgAudio.playHover();
                 path.style.fill = hoverColor;
+                path.style.fillOpacity = '1';
                 path.style.stroke = '#ffffff';
-                path.style.strokeWidth = '2.5px';
-                path.style.filter = `drop-shadow(0 0 20px ${hoverColor})`;
+                path.style.strokeWidth = '3px';
+                path.style.filter = `drop-shadow(0 0 24px ${hoverColor})`;
                 
                 hudState.textContent = stateName.toUpperCase();
                 hudState.style.color = hoverColor;
@@ -325,10 +353,21 @@
             });
 
             path.addEventListener('mouseleave', () => {
-                path.style.fill = '#1a120b';
-                path.style.stroke = 'var(--rpg-gold)';
-                path.style.strokeWidth = '1.8px';
-                path.style.filter = 'drop-shadow(0 0 8px rgba(244, 196, 48, 0.3))';
+                const isActive = path.getAttribute('data-active') === 'true';
+
+                if (isActive) {
+                    path.style.fill = hoverColor;
+                    path.style.fillOpacity = '0.75';
+                    path.style.stroke = hoverColor;
+                    path.style.strokeWidth = '2px';
+                    path.style.filter = `drop-shadow(0 0 12px ${hoverColor})`;
+                } else {
+                    path.style.fill = '#1a120b';
+                    path.style.fillOpacity = '1';
+                    path.style.stroke = 'var(--rpg-gold)';
+                    path.style.strokeWidth = '1.8px';
+                    path.style.filter = 'drop-shadow(0 0 8px rgba(244, 196, 48, 0.3))';
+                }
                 
                 hudState.textContent = 'HOVER OVER MAP';
                 hudState.style.color = 'var(--rpg-gold-light)';
@@ -518,6 +557,7 @@
             const res = await fetch('/api/members?t=' + new Date().getTime());
             if (!res.ok) throw new Error("Failed to load members");
             allSites = await res.json();
+            updateMapStateFills();
         } catch (e) {
             console.error(e);
         }
@@ -531,6 +571,7 @@
     initConstellationBackground();
     initPanAndZoom();
     setupMapInteractivity();
+    loadMembers();
     // 2. PAN & ZOOM ENGINE (MOUSE WHEEL, MOUSE DRAG, TOUCH PINCH, TOUCH DRAG, ZOOM BUTTONS)
     let scale = 1;
     let pointX = 0;

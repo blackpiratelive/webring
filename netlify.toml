@@ -1,10 +1,13 @@
 # netlify.toml
-# This tells Netlify how to build your site.
+# Configures static publishing from public/ and serverless functions in api/
 
 [build]
-  # This confirms that your main page (index.html) and other assets are in the root.
-  publish = "."
+  publish = "public"
 
 [functions]
-  # This tells Netlify that your serverless functions are in the "netlify/functions" folder.
-  directory = "netlify/functions"
+  directory = "api"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200

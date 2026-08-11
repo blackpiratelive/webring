@@ -1,5 +1,6 @@
 {
   "name": "websutra-ring",
+  "type": "module",
   "scripts": {
     "migrate:secret-hashes": "node scripts/migrate-secret-hashes.mjs"
   },

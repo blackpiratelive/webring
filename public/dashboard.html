@@ -214,8 +214,13 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
-            return await req.json();
-        } catch(e) { return { error: "Network Error" }; }
+            const text = await req.text();
+            try {
+                return JSON.parse(text);
+            } catch(pe) {
+                return { error: `Server Error (${req.status}): ${text.slice(0, 120)}` };
+            }
+        } catch(e) { return { error: "Network Error: " + e.message }; }
     }
 
     async function login() {

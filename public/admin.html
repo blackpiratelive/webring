@@ -124,12 +124,21 @@
         }
 
         async function api(action, payload = {}) {
-            const res = await fetch('/api/admin', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ key: SECRET, action, ...payload })
-            });
-            return await res.json();
+            try {
+                const res = await fetch('/api/admin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key: SECRET, action, ...payload })
+                });
+                const text = await res.text();
+                try {
+                    return JSON.parse(text);
+                } catch (parseErr) {
+                    return { success: false, error: `Server returned ${res.status} HTML/Text: ${text.slice(0, 120)}` };
+                }
+            } catch (e) {
+                return { success: false, error: `Network Error: ${e.message}` };
+            }
         }
 
         function render(users) {

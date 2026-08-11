@@ -113,6 +113,7 @@
             <!-- DRAWER TAB BUTTONS -->
             <div class="drawer-tab-bar">
                 <button onclick="switchDrawerTab('about'); rpgAudio.playClick();" class="btn btn-saffron">📜 Overview</button>
+                <button onclick="switchDrawerTab('widgets'); rpgAudio.playClick();" class="btn btn-saffron">🔮 Widgets</button>
                 <a href="join.html" onclick="rpgAudio.playClick();" class="btn btn-saffron">⚔️ Join Guild</a>
                 <a href="members.html" onclick="rpgAudio.playClick();" class="btn btn-saffron">🎒 Members Gallery</a>
                 <button onclick="switchDrawerTab('directory'); rpgAudio.playClick();" class="btn">📜 Directory</button>
@@ -529,6 +530,40 @@
             body.innerHTML = `
                 <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-wood-dark); margin-top: 0;">🔒 Privacy Shield</h3>
                 <p>Your site details are preserved securely in our database. Dashboard secret keys are hashed with HMAC-SHA256.</p>
+            `;
+        } else if (tab === 'widgets') {
+            body.innerHTML = `
+                <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-wood-dark); margin-top: 0;">🔮 Guild Runes &amp; Widgets Catalog</h3>
+                <p>Embed these runes on your website to connect your realm to the WebSutra Webring!</p>
+                
+                <h4 style="font-family: var(--font-fantasy); color: var(--rpg-wood-dark); margin-bottom: 6px;">Rune #1: Classic Text Ring Widget</h4>
+                <div style="background: #0d0905; color: #fbbf24; border: 2px solid var(--rpg-gold); border-radius: 4px; padding: 10px; font-family: var(--font-mono); font-size: 12px; margin-bottom: 14px;">
+                    &lt;div id="websutra-ring" style="background:#1c120a; color:#ffeb99; border:2px solid #f4c430; padding:12px; text-align:center;"&gt;<br>
+                    &nbsp;&nbsp;&lt;p style="margin:0 0 6px 0; font-weight:bold;"&gt;Member of &lt;a href="https://webring.blackpiratex.com" style="color:#f4c430;"&gt;WebSutra&lt;/a&gt;&lt;/p&gt;<br>
+                    &nbsp;&nbsp;&lt;a href="https://webring.blackpiratex.com/api/ring?action=prev&amp;slug=YOUR-SLUG" style="color:#ffeb99; margin-right:10px;"&gt;← Prev&lt;/a&gt;<br>
+                    &nbsp;&nbsp;&lt;a href="https://webring.blackpiratex.com/api/ring?action=random" style="color:#ffeb99; margin-right:10px;"&gt;Random&lt;/a&gt;<br>
+                    &nbsp;&nbsp;&lt;a href="https://webring.blackpiratex.com/api/ring?action=next&amp;slug=YOUR-SLUG" style="color:#ffeb99;"&gt;Next →&lt;/a&gt;<br>
+                    &lt;/div&gt;
+                </div>
+
+                <h4 style="font-family: var(--font-fantasy); color: var(--rpg-wood-dark); margin-bottom: 6px;">Rune #2: Cap'n JS Widget Script</h4>
+                <div style="background: #0d0905; color: #fbbf24; border: 2px solid var(--rpg-gold); border-radius: 4px; padding: 10px; font-family: var(--font-mono); font-size: 12px; margin-bottom: 14px;">
+                    &lt;div id="my-webring"&gt;&lt;/div&gt;<br>
+                    &lt;script src="https://webring.blackpiratex.com/widget.js"&gt;&lt;/script&gt;
+                </div>
+
+                <h4 style="font-family: var(--font-fantasy); color: var(--rpg-wood-dark); margin-bottom: 6px;">Rune #3: 88x31 Retro Badge Button</h4>
+                <div style="background: #0d0905; color: #fbbf24; border: 2px solid var(--rpg-gold); border-radius: 4px; padding: 10px; font-family: var(--font-mono); font-size: 12px; margin-bottom: 16px;">
+                    &lt;a href="https://webring.blackpiratex.com" target="_blank"&gt;<br>
+                    &nbsp;&nbsp;&lt;img src="https://webring.blackpiratex.com/graphics/websutra-badge.jpg" alt="WebSutra Webring Member"&gt;<br>
+                    &lt;/a&gt;
+                </div>
+
+                <div style="margin-top: 18px; text-align: center;">
+                    <a href="widgets.html" onclick="rpgAudio.playClick()" class="btn btn-saffron" style="font-size: 15px;">
+                        📖 Open Full Guild Rune Catalog &amp; Integration Guides &rarr;
+                    </a>
+                </div>
             `;
         }
     }

@@ -20,7 +20,8 @@ WebSutra is a static site + serverless API for an India-focused webring & direct
   - `lib/secret-hash.mjs` - HMAC-SHA256 secret hashing algorithms.
   - `lib/secret-reset-tokens.mjs` - One-time secret reset token generation and consumption.
 - **Static UI (`public/`)**:
-  - `public/index.html` - **Primary Full-Screen Interactive World Map Viewport** (Hero Guild HUD with HP/MP bars, pan/zoom, state matching, real Level/XP calculation per state, Mana Ember particle canvas, `📜` FAB Quest Scroll, slide-out Quest Tome drawer).
+  - `public/index.html` - **Primary Full-Screen Interactive World Map Viewport** (Hero Guild HUD with HP/MP bars, pan/zoom, state matching, real Level/XP calculation per state, Mana Ember particle canvas, `📜` FAB Quest Scroll, slide-out Quest Tome drawer with `🔮 Widgets` tab).
+  - `public/widgets.html` - **Guild Runes & Widgets Catalog** (Embed code snippets, live previews, 88x31 badges, `widget.js` script embeds, and step-by-step framework integration guides).
   - `public/members.html` - **Gamified Guild Champions Gallery & XP Leaderboard** (Displays verified members only, state badges, level & XP based on `member_days`, live search, and sorting).
   - `public/demo.html` - **Traditional Scrolling Homepage** (About WebSutra, inline map, Member Gallery, and Members Directory table).
   - `public/join.html` - Dedicated Webring registration page ("Guild Charter Desk") with optional Indian State dropdown, secret key generator, and snippet output.
@@ -42,7 +43,7 @@ WebSutra is a static site + serverless API for an India-focused webring & direct
 ## Architecture Overview
 1. **DB-backed API (Source of Truth)**:
    - Built on Turso / libSQL (`@libsql/client`).
-   - Web UI in `public/index.html`, `public/members.html`, `public/join.html`, etc. interact with `/api/*` endpoints.
+   - Web UI in `public/index.html`, `public/widgets.html`, `public/members.html`, `public/join.html`, etc. interact with `/api/*` endpoints.
    - Automatic DB schema initialization (`ensureStateColumn` in `lib/db-init.mjs`) automatically adds `state` column to `sites` table on request.
    - Secret key hashes use HMAC-SHA256 with a pepper (`SECRET_HASH_PEPPER`).
 
@@ -51,7 +52,7 @@ WebSutra is a static site + serverless API for an India-focused webring & direct
    - Features **Google Maps-Style Pan & Zoom Engine**: mouse wheel zoom, mouse drag pan, mobile touch pinch-to-zoom, touch drag pan, and runic `[ ➕ ]` / `[ ➖ ]` / `[ 🧭 ]` control stack.
    - Features **HTML5 Canvas Mana Ember Background** (`#constellations-bg`) rendering floating golden embers and cyan mana sparks.
    - Built-in **Web Audio API Chiptune SFX Engine**: zero-dependency audio synthesizer for button clinks, parchment drawer unrolls, and hover harps with `🔊 SFX ON` toggle.
-   - Floating `📜` Quest Scroll FAB button opens a parchment modal drawer containing `Overview`, `Join Guild`, `Members Gallery`, `Directory`, `Oracle FAQ`, `Manifesto`, `Codex`, `Privacy`, and `Key Login`.
+   - Floating `📜` Quest Scroll FAB button opens a parchment modal drawer containing `Overview`, `Widgets`, `Join Guild`, `Members Gallery`, `Directory`, `Oracle FAQ`, `Manifesto`, `Codex`, `Privacy`, and `Key Login`.
 
 3. **Gamified XP Leaderboard System (`members.html` & Map Popups)**:
    - Displays verified member websites (`status === 'verified'`).
@@ -85,10 +86,8 @@ WebSutra is a static site + serverless API for an India-focused webring & direct
 ---
 
 ## Recent Accomplishments
+- **Guild Runes & Widgets Catalog (`public/widgets.html` & Drawer Tab)**: Created a dedicated widgets page and drawer scroll tab containing interactive widget previews, 1-click copyable embed code snippets, 88x31 badges, `widget.js` embeds, and step-by-step framework integration guides.
 - **Active State Map Fills & Unique State HSL Palette**: States with at least 1 registered site automatically render with distinct, unique HSL fill colors and glowing neon drop-shadows across the world map.
 - **Button & UI Typography Upgrade**: Replaced blocky `Press Start 2P` pixel font on buttons, badges, and banners with crisp, clean **`Plus Jakarta Sans`**, solving illegibility on long button labels.
 - **Highly Legible Typography Upgrade**: Replaced cramped cursive fonts with Google Font `'Plus Jakarta Sans'`, providing crisp, modern, highly readable body text while preserving medieval `'Cinzel'` headings.
 - **Dynamic Map & Dashboard Level/XP Calculation**: Replaced hardcoded "LEVEL 99" badges with dynamic Level and XP calculations based on `member_days` across state popups and member dashboards.
-- **Optional Indian State Support & Auto DB Migration**: Added optional `state` selection dropdown across sign up (`join.html`), member dashboard (`dashboard.html`), and admin panel (`admin.html`), with automatic DB schema migration (`ensureStateColumn`) in `lib/db-init.mjs`.
-- **Gamified Members Gallery (`public/members.html`)**: Created a dedicated verified members gallery with level badges, XP bars based on `member_days`, state badges, live search filtering, and leaderboard sorting.
-- **Web Audio API Chiptune SFX Engine**: Synthesized retro RPG sound effects for button clicks, drawer unrolls, and hover states with audio mute toggle (`🔊 SFX ON`).

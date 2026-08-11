@@ -29,7 +29,7 @@ WebSutra is a static site + serverless API for an India-focused webring & direct
   - `public/reset-secret.html` - One-time secret reset page ("Key Recovery Altar").
   - `public/api-docs.html` - Interactive API documentation ("Oracle API Reference").
   - `public/widget.js` - Embeddable webring widget script.
-  - `public/style.css` - **Classic Fantasy RPG World Map & Questbook Design System** (Highly legible `Plus Jakarta Sans` body typography, parchment cards, embossed wood & gold 3D buttons, RPG status bars, `Press Start 2P`, `Cinzel Decorative`, `Courier Prime`).
+  - `public/style.css` - **Classic Fantasy RPG World Map & Questbook Design System** (Ultra-legible `Plus Jakarta Sans` typography across body and UI buttons, parchment cards, embossed wood & gold 3D buttons, RPG status bars, `Cinzel Decorative`, `Courier Prime`).
   - `public/graphics/` - Retro GIFs (`flag.gif`, `divider-blood.gif`, `email-me.gif`, `join-now.gif`), badge (`websutra-badge.jpg`), and `states.svg`.
   - `public/india.png` - India map graphic used in About sections.
 - **Docs**:
@@ -85,6 +85,7 @@ WebSutra is a static site + serverless API for an India-focused webring & direct
 ---
 
 ## Recent Accomplishments
+- **Button & UI Typography Upgrade**: Replaced blocky `Press Start 2P` pixel font on buttons, badges, and banners with crisp, clean **`Plus Jakarta Sans`**, solving illegibility on long button labels.
 - **Highly Legible Typography Upgrade**: Replaced cramped cursive fonts with Google Font `'Plus Jakarta Sans'`, providing crisp, modern, highly readable body text while preserving medieval `'Cinzel'` headings.
 - **Dynamic Map & Dashboard Level/XP Calculation**: Replaced hardcoded "LEVEL 99" badges with dynamic Level and XP calculations based on `member_days` across state popups and member dashboards.
 - **Optional Indian State Support & Auto DB Migration**: Added optional `state` selection dropdown across sign up (`join.html`), member dashboard (`dashboard.html`), and admin panel (`admin.html`), with automatic DB schema migration (`ensureStateColumn`) in `lib/db-init.mjs`.

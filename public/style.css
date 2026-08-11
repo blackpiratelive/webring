@@ -47,7 +47,7 @@
   --text-dim: #a08c70;
   --text-dark: #201309;
 
-  --font-pixel: 'Press Start 2P', monospace;
+  --font-pixel: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-fantasy: 'Cinzel Decorative', 'Cinzel', serif;
   --font-heading: 'Cinzel', serif;
   --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;

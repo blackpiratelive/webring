@@ -350,7 +350,8 @@
         let filtered = rawMembers.filter(m => 
             (m.title && m.title.toLowerCase().includes(query)) ||
             (m.slug && m.slug.toLowerCase().includes(query)) ||
-            (m.url && m.url.toLowerCase().includes(query))
+            (m.url && m.url.toLowerCase().includes(query)) ||
+            (m.state && m.state.toLowerCase().includes(query))
         );
 
         if (sortVal === 'xp-desc') {
@@ -360,7 +361,6 @@
                 return xpB - xpA;
             });
         } else if (sortVal === 'newest') {
-            // Newest by member_days ascending or array index
             filtered.sort((a, b) => (a.member_days || 0) - (b.member_days || 0));
         } else if (sortVal === 'title-asc') {
             filtered.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
@@ -391,6 +391,7 @@
 
                         <h3 class="champion-title">${escapeHtml(m.title)}</h3>
                         <div class="champion-rank">${xp.rankTitle}</div>
+                        ${m.state ? `<div style="font-family: var(--font-pixel); font-size: 10px; color: #b45309; margin-bottom: 8px;">📍 ${escapeHtml(m.state)}</div>` : ''}
 
                         <div class="xp-container">
                             <div class="xp-header">

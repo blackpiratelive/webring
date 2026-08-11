@@ -112,9 +112,52 @@
                     <input type="url" id="newUrl" placeholder="https://example.com">
                 </div>
 
-                <div style="margin-bottom: 18px;">
+                <div style="margin-bottom: 14px;">
                     <label>Unique Guild Slug (ID):</label>
                     <input type="text" id="newSlug" placeholder="my-creative-corner">
+                </div>
+
+                <div style="margin-bottom: 18px;">
+                    <label>Indian Realm / State (Optional):</label>
+                    <select id="newState">
+                        <option value="">-- None / Outside India --</option>
+                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Chandigarh">Chandigarh</option>
+                        <option value="Chhattisgarh">Chhattisgarh</option>
+                        <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                        <option value="Jharkhand">Jharkhand</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Ladakh">Ladakh</option>
+                        <option value="Lakshadweep">Lakshadweep</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Manipur">Manipur</option>
+                        <option value="Meghalaya">Meghalaya</option>
+                        <option value="Mizoram">Mizoram</option>
+                        <option value="Nagaland">Nagaland</option>
+                        <option value="Odisha">Odisha</option>
+                        <option value="Puducherry">Puducherry</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Sikkim">Sikkim</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Tripura">Tripura</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                        <option value="Uttarakhand">Uttarakhand</option>
+                        <option value="West Bengal">West Bengal</option>
+                    </select>
                 </div>
 
                 <div>
@@ -143,6 +186,15 @@
 </div> <!-- END CONTAINER -->
 
 <script>
+    const INDIAN_STATES = [
+        "Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar",
+        "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa",
+        "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka",
+        "Kerala", "Ladakh", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya",
+        "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
+        "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
+    ];
+
     let sessionKey = localStorage.getItem('websutra_key') || '';
     let currentUser = null;
 
@@ -218,7 +270,8 @@
             siteId: id,
             newTitle: document.getElementById(`title-${id}`).value,
             newUrl: document.getElementById(`url-${id}`).value,
-            newSlug: document.getElementById(`slug-${id}`).value
+            newSlug: document.getElementById(`slug-${id}`).value,
+            newState: document.getElementById(`state-${id}`).value
         });
         if(res.success) alert("Site details updated."); else alert(res.error);
     }
@@ -234,7 +287,8 @@
             action: 'add_site',
             newTitle: document.getElementById('newTitle').value,
             newUrl: document.getElementById('newUrl').value,
-            newSlug: document.getElementById('newSlug').value
+            newSlug: document.getElementById('newSlug').value,
+            newState: document.getElementById('newState').value
         });
         if(res.success) {
             toggleAddForm();
@@ -291,6 +345,10 @@
 
             const statusClass = site.status === 'verified' ? 'verified' : (site.status === 'pending' ? 'pending' : 'suspended');
 
+            const stateOptionsHtml = '<option value="">-- None / Outside India --</option>' + INDIAN_STATES.map(s => 
+                `<option value="${s}" ${site.state === s ? 'selected' : ''}>${s}</option>`
+            ).join('');
+
             return `
             <div style="background: var(--rpg-wood-dark); border: 2px solid var(--rpg-gold); border-radius: 6px; padding: 18px; margin-bottom: 22px; box-shadow: 0 4px 12px rgba(0,0,0,0.6);">
                 <h4 style="margin: 0 0 14px 0; font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-gold-light);">
@@ -308,9 +366,16 @@
                     <input type="url" id="url-${site.id}" value="${site.url}">
                 </div>
 
-                <div style="margin-bottom: 16px;">
+                <div style="margin-bottom: 12px;">
                     <label>Guild Slug:</label>
                     <input type="text" id="slug-${site.id}" value="${site.slug}">
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label>Indian Realm / State:</label>
+                    <select id="state-${site.id}">
+                        ${stateOptionsHtml}
+                    </select>
                 </div>
                 
                 <div style="margin-bottom: 18px;">

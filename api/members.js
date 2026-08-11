@@ -1,4 +1,5 @@
 import { createClient } from '@libsql/client';
+import { ensureStateColumn } from '../lib/db-init.mjs';
 
 const db = createClient({
   url: process.env.TURSO_DATABASE_URL,
@@ -6,17 +7,19 @@ const db = createClient({
 });
 
 export default async function handler(req, res) {
-  // 1. Force fresh data (No Caching)
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
   
   try {
-    // 2. Select public site fields plus membership age from the owning user
+    await ensureStateColumn(db);
+
     const result = await db.execute({
         sql: `SELECT
+                s.id,
                 s.title,
                 s.url,
                 s.slug,
                 s.status,
+                s.state,
                 u.created_at AS member_since,
                 CASE
                   WHEN u.created_at IS NULL THEN NULL

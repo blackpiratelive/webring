@@ -1,4 +1,5 @@
 import { createClient } from '@libsql/client';
+import { ensureStateColumn } from '../lib/db-init.mjs';
 
 const db = createClient({
   url: process.env.TURSO_DATABASE_URL,
@@ -11,12 +12,13 @@ const QUALIFIED_USER_COLUMNS = USER_COLUMNS.split(', ').map((column) => `u.${col
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
-  // "targetSlug" is used by Admin to find a user. "key" is used by everyone to login.
-  const { key, targetSlug, action, siteId, newTitle, newUrl, newSlug, newStatus, newLimit, newEmail } = req.body;
+  const { key, targetSlug, action, siteId, newTitle, newUrl, newSlug, newStatus, newState, state, newLimit, newEmail } = req.body;
 
   if (!key) return res.status(401).json({ error: "Missing Key" });
 
   try {
+    await ensureStateColumn(db);
+
     const isAdmin = key === process.env.ADMIN_SECRET;
     let user;
 
@@ -24,7 +26,6 @@ export default async function handler(req, res) {
     if (isAdmin) {
         if (!targetSlug) return res.status(400).json({ error: "Admin must provide a Target Slug to find the user" });
         
-        // Find user via one of their sites
         const userRes = await db.execute({
             sql: `SELECT ${QUALIFIED_USER_COLUMNS} FROM users u 
                   JOIN sites s ON s.user_id = u.id 
@@ -34,7 +35,6 @@ export default async function handler(req, res) {
         if (userRes.rows.length === 0) return res.status(404).json({ error: "User/Site not found" });
         user = userRes.rows[0];
     } else {
-        // Normal Login: Find user by Secret Key
         const { hashSecretKey } = await import('../lib/secret-hash.mjs');
         const secretKeyHash = hashSecretKey(key);
         const userRes = await db.execute({
@@ -46,22 +46,18 @@ export default async function handler(req, res) {
     }
 
     // --- 2. GET SITES ---
-    // Always fetch sites to return them to dashboard
     const sitesRes = await db.execute({
         sql: "SELECT * FROM sites WHERE user_id = ?",
         args: [user.id]
     });
     const sites = sitesRes.rows;
 
-
     // --- 3. HANDLE ACTIONS ---
 
-    // ACTION: LOGIN (Just return data)
     if (action === 'login') {
         return res.json({ success: true, user, sites, isAdmin });
     }
 
-    // ACTION: ADD SITE (User wants to add 2nd site)
     if (action === 'add_site') {
         if (sites.length >= user.max_sites && !isAdmin) {
             return res.status(403).json({ error: `Limit reached. You can only have ${user.max_sites} sites.` });
@@ -69,14 +65,15 @@ export default async function handler(req, res) {
         
         if (!newTitle || !newUrl || !newSlug) return res.status(400).json({ error: "Missing fields" });
 
+        const selectedState = newState !== undefined ? newState : (state !== undefined ? state : null);
+
         await db.execute({
-            sql: "INSERT INTO sites (user_id, slug, url, title, status) VALUES (?, ?, ?, ?, ?)",
-            args: [user.id, newSlug, newUrl, newTitle, 'pending']
+            sql: "INSERT INTO sites (user_id, slug, url, title, status, state) VALUES (?, ?, ?, ?, ?, ?)",
+            args: [user.id, newSlug, newUrl, newTitle, 'pending', selectedState || null]
         });
         return res.json({ success: true, message: "Site added!" });
     }
 
-    // ACTION: UPDATE PROFILE
     if (action === 'update_profile') {
         await db.execute({
             sql: "UPDATE users SET email = ? WHERE id = ?",
@@ -85,24 +82,23 @@ export default async function handler(req, res) {
         return res.json({ success: true, message: "Profile updated." });
     }
 
-    // ACTION: UPDATE SITE
     if (action === 'update_site') {
         if (!siteId) return res.status(400).json({ error: "Missing Site ID" });
         
-        let sql = "UPDATE sites SET title = ?, url = ? WHERE id = ? AND user_id = ?";
-        let args = [newTitle, newUrl, siteId, user.id];
+        const selectedState = newState !== undefined ? newState : (state !== undefined ? state : null);
 
-        // Admin can update Status
+        let sql = "UPDATE sites SET title = ?, url = ?, state = ? WHERE id = ? AND user_id = ?";
+        let args = [newTitle, newUrl, selectedState || null, siteId, user.id];
+
         if (isAdmin && newStatus) {
-            sql = "UPDATE sites SET title = ?, url = ?, status = ? WHERE id = ? AND user_id = ?";
-            args = [newTitle, newUrl, newStatus, siteId, user.id];
+            sql = "UPDATE sites SET title = ?, url = ?, status = ?, state = ? WHERE id = ? AND user_id = ?";
+            args = [newTitle, newUrl, newStatus, selectedState || null, siteId, user.id];
         }
 
         await db.execute({ sql, args });
         return res.json({ success: true, message: "Updated." });
     }
 
-    // ACTION: DELETE SITE
     if (action === 'delete_site') {
         await db.execute({
             sql: "DELETE FROM sites WHERE id = ? AND user_id = ?",
@@ -111,7 +107,6 @@ export default async function handler(req, res) {
         return res.json({ success: true, message: "Deleted." });
     }
 
-    // ACTION: UPDATE LIMIT (Admin Only)
     if (action === 'update_limit') {
         if (!isAdmin) return res.status(403).json({ error: "Unauthorized" });
         

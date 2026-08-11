@@ -1,5 +1,6 @@
 import { createClient } from '@libsql/client';
 import { randomUUID } from 'crypto';
+import { ensureStateColumn } from '../lib/db-init.mjs';
 
 const db = createClient({
   url: process.env.TURSO_DATABASE_URL,
@@ -9,12 +10,13 @@ const db = createClient({
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
-  const { title, url, slug, email } = req.body;
+  const { title, url, slug, email, state } = req.body;
   if (!title || !url || !slug) return res.status(400).json({ error: 'Missing fields' });
 
   const secretKey = randomUUID();
 
   try {
+    await ensureStateColumn(db);
     const { hashSecretKey } = await import('../lib/secret-hash.mjs');
     const secretKeyHash = hashSecretKey(secretKey);
 
@@ -25,19 +27,15 @@ export default async function handler(req, res) {
             args: [secretKeyHash, email || null]
         },
         {
-            sql: "INSERT INTO sites (user_id, slug, url, title, status) VALUES (last_insert_rowid(), ?, ?, ?, ?)",
-            args: [slug, url, title, 'pending']
+            sql: "INSERT INTO sites (user_id, slug, url, title, status, state) VALUES (last_insert_rowid(), ?, ?, ?, ?, ?)",
+            args: [slug, url, title, 'pending', state || null]
         }
     ]);
 
-    // 2. ZAPIER TRIGGER (Updated to use AWAIT)
+    // 2. ZAPIER TRIGGER
     if (process.env.ZAPIER_WEBHOOK_URL) {
-        console.log("Triggering Zapier...");
-        
         try {
-            // FIX: We must AWAIT this, otherwise Vercel kills the request 
-            // before it reaches Make.com
-            const webhookRes = await fetch(process.env.ZAPIER_WEBHOOK_URL, {
+            await fetch(process.env.ZAPIER_WEBHOOK_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -46,13 +44,12 @@ export default async function handler(req, res) {
                     website_url: url,
                     site_slug: slug,
                     user_email: email || "Not provided",
+                    state: state || "Not provided",
                     timestamp: new Date().toISOString()
                 })
             });
-            console.log("Zapier Status:", webhookRes.status);
         } catch (webhookError) {
             console.error("Zapier Failed:", webhookError);
-            // We ignore errors here so the user still gets their success message
         }
     }
 

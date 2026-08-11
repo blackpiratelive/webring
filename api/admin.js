@@ -1,4 +1,5 @@
 import { createClient } from '@libsql/client';
+import { ensureStateColumn } from '../lib/db-init.mjs';
 
 const db = createClient({
   url: process.env.TURSO_DATABASE_URL,
@@ -13,7 +14,6 @@ export default async function handler(req, res) {
   const { key, action, userId, siteId, data } = req.body;
   const adminSecret = process.env.ADMIN_SECRET ? process.env.ADMIN_SECRET.trim() : '';
 
-  // 1. SECURITY CHECK
   if (!adminSecret) {
     return res.status(500).json({ error: "ADMIN_SECRET is not configured" });
   }
@@ -23,17 +23,15 @@ export default async function handler(req, res) {
   }
 
   try {
-    // --- LIST ALL (Users + Sites) ---
+    await ensureStateColumn(db);
+
     if (action === 'list_all') {
-      // Fetch Users
       const usersRes = await db.execute(`SELECT ${USER_COLUMNS} FROM users ORDER BY created_at DESC`);
       const users = usersRes.rows;
 
-      // Fetch Sites
       const sitesRes = await db.execute("SELECT * FROM sites");
       const sites = sitesRes.rows;
 
-      // Combine them in JavaScript
       const fullList = users.map(user => {
         return {
           ...user,
@@ -44,7 +42,6 @@ export default async function handler(req, res) {
       return res.json({ success: true, data: fullList });
     }
 
-    // --- UPDATE USER ---
     if (action === 'update_user') {
       await db.execute({
         sql: "UPDATE users SET email = ?, max_sites = ? WHERE id = ?",
@@ -53,7 +50,6 @@ export default async function handler(req, res) {
       return res.json({ success: true });
     }
 
-    // --- CREATE SECRET RESET LINK ---
     if (action === 'create_secret_reset_link') {
       if (!userId) return res.status(400).json({ error: "Missing userId" });
       const {
@@ -92,9 +88,7 @@ export default async function handler(req, res) {
       return res.json({ success: true, resetLink, expiresAt });
     }
 
-    // --- DELETE USER (Cascades to sites usually, but we ensure it) ---
     if (action === 'delete_user') {
-      // Delete sites first (manual cascade if DB doesn't support it)
       const { ensureSecretResetTable } = await import('../lib/secret-reset-tokens.mjs');
       await ensureSecretResetTable(db);
       await db.execute({
@@ -106,16 +100,14 @@ export default async function handler(req, res) {
       return res.json({ success: true });
     }
 
-    // --- UPDATE SITE ---
     if (action === 'update_site') {
       await db.execute({
-        sql: "UPDATE sites SET title = ?, url = ?, slug = ?, status = ? WHERE id = ?",
-        args: [data.title, data.url, data.slug, data.status, siteId]
+        sql: "UPDATE sites SET title = ?, url = ?, slug = ?, status = ?, state = ? WHERE id = ?",
+        args: [data.title, data.url, data.slug, data.status, data.state || null, siteId]
       });
       return res.json({ success: true });
     }
 
-    // --- DELETE SITE ---
     if (action === 'delete_site') {
       await db.execute({ sql: "DELETE FROM sites WHERE id = ?", args: [siteId] });
       return res.json({ success: true });

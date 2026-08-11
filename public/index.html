@@ -314,8 +314,9 @@
                 hudState.style.color = hoverColor;
                 
                 const stateMembers = allSites.filter(s => 
-                    (s.title && s.title.toLowerCase().includes(stateName.toLowerCase())) ||
-                    (s.slug && s.slug.toLowerCase().includes(stateName.toLowerCase()))
+                    (s.state && s.state.toLowerCase() === stateName.toLowerCase()) ||
+                    (!s.state && ((s.title && s.title.toLowerCase().includes(stateName.toLowerCase())) ||
+                    (s.slug && s.slug.toLowerCase().includes(stateName.toLowerCase()))))
                 );
                 
                 hudAction.textContent = stateMembers.length 
@@ -351,8 +352,9 @@
         title.innerHTML = `⚔️ Realm Roster: <span style="color: ${color}; font-family: var(--font-fantasy);">${escapeHtml(stateName)}</span>`;
 
         const stateMembers = allSites.filter(s => 
-            (s.title && s.title.toLowerCase().includes(stateName.toLowerCase())) ||
-            (s.slug && s.slug.toLowerCase().includes(stateName.toLowerCase()))
+            (s.state && s.state.toLowerCase() === stateName.toLowerCase()) ||
+            (!s.state && ((s.title && s.title.toLowerCase().includes(stateName.toLowerCase())) ||
+            (s.slug && s.slug.toLowerCase().includes(stateName.toLowerCase()))))
         );
 
         let membersListHtml = '';

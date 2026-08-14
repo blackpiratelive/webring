@@ -20,9 +20,9 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
   - `lib/secret-hash.mjs` - HMAC-SHA256 secret hashing algorithms.
   - `lib/secret-reset-tokens.mjs` - One-time secret reset token generation and consumption.
 - **Static UI (`public/`)**:
-  - `public/index.html` - **Webmaster Portal Homepage** (Top marquee, directory hero header banner, Web 1.0 navigation bar, Webring quick nav widget, statistics counter, 88x31 badges, interactive SVG India state directory map with pan/zoom engine and bold high-contrast state labels, 468x60 retro banner network, and recently verified webmasters table).
-  - `public/widgets.html` - **Webring Widgets & Badges Catalog** (Embed code snippets, live previews, 88x31 badges, 468x60 pure CSS retro banner ad collection, `widget.js` script embeds, and step-by-step framework integration guides).
-  - `public/members.html` - **Registered Webmasters Directory Index** (Searchable directory roster, state filters, grid card and table view toggles).
+  - `public/index.html` - **Webmaster Portal Homepage** (Top marquee, directory hero header banner, 80th Independence Day tricolor sub-banner, Web 1.0 navigation bar, Webring quick nav widget, statistics counter, 88x31 badges, interactive SVG India state directory map with pan/zoom engine and bold high-contrast state labels, 468x60 retro banner network, and recently verified webmasters table).
+  - `public/widgets.html` - **Webring Widgets & Badges Catalog** (Embed code snippets, live previews, 88x31 badges, 80th Independence Day 88x31 Freedom Badge, 468x60 pure CSS retro banner ad collection, `widget.js` script embeds, and step-by-step framework integration guides).
+  - `public/members.html` - **Registered Webmasters Directory Index** (Searchable directory roster, 80th Swaraj Member badge overlays, state filters, grid card and table view toggles).
   - `public/join.html` - **Site Registration Desk** with optional Indian State dropdown, secret key generator, and snippet output.
   - `public/dashboard.html` - **Webmaster Control Panel** for login, site CRUD management, and widget verification.
   - `public/admin.html` - **Super Admin Console** with full user, site, and state management capabilities.
@@ -30,7 +30,7 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
   - `public/api-docs.html` - **REST API Reference** page.
   - `public/demo.html` - **Traditional Directory View** (About WebSutra, inline map with state text labels, and webmaster directory).
   - `public/widget.js` - Embeddable webring widget script with scoped CSS isolation.
-  - `public/style.css` - **Early 2000s Web Directory Design System (Yahoo! / DMOZ Aesthetic)** (Light off-white background `#f4f6f9`, steel blue headers `#003366`, slate borders `#7a92a5`, Verdana typography, classic blue/purple link colors, retro status pills, bold high-contrast state label text overlay rules, 468x60 banner keyframe animations).
+  - `public/style.css` - **Early 2000s Web Directory Design System (Yahoo! / DMOZ Aesthetic)** (Light off-white background `#f4f6f9`, steel blue headers `#003366`, slate borders `#7a92a5`, Verdana typography, classic blue/purple link colors, retro status pills, 80th Independence Day commemorative badge styles, 468x60 banner keyframe animations).
   - `public/graphics/` - Retro GIFs (`flag.gif`, `email-me.gif`, `join-now.gif`), badge (`websutra-badge.jpg`), `states.svg`, and local SVG fallback `states.js`.
   - `public/india.png` - India map graphic used in About sections.
 - **Docs**:
@@ -48,7 +48,7 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
    - Secret key hashes use HMAC-SHA256 with a pepper (`SECRET_HASH_PEPPER`).
 
 2. **Early 2000s Web Directory Design System (Yahoo! / DMOZ Style)**:
-   - Clean, lightweight 2-column portal layout (`.portal-container`) with top marquee banner, hero header, and navigation bar.
+   - Clean, lightweight 2-column portal layout (`.portal-container`) with top marquee banner, hero header, 80th Independence Day tricolor sub-banner, and navigation bar.
    - Soft directory palette (`#f4f6f9` background, `#ffffff` card panels, `#003366` steel blue headers, `#7a92a5` borders).
    - Standard retro link colors (`#0000cc` blue links, `#800080` purple visited, `#cc0000` hover red).
    - Pure Web Directory metrics: Level/XP fantasy metrics removed in favor of authentic Join Date, State, and Verification status.
@@ -59,8 +59,10 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
    - **Pan & Zoom Controller**: Mouse wheel zooming, click-and-drag panning, touch dragging for mobile, and `[ Zoom In + ]`, `[ Zoom Out - ]`, `[ Reset View ]` controls stack.
    - **Bold High-Legibility Labels**: SVG coordinate font sizes (`16px` main, `13px` small), `3px` white stroke halo outlines (`paint-order: stroke fill`), custom centroid offsets, and `pointer-events: none;` click-through.
 
-4. **Web 1.0 468x60 Pure CSS Retro Banner Network**:
-   - Includes 5 classic banner ad designs: Tricolor Flash, Patriotic Marquee, Windows 95 3D Bevel Button, Simulated GIF Animation, and Tricolor Ribbon.
+4. **80th Independence Day Commemorative Features (August 15, 2026)**:
+   - **Festive Header Sub-Banner (`index.html`)**: Tricolor banner celebrating 80 Years of Freedom (1947–2026).
+   - **80th Freedom 88x31 Retro Badge (`widgets.html`)**: Dedicated retro badge with 1-click copy code snippet for member homepages.
+   - **80th Swaraj Member Badge Overlays (`members.html`)**: Commemorative pill tags displayed across directory roster cards and tables.
 
 5. **Data Model**:
    - `users`: `id`, `secret_key_hash`, `email`, `max_sites`, `created_at`.
@@ -88,10 +90,9 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
 ---
 
 ## Recent Accomplishments
+- **80th Independence Day Commemorative Additions**: Added festive tricolor sub-banner on `index.html`, 80th Freedom 88x31 badge on `widgets.html`, and '80th Swaraj Member' badge overlays on `members.html`.
 - **Interactive Map Pan & Zoom Engine**: Mouse wheel zoom, click-and-drag panning, touch dragging, and zoom control buttons.
 - **Bold High-Contrast State Labels**: Scaled SVG font sizes to `16px`/`13px` with `3px` white outline strokes (`paint-order: stroke fill`) for 100% crystal-clear legibility.
 - **Web 1.0 Theme Conversion**: Completely redesigned WebSutra from RPG Fantasy Video Game theme to an authentic Early 2000s Web Directory (Yahoo! / DMOZ style).
 - **Standalone SVG Map Loader**: Preserved `public/graphics/states.svg` as a separate asset with dynamic `fetch()` loading and local `states.js` fallback for offline viewing.
-- **Web 1.0 468x60 Retro Banner Ads**: Built 5 pure CSS animated 468x60 banner ads and integrated them onto the homepage and widget catalog.
 - **Zero Emojis Policy**: Stripped out all emojis across the codebase, replacing them with clean retro webmaster typography, text/ASCII bracket indicators, and GIF icons.
-- **Complete Portal Page Alignment**: Updated all static pages (`index.html`, `members.html`, `join.html`, `widgets.html`, `dashboard.html`, `admin.html`, `reset-secret.html`, `api-docs.html`, `demo.html`, and `widget.js`).

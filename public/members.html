@@ -304,6 +304,7 @@
                             </div>
                             <div class="site-card-meta">
                                 <span>${escapeHtml(m.state || 'India')}</span>
+                                <span class="status-pill swaraj" style="font-size: 10px; margin-top: 4px;">80th Swaraj Member</span>
                                 <span>Joined ${formatDate(m.created_at)}</span>
                             </div>
                         </div>
@@ -331,7 +332,10 @@
                                         <td><a href="${escapeHtml(m.url)}" target="_blank" rel="noopener">${escapeHtml(m.url)}</a></td>
                                         <td>${escapeHtml(m.state || 'India')}</td>
                                         <td>${formatDate(m.created_at)}</td>
-                                        <td><span class="status-pill verified">${escapeHtml(m.status)}</span></td>
+                                        <td>
+                                            <span class="status-pill verified">${escapeHtml(m.status)}</span>
+                                            <span class="status-pill swaraj" style="font-size: 10px; margin-left: 4px;">80th Swaraj Member</span>
+                                        </td>
                                     </tr>
                                 `).join('')}
                             </tbody>

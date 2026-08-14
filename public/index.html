@@ -100,9 +100,16 @@
         <main>
             <!-- INTERACTIVE INDIA MAP CARD -->
             <div class="map-portal-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <h2 style="font-family: var(--font-heading); font-size: 16px; margin: 0; color: var(--dir-blue-dark);">State Directory Map</h2>
-                    <span style="font-size: 11px; color: var(--dir-text-muted);">Hover &amp; Click state to inspect webmasters</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                    <div>
+                        <h2 style="font-family: var(--font-heading); font-size: 16px; margin: 0; color: var(--dir-blue-dark); display: inline-block;">State Directory Map</h2>
+                        <span style="font-size: 11px; color: var(--dir-text-muted); margin-left: 8px;">(Scroll/Drag to Zoom &amp; Pan)</span>
+                    </div>
+                    <div style="display: flex; gap: 6px;">
+                        <button onclick="zoomMap(0.8)" class="btn" style="padding: 3px 8px; font-size: 11px; font-weight: bold;">[ Zoom In + ]</button>
+                        <button onclick="zoomMap(1.25)" class="btn" style="padding: 3px 8px; font-size: 11px; font-weight: bold;">[ Zoom Out - ]</button>
+                        <button onclick="resetMapZoom()" class="btn" style="padding: 3px 8px; font-size: 11px; font-weight: bold;">[ Reset View ]</button>
+                    </div>
                 </div>
 
                 <div id="svg-container">
@@ -287,6 +294,108 @@
         });
     }
 
+    let defaultViewBox = { x: 0, y: 0, w: 1000, h: 1100 };
+    let currentViewBox = { ...defaultViewBox };
+
+    function applyViewBox() {
+        const svgElement = document.querySelector('#svg-container svg');
+        if (!svgElement) return;
+        svgElement.setAttribute('viewBox', `${currentViewBox.x} ${currentViewBox.y} ${currentViewBox.w} ${currentViewBox.h}`);
+    }
+
+    function zoomMap(factor) {
+        const svgElement = document.querySelector('#svg-container svg');
+        if (!svgElement) return;
+
+        const newW = currentViewBox.w * factor;
+        const newH = currentViewBox.h * factor;
+
+        if (newW < 250 || newW > 1400) return;
+
+        currentViewBox.x += (currentViewBox.w - newW) / 2;
+        currentViewBox.y += (currentViewBox.h - newH) / 2;
+        currentViewBox.w = newW;
+        currentViewBox.h = newH;
+
+        applyViewBox();
+    }
+
+    function resetMapZoom() {
+        currentViewBox = { ...defaultViewBox };
+        applyViewBox();
+    }
+
+    function enableMapPanAndZoom() {
+        const container = document.getElementById('svg-container');
+        if (!container) return;
+
+        container.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const factor = e.deltaY < 0 ? 0.85 : 1.15;
+            zoomMap(factor);
+        }, { passive: false });
+
+        let isDragging = false;
+        let startMouse = { x: 0, y: 0 };
+        let startVB = { x: 0, y: 0 };
+
+        container.addEventListener('mousedown', (e) => {
+            if (e.button !== 0) return;
+            isDragging = true;
+            container.style.cursor = 'grabbing';
+            startMouse = { x: e.clientX, y: e.clientY };
+            startVB = { x: currentViewBox.x, y: currentViewBox.y };
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const rect = container.getBoundingClientRect();
+            const scaleX = currentViewBox.w / rect.width;
+            const scaleY = currentViewBox.h / rect.height;
+
+            const dx = (e.clientX - startMouse.x) * scaleX;
+            const dy = (e.clientY - startMouse.y) * scaleY;
+
+            currentViewBox.x = startVB.x - dx;
+            currentViewBox.y = startVB.y - dy;
+            applyViewBox();
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                container.style.cursor = 'grab';
+            }
+        });
+
+        let startTouch = { x: 0, y: 0 };
+        container.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                isDragging = true;
+                startTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+                startVB = { x: currentViewBox.x, y: currentViewBox.y };
+            }
+        }, { passive: true });
+
+        container.addEventListener('touchmove', (e) => {
+            if (!isDragging || e.touches.length !== 1) return;
+            const rect = container.getBoundingClientRect();
+            const scaleX = currentViewBox.w / rect.width;
+            const scaleY = currentViewBox.h / rect.height;
+
+            const dx = (e.touches[0].clientX - startTouch.x) * scaleX;
+            const dy = (e.touches[0].clientY - startTouch.y) * scaleY;
+
+            currentViewBox.x = startVB.x - dx;
+            currentViewBox.y = startVB.y - dy;
+            applyViewBox();
+        }, { passive: true });
+
+        container.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+    }
+
     function addStateMapLabels() {
         const svgElement = document.querySelector('#svg-container svg');
         if (!svgElement) return;
@@ -314,7 +423,7 @@
             "Lakshadweep": "LD",
             "Chandigarh": "CH",
             "Delhi": "DL",
-            "Goa": "Goa",
+            "Goa": "GOA",
             "Sikkim": "SK",
             "Tripura": "TR",
             "Meghalaya": "ML",
@@ -325,7 +434,25 @@
             "Jharkhand": "JH",
             "Chhattisgarh": "CG",
             "Haryana": "HR",
-            "Punjab": "PB"
+            "Punjab": "PB",
+            "Rajasthan": "RAJASTHAN",
+            "Maharashtra": "MAHARASHTRA",
+            "Gujarat": "GUJARAT",
+            "Karnataka": "KARNATAKA",
+            "Kerala": "KERALA",
+            "Odisha": "ODISHA",
+            "Telangana": "TELANGANA",
+            "Bihar": "BIHAR",
+            "Assam": "ASSAM"
+        };
+
+        const customOffsets = {
+            "Kerala": { dx: -12, dy: 0 },
+            "Tamil Nadu": { dx: 10, dy: 10 },
+            "Gujarat": { dx: 15, dy: 0 },
+            "West Bengal": { dx: 5, dy: -10 },
+            "Andaman and Nicobar Islands": { dx: -25, dy: 0 },
+            "Assam": { dx: 0, dy: -6 }
         };
 
         paths.forEach(path => {
@@ -334,18 +461,19 @@
 
             try {
                 const bbox = path.getBBox();
-                if (bbox.width < 12 || bbox.height < 12) return;
+                if (bbox.width < 8 || bbox.height < 8) return;
 
-                const cx = bbox.x + bbox.width / 2;
-                const cy = bbox.y + bbox.height / 2;
+                const offset = customOffsets[stateId] || { dx: 0, dy: 0 };
+                const cx = bbox.x + bbox.width / 2 + offset.dx;
+                const cy = bbox.y + bbox.height / 2 + offset.dy;
 
                 const textNode = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 textNode.setAttribute('x', cx);
                 textNode.setAttribute('y', cy);
-                textNode.setAttribute('class', 'state-label');
+                textNode.setAttribute('class', (bbox.width < 50 || bbox.height < 40) ? 'state-label small-state' : 'state-label');
                 textNode.setAttribute('data-state-id', stateId);
 
-                let displayName = (bbox.width > 70 && bbox.height > 50) ? stateId : (shortNames[stateId] || stateId);
+                let displayName = shortNames[stateId] || stateId;
                 textNode.textContent = displayName;
 
                 labelsGroup.appendChild(textNode);
@@ -362,6 +490,7 @@
         const hudState = document.getElementById('hud-state-name');
         const hudAction = document.getElementById('hud-action-name');
 
+        enableMapPanAndZoom();
         addStateMapLabels();
 
         paths.forEach(path => {

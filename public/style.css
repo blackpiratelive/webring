@@ -397,6 +397,21 @@ input:focus, textarea:focus, select:focus {
   stroke: #002244 !important;
 }
 
+/* SVG MAP STATE LABELS */
+#svg-container text.state-label {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 9px;
+  font-weight: bold;
+  fill: #002244;
+  stroke: #ffffff;
+  stroke-width: 0.6px;
+  paint-order: stroke fill;
+  pointer-events: none;
+  text-anchor: middle;
+  dominant-baseline: central;
+  user-select: none;
+}
+
 /* HUD / STATE TOOLTIP BAR */
 #map-hud {
   background: var(--dir-blue-pale);

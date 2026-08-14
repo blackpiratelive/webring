@@ -98,12 +98,84 @@
 </div>
 
 <script src="graphics/states.js"></script>
-<script> async function loadSvgMap() {
+<script>
+    function addStateMapLabels() {
+        const svgElement = document.querySelector('#svg-container svg');
+        if (!svgElement) return;
+
+        let labelsGroup = svgElement.querySelector('#labels-group');
+        if (labelsGroup) labelsGroup.remove();
+
+        labelsGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        labelsGroup.setAttribute('id', 'labels-group');
+
+        const paths = svgElement.querySelectorAll('path');
+        const shortNames = {
+            "Andaman and Nicobar Islands": "A&N",
+            "Arunachal Pradesh": "AR",
+            "Himachal Pradesh": "HP",
+            "Jammu and Kashmir": "J&K",
+            "Madhya Pradesh": "MP",
+            "Uttar Pradesh": "UP",
+            "West Bengal": "WB",
+            "Andhra Pradesh": "AP",
+            "Tamil Nadu": "TN",
+            "Puducherry": "PY",
+            "Dadra and Nagar Haveli": "DNH",
+            "Daman and Diu": "DD",
+            "Lakshadweep": "LD",
+            "Chandigarh": "CH",
+            "Delhi": "DL",
+            "Goa": "Goa",
+            "Sikkim": "SK",
+            "Tripura": "TR",
+            "Meghalaya": "ML",
+            "Manipur": "MN",
+            "Mizoram": "MZ",
+            "Nagaland": "NL",
+            "Uttarakhand": "UK",
+            "Jharkhand": "JH",
+            "Chhattisgarh": "CG",
+            "Haryana": "HR",
+            "Punjab": "PB"
+        };
+
+        paths.forEach(path => {
+            const stateId = path.getAttribute('id');
+            if (!stateId) return;
+
+            try {
+                const bbox = path.getBBox();
+                if (bbox.width < 12 || bbox.height < 12) return;
+
+                const cx = bbox.x + bbox.width / 2;
+                const cy = bbox.y + bbox.height / 2;
+
+                const textNode = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                textNode.setAttribute('x', cx);
+                textNode.setAttribute('y', cy);
+                textNode.setAttribute('class', 'state-label');
+                textNode.setAttribute('data-state-id', stateId);
+
+                let displayName = (bbox.width > 70 && bbox.height > 50) ? stateId : (shortNames[stateId] || stateId);
+                textNode.textContent = displayName;
+
+                labelsGroup.appendChild(textNode);
+            } catch(e) {
+                // Ignore bbox error
+            }
+        });
+
+        svgElement.appendChild(labelsGroup);
+    }
+
+    async function loadSvgMap() {
         const container = document.getElementById('svg-container');
         if (!container) return;
         try {
             if (window.location.protocol === 'file:' && window.INDIA_STATES_SVG) {
                 container.innerHTML = window.INDIA_STATES_SVG;
+                addStateMapLabels();
                 return;
             }
             const res = await fetch('graphics/states.svg');
@@ -111,12 +183,15 @@
                 let svgText = await res.text();
                 svgText = svgText.replace(/<\?xml[^>]*\?>/gi, '').trim();
                 container.innerHTML = svgText;
+                addStateMapLabels();
             } else if (window.INDIA_STATES_SVG) {
                 container.innerHTML = window.INDIA_STATES_SVG;
+                addStateMapLabels();
             }
         } catch(e) {
             if (window.INDIA_STATES_SVG) {
                 container.innerHTML = window.INDIA_STATES_SVG;
+                addStateMapLabels();
             }
         }
     }

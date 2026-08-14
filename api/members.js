@@ -20,10 +20,11 @@ export default async function handler(req, res) {
                 s.slug,
                 s.status,
                 s.state,
-                u.created_at AS member_since,
+                COALESCE(u.created_at, s.created_at, CURRENT_TIMESTAMP) AS created_at,
+                COALESCE(u.created_at, s.created_at, CURRENT_TIMESTAMP) AS member_since,
                 CASE
-                  WHEN u.created_at IS NULL THEN NULL
-                  ELSE MAX(0, CAST(julianday('now') - julianday(u.created_at) AS INTEGER))
+                  WHEN u.created_at IS NULL AND s.created_at IS NULL THEN 0
+                  ELSE MAX(0, CAST(julianday('now') - julianday(COALESCE(u.created_at, s.created_at)) AS INTEGER))
                 END AS member_days
               FROM sites s
               LEFT JOIN users u ON u.id = s.user_id

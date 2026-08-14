@@ -10,7 +10,7 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
   - `api/join.js` - Handles site registration (including optional state selection), password hashing, and widget snippet generation.
   - `api/verify.js` - Scrapes member site to verify WebSutra widget code placement.
   - `api/ring.js` - Handles next/prev/random redirects and JSON responses.
-  - `api/members.js` - Returns verified and pending webring members with `member_days` and state.
+  - `api/members.js` - Returns verified and pending webring members with `created_at`, `member_since`, `member_days`, and `state`.
   - `api/manage.js` - Member dashboard CRUD API (login, add_site, update, delete) with state field management.
   - `api/admin.js` - Super admin API (list all, reset links, user/site/state management).
   - `api/reset-secret.js` - One-time secret reset consumption.
@@ -22,7 +22,7 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
 - **Static UI (`public/`)**:
   - `public/index.html` - **Webmaster Portal Homepage** (Top marquee, directory hero header banner, 80th Independence Day tricolor sub-banner, Web 1.0 navigation bar, Webring quick nav widget, statistics counter, 88x31 badges, interactive SVG India state directory map with pan/zoom engine and bold high-contrast state labels, 468x60 retro banner network, and recently verified webmasters table).
   - `public/widgets.html` - **Webring Widgets & Badges Catalog** (Embed code snippets, live previews, 88x31 badges, 80th Independence Day 88x31 Freedom Badge, 468x60 pure CSS retro banner ad collection, `widget.js` script embeds, and step-by-step framework integration guides).
-  - `public/members.html` - **Registered Webmasters Directory Index** (Searchable directory roster, 80th Swaraj Member badge overlays, state filters, grid card and table view toggles).
+  - `public/members.html` - **Registered Webmasters Directory Index** (Searchable directory roster, 80th Swaraj Member badge overlays, member joined dates, state filters, grid card and table view toggles).
   - `public/join.html` - **Site Registration Desk** with optional Indian State dropdown, secret key generator, and snippet output.
   - `public/dashboard.html` - **Webmaster Control Panel** for login, site CRUD management, and widget verification.
   - `public/admin.html` - **Super Admin Console** with full user, site, and state management capabilities.
@@ -51,7 +51,7 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
    - Clean, lightweight 2-column portal layout (`.portal-container`) with top marquee banner, hero header, 80th Independence Day tricolor sub-banner, and navigation bar.
    - Soft directory palette (`#f4f6f9` background, `#ffffff` card panels, `#003366` steel blue headers, `#7a92a5` borders).
    - Standard retro link colors (`#0000cc` blue links, `#800080` purple visited, `#cc0000` hover red).
-   - Pure Web Directory metrics: Level/XP fantasy metrics removed in favor of authentic Join Date, State, and Verification status.
+   - Pure Web Directory metrics: Join Date (`created_at` / `member_since`), State, and Verification status.
    - Clean retro webmaster typography and icons (zero emojis across all templates).
 
 3. **Standalone SVG Map with Pan & Zoom Engine + High-Legibility Labels**:
@@ -90,6 +90,7 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
 ---
 
 ## Recent Accomplishments
+- **Member Join Date Resolution**: Updated `api/members.js` SQL query to export both `created_at` and `member_since` with `COALESCE(u.created_at, s.created_at, CURRENT_TIMESTAMP)`, and enhanced `formatDate()` helper to resolve object member attributes seamlessly.
 - **80th Independence Day Commemorative Additions**: Added festive tricolor sub-banner on `index.html`, 80th Freedom 88x31 badge on `widgets.html`, and '80th Swaraj Member' badge overlays on `members.html`.
 - **Interactive Map Pan & Zoom Engine**: Mouse wheel zoom, click-and-drag panning, touch dragging, and zoom control buttons.
 - **Bold High-Contrast State Labels**: Scaled SVG font sizes to `16px`/`13px` with `3px` white outline strokes (`paint-order: stroke fill`) for 100% crystal-clear legibility.

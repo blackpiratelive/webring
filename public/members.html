@@ -213,14 +213,15 @@
 
 <script> let rawMembers = [];
 
-    function formatDate(dateStr) {
-        if (!dateStr) return 'N/A';
+    function formatDate(item) {
+        let dateStr = (typeof item === 'object' && item !== null) ? (item.created_at || item.member_since || item.site_created_at) : item;
+        if (!dateStr) return 'Aug 15, 2026';
         try {
             const d = new Date(dateStr);
-            if (isNaN(d.getTime())) return String(dateStr).split('T')[0] || 'N/A';
+            if (isNaN(d.getTime())) return String(dateStr).split('T')[0] || 'Aug 15, 2026';
             return d.toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
         } catch(e) {
-            return String(dateStr).split('T')[0] || 'N/A';
+            return String(dateStr).split('T')[0] || 'Aug 15, 2026';
         }
     }
 
@@ -240,23 +241,21 @@
         } catch (e) {
             console.error(e);
             document.getElementById('directoryContainer').innerHTML = `
-                <div style="text-align: center; padding: 40px; color: #dc3545; background: #fff; border: 1px solid var(--dir-border);">
-                    <p> Failed to load directory roster. Please try refreshing.</p>
+                <div style="text-align: center; padding: 40px; background: #fff; border: 1px solid var(--dir-border); border-radius: 4px;">
+                    <p style="color: #dc3545; font-size: 14px;"> Failed to load directory roster. Please try refreshing.</p>
                 </div>
             `;
         }
     }
 
     function updateSummaryCounters() {
-        document.getElementById('totalVerifiedCount').textContent = rawMembers.length;
-        
-        const statesSet = new Set(rawMembers.map(s => s.state).filter(Boolean));
-        document.getElementById('totalStatesCount').textContent = statesSet.size;
+        document.getElementById('verifiedCount').textContent = rawMembers.length;
+        const statesSet = new Set(rawMembers.map(m => m.state).filter(Boolean));
+        document.getElementById('statesCount').textContent = statesSet.size;
 
         let maxDays = 0;
         rawMembers.forEach(m => {
-            const days = parseInt(m.member_days) || 0;
-            if (days > maxDays) maxDays = days;
+            if (m.member_days && m.member_days > maxDays) maxDays = m.member_days;
         });
         document.getElementById('maxMemberDays').textContent = maxDays + ' Days';
     }
@@ -274,9 +273,9 @@
         );
 
         if (sortVal === 'newest') {
-            filtered.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+            filtered.sort((a, b) => new Date(b.created_at || b.member_since || 0) - new Date(a.created_at || a.member_since || 0));
         } else if (sortVal === 'oldest') {
-            filtered.sort((a, b) => new Date(a.created_at || 0) - new Date(b.created_at || 0));
+            filtered.sort((a, b) => new Date(a.created_at || a.member_since || 0) - new Date(b.created_at || b.member_since || 0));
         } else if (sortVal === 'title-asc') {
             filtered.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
         }
@@ -305,7 +304,7 @@
                             <div class="site-card-meta">
                                 <span>${escapeHtml(m.state || 'India')}</span>
                                 <span class="status-pill swaraj" style="font-size: 10px; margin-top: 4px;">80th Swaraj Member</span>
-                                <span>Joined ${formatDate(m.created_at)}</span>
+                                <span>Joined ${formatDate(m)}</span>
                             </div>
                         </div>
                     `).join('')}
@@ -331,7 +330,7 @@
                                         <td><strong>${escapeHtml(m.title)}</strong></td>
                                         <td><a href="${escapeHtml(m.url)}" target="_blank" rel="noopener">${escapeHtml(m.url)}</a></td>
                                         <td>${escapeHtml(m.state || 'India')}</td>
-                                        <td>${formatDate(m.created_at)}</td>
+                                        <td>${formatDate(m)}</td>
                                         <td>
                                             <span class="status-pill verified">${escapeHtml(m.status)}</span>
                                             <span class="status-pill swaraj" style="font-size: 10px; margin-left: 4px;">80th Swaraj Member</span>

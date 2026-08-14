@@ -10,7 +10,7 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
   - `api/join.js` - Handles site registration (including optional state selection), password hashing, and widget snippet generation.
   - `api/verify.js` - Scrapes member site to verify WebSutra widget code placement.
   - `api/ring.js` - Handles next/prev/random redirects and JSON responses.
-  - `api/members.js` - Returns verified and pending webring members with `created_at`, `member_since`, `member_days`, and `state`.
+  - `api/members.js` - Returns verified and pending webring members with `created_at` (from `u.created_at`), `member_since`, `member_days`, and `state`.
   - `api/manage.js` - Member dashboard CRUD API (login, add_site, update, delete) with state field management.
   - `api/admin.js` - Super admin API (list all, reset links, user/site/state management).
   - `api/reset-secret.js` - One-time secret reset consumption.
@@ -91,8 +91,9 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
 ---
 
 ## Recent Accomplishments
+- **API SQL Column Reference Fix (`api/members.js`)**: Fixed SQLite query runtime error caused by referencing non-existent `s.created_at` column; corrected query to pull `u.created_at` from `users` table (`u`).
 - **Webmaster Contact Email Update**: Updated all support mailto links, dashboard key recovery notices, registration forms, and page footers across all pages to point to `sudip@blackpiratex.com`.
-- **Member Join Date Resolution**: Updated `api/members.js` SQL query to export both `created_at` and `member_since` with `COALESCE(u.created_at, s.created_at, CURRENT_TIMESTAMP)`, and enhanced `formatDate()` helper to resolve object member attributes seamlessly.
+- **Member Join Date Resolution**: Updated `api/members.js` SQL query to export both `created_at` and `member_since` with `COALESCE(u.created_at, CURRENT_TIMESTAMP)`, and enhanced `formatDate()` helper to resolve object member attributes seamlessly.
 - **80th Independence Day Commemorative Additions**: Added festive tricolor sub-banner on `index.html`, 80th Freedom 88x31 badge on `widgets.html`, and '80th Swaraj Member' badge overlays on `members.html`.
 - **Interactive Map Pan & Zoom Engine**: Mouse wheel zoom, click-and-drag panning, touch dragging, and zoom control buttons.
 - **Bold High-Contrast State Labels**: Scaled SVG font sizes to `16px`/`13px` with `3px` white outline strokes (`paint-order: stroke fill`) for 100% crystal-clear legibility.

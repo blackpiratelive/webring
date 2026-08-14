@@ -20,11 +20,11 @@ export default async function handler(req, res) {
                 s.slug,
                 s.status,
                 s.state,
-                COALESCE(u.created_at, s.created_at, CURRENT_TIMESTAMP) AS created_at,
-                COALESCE(u.created_at, s.created_at, CURRENT_TIMESTAMP) AS member_since,
+                u.created_at,
+                u.created_at AS member_since,
                 CASE
-                  WHEN u.created_at IS NULL AND s.created_at IS NULL THEN 0
-                  ELSE MAX(0, CAST(julianday('now') - julianday(COALESCE(u.created_at, s.created_at)) AS INTEGER))
+                  WHEN u.created_at IS NULL THEN 0
+                  ELSE MAX(0, CAST(julianday('now') - julianday(u.created_at) AS INTEGER))
                 END AS member_days
               FROM sites s
               LEFT JOIN users u ON u.id = s.user_id
@@ -34,7 +34,7 @@ export default async function handler(req, res) {
     
     res.status(200).json(result.rows);
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching members:', error);
     res.status(500).json({ error: 'Failed to fetch members' });
   }
 }

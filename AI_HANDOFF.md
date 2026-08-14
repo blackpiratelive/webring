@@ -1,7 +1,7 @@
 # AI Handoff: WebSutra Webring
 
 ## Purpose
-WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Indian personal homepages, indie blogs, and passion websites. Users register their site, receive a Webmaster Secret Key + widget snippet, and verify link placement. Member and admin control panels exist. The DB is the single source of truth.
+WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Indian personal homepages, indie blogs, and passion websites. Users register their site, receive a Webmaster Secret Key + widget snippet, and verify link placement. Member and admin control panels exist. The DB is the single source of truth. Contact webmaster: `sudip@blackpiratex.com`.
 
 ---
 
@@ -20,11 +20,11 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
   - `lib/secret-hash.mjs` - HMAC-SHA256 secret hashing algorithms.
   - `lib/secret-reset-tokens.mjs` - One-time secret reset token generation and consumption.
 - **Static UI (`public/`)**:
-  - `public/index.html` - **Webmaster Portal Homepage** (Top marquee, directory hero header banner, 80th Independence Day tricolor sub-banner, Web 1.0 navigation bar, Webring quick nav widget, statistics counter, 88x31 badges, interactive SVG India state directory map with pan/zoom engine and bold high-contrast state labels, 468x60 retro banner network, and recently verified webmasters table).
+  - `public/index.html` - **Webmaster Portal Homepage** (Top marquee, directory hero header banner, 80th Independence Day tricolor sub-banner, Web 1.0 navigation bar, Webring quick nav widget, statistics counter, 88x31 badges, interactive SVG India state directory map with pan/zoom engine and bold high-contrast state labels, 468x60 retro banner network, recently verified webmasters table, and webmaster contact `sudip@blackpiratex.com`).
   - `public/widgets.html` - **Webring Widgets & Badges Catalog** (Embed code snippets, live previews, 88x31 badges, 80th Independence Day 88x31 Freedom Badge, 468x60 pure CSS retro banner ad collection, `widget.js` script embeds, and step-by-step framework integration guides).
   - `public/members.html` - **Registered Webmasters Directory Index** (Searchable directory roster, 80th Swaraj Member badge overlays, member joined dates, state filters, grid card and table view toggles).
   - `public/join.html` - **Site Registration Desk** with optional Indian State dropdown, secret key generator, and snippet output.
-  - `public/dashboard.html` - **Webmaster Control Panel** for login, site CRUD management, and widget verification.
+  - `public/dashboard.html` - **Webmaster Control Panel** for login, site CRUD management, key recovery contact `sudip@blackpiratex.com`, and widget verification.
   - `public/admin.html` - **Super Admin Console** with full user, site, and state management capabilities.
   - `public/reset-secret.html` - **Key Recovery Desk** for one-time secret key resets.
   - `public/api-docs.html` - **REST API Reference** page.
@@ -77,6 +77,7 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
 - **Ring Navigation**: `GET /api/ring?action=next|prev|random&slug=...` &rarr; redirects to next verified site.
 - **Member Dashboard**: Login via raw secret token &rarr; `POST /api/manage` { action: 'login', secretKey }. Can add/update `state`.
 - **Super Admin**: Super Admin panel allows editing `state` for any site.
+- **Contact Webmaster**: All support links and footers direct to `sudip@blackpiratex.com`.
 
 ---
 
@@ -90,6 +91,7 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
 ---
 
 ## Recent Accomplishments
+- **Webmaster Contact Email Update**: Updated all support mailto links, dashboard key recovery notices, registration forms, and page footers across all pages to point to `sudip@blackpiratex.com`.
 - **Member Join Date Resolution**: Updated `api/members.js` SQL query to export both `created_at` and `member_since` with `COALESCE(u.created_at, s.created_at, CURRENT_TIMESTAMP)`, and enhanced `formatDate()` helper to resolve object member attributes seamlessly.
 - **80th Independence Day Commemorative Additions**: Added festive tricolor sub-banner on `index.html`, 80th Freedom 88x31 badge on `widgets.html`, and '80th Swaraj Member' badge overlays on `members.html`.
 - **Interactive Map Pan & Zoom Engine**: Mouse wheel zoom, click-and-drag panning, touch dragging, and zoom control buttons.

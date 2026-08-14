@@ -3,239 +3,314 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSutra Guild Runes & Widgets 🔮 | Live Previews & Embed Catalog</title>
+    <title>WebSutra Webring Widgets &amp; Badges Catalog</title>
+    <meta name="description" content="Embed code snippets, live widget previews, 88x31 retro badges, and integration guides for WebSutra Webring members.">
     <link rel="stylesheet" href="style.css">
     <style>
         .widget-card {
-            background: var(--rpg-parchment-light);
-            color: var(--rpg-parchment-text);
-            border: 3px solid var(--rpg-wood-mid);
-            outline: 2px solid var(--rpg-gold);
-            border-radius: 8px;
-            padding: 22px;
-            margin-bottom: 30px;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+            background: #ffffff;
+            border: 1px solid var(--dir-border);
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 24px;
         }
 
         .widget-preview-box {
-            background: #090604;
-            border: 2px inset var(--rpg-wood-border);
-            border-radius: 6px;
+            background: #f8fafd;
+            border: 1px solid var(--dir-border);
+            border-radius: 4px;
             padding: 20px;
-            margin: 16px 0;
+            margin: 14px 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 110px;
+            min-height: 100px;
         }
 
         .code-container {
             position: relative;
-            margin-top: 14px;
+            margin-top: 10px;
         }
 
         .code-container textarea {
             width: 100%;
-            height: 120px;
-            background: #050403;
-            color: #fbbf24;
-            font-family: var(--font-mono);
-            font-size: 13px;
-            border: 2px solid var(--rpg-gold);
-            border-radius: 4px;
-            padding: 12px;
+            height: 100px;
+            background: #ffffff;
+            color: var(--dir-text);
+            font-family: monospace;
+            font-size: 12px;
+            border: 1px solid var(--dir-border);
+            border-radius: 3px;
+            padding: 10px;
             resize: none;
         }
 
         .copy-btn {
             position: absolute;
-            top: 8px;
-            right: 8px;
+            top: 6px;
+            right: 6px;
             font-size: 11px;
-            padding: 4px 10px;
+            padding: 3px 8px;
         }
 
         .guide-step {
             display: flex;
             gap: 14px;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             align-items: flex-start;
         }
 
         .step-num {
-            background: var(--rpg-gold);
-            color: #000;
-            font-family: var(--font-fantasy);
+            background: var(--dir-blue-header);
+            color: #ffffff;
             font-weight: bold;
             border-radius: 50%;
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            font-size: 16px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-<!-- TOP SCROLLING MARQUEE BANNER -->
+<!-- RETRO TOP MARQUEE BANNER -->
 <div class="top-marquee">
-    <marquee scrollamount="6" behavior="scroll">
-        ★ WEBSUTRA GUILD RUNES &amp; WIDGET EMBED CATALOG ★ EMBED WIDGETS ON YOUR REALM ★ CLAIM YOUR VERIFIED CHAMPION RANK 🇮🇳 ★
-    </marquee>
+    <marquee>WEBSUTRA WIDGETS &amp; BADGES CATALOG • EMBED WEBRING WIDGETS ON YOUR HOMEPAGE</marquee>
 </div>
 
-<div id="container">
+<!-- MAIN PORTAL CONTAINER -->
+<div class="portal-container">
 
+    <!-- DIRECTORY HERO HEADER -->
     <header class="hero-header">
         <div class="header-top-nav">
+            <div><img src="graphics/flag.gif" alt="India Flag" style="height: 18px; vertical-align: middle;"> <strong> WebSutra Widgets &amp; Badges</strong></div>
             <div>
-                <span style="font-size: 24px;">🔮</span>
-                <span style="font-family: var(--font-fantasy); font-size: 18px; color: var(--rpg-gold-light); font-weight: bold; margin-left: 8px;">GUILD_RUNES.SYS</span>
-            </div>
-            <div>
-                <a href="index.html" class="btn">🏠 World Map</a>
-                <a href="members.html" class="btn btn-saffron">🎒 Members Gallery</a>
-                <a href="join.html" class="btn btn-saffron">⚔️ Join Guild</a>
-                <a href="dashboard.html" class="btn btn-cyan">🔑 Key Login</a>
+                <a href="index.html" class="btn">Portal Home</a>
+                <a href="members.html" class="btn">Directory Index</a>
+                <a href="join.html" class="btn btn-primary">Register Homepage</a>
             </div>
         </div>
 
         <div class="hero-title-group">
-            <h1>🔮 Guild Runes &amp; Widget Catalog</h1>
-            <div class="hero-subtitle">Interactive live previews, embed code snippets, and integration guides</div>
+            <h1>Webring Widgets &amp; 88x31 Badges</h1>
+            <div class="hero-subtitle"> Live previews, copyable code snippets, and site integration instructions</div>
         </div>
     </header>
 
-    <!-- WIDGET 1: STANDARD WEBRING NAV WIDGET -->
-    <div class="widget-card">
-        <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-wood-dark); margin-top: 0;">📜 Rune #1: Classic Text Ring Widget</h3>
-        <p>The essential WebSutra webring navigation bar styled in the Fantasy RPG theme. Includes Previous Realm, Random Isle, and Next Realm links.</p>
+    <!-- RETRO DIRECTORY NAVBAR -->
+    <nav class="dir-navbar">
+        <a href="index.html">Portal Home</a>
+        <a href="members.html">Web Directory</a>
+        <a href="join.html">Join Webring</a>
+        <a href="widgets.html" class="active">Widgets &amp; Badges</a>
+        <a href="dashboard.html">Webmaster Control</a>
+        <a href="api-docs.html">API Reference</a>
+        <a href="admin.html">Admin Console</a>
+    </nav>
 
-        <h4 style="font-family: var(--font-fantasy); color: var(--rpg-wood-dark); margin: 12px 0 6px 0;">Live Preview:</h4>
+    <!-- WIDGET 1: STANDARD RETRO TEXT RING WIDGET -->
+    <div class="widget-card">
+        <h3 style="color: var(--dir-blue-dark); margin-top: 0; font-size: 16px;">Widget Option #1: Classic Retro Webring Box</h3>
+        <p style="font-size: 13px; color: var(--dir-text-muted);"> The classic WebSutra webring navigation box. Styled with directory borders, clear links to Previous site, Random site, and Next site.</p>
+
+        <h4 style="color: var(--dir-blue-dark); font-size: 13px; margin: 12px 0 6px 0;">Live Preview:</h4>
         <div class="widget-preview-box">
-            <div id="websutra-ring" style="background: linear-gradient(180deg, #1c120a 0%, #0d0804 100%); color: #ffeb99; border: 2px solid #f4c430; border-radius: 6px; padding: 14px 24px; text-align: center; font-family: 'Plus Jakarta Sans', sans-serif; box-shadow: 0 4px 12px rgba(0,0,0,0.6);">
-                <p style="margin:0 0 8px 0; font-family: 'Cinzel', serif; font-weight:bold; font-size: 16px; color: #f4c430;">🛡️ Member of <a href="index.html" target="_blank" style="color: #f4c430; text-decoration: underline;">WebSutra Guild</a></p>
-                <div style="display: flex; gap: 16px; justify-content: center; font-weight: bold; font-size: 14px;">
-                    <a href="api/ring?action=prev&slug=demo" style="color: #ffeb99; text-decoration: none;">← Prev Realm</a>
-                    <a href="api/ring?action=random" style="color: #ffeb99; text-decoration: none;">🎲 Random Isle</a>
-                    <a href="api/ring?action=next&slug=demo" style="color: #ffeb99; text-decoration: none;">Next Realm →</a>
+            <div id="websutra-ring" style="background: #ffffff; color: #003366; border: 1px solid #7a92a5; border-radius: 4px; padding: 12px 20px; text-align: center; font-family: Verdana, sans-serif; font-size: 12px;">
+                <p style="margin: 0 0 6px 0; font-weight: bold; color: #003366;"> Member of <a href="index.html" target="_blank" style="color: #003366; text-decoration: underline;">WebSutra Webring</a></p>
+                <div style="display: flex; gap: 14px; justify-content: center; font-size: 12px;">
+                    <a href="api/ring?action=prev&slug=demo" style="color: #0000cc; text-decoration: underline;">[ &lt;&lt; Prev Site ]</a>
+                    <a href="api/ring?action=random" style="color: #0000cc; text-decoration: underline;">[ Random Site ]</a>
+                    <a href="api/ring?action=next&slug=demo" style="color: #0000cc; text-decoration: underline;">[ Next Site &gt;&gt; ]</a>
                 </div>
             </div>
         </div>
 
-        <p><strong>HTML Integration Snippet:</strong> (Replace <code>YOUR-REALM-SLUG</code> with your registered slug):</p>
+        <p style="font-size: 12px;"><strong> HTML Integration Snippet:</strong> (Replace <code> YOUR-MEMBER-SLUG</code> with your registered slug):</p>
         <div class="code-container">
-            <button class="btn btn-saffron copy-btn" onclick="copyCode('code1', this)">📋 Copy Code</button>
-            <textarea id="code1" readonly><div id="websutra-ring" style="background: linear-gradient(180deg, #1c120a 0%, #0d0804 100%); color: #ffeb99; border: 2px solid #f4c430; border-radius: 6px; padding: 14px; text-align: center; font-family: sans-serif;">
-  <p style="margin:0 0 8px 0; font-weight:bold; color: #f4c430;">Member of <a href="https://webring.blackpiratex.com" style="color:#f4c430;">WebSutra Guild</a></p>
-  <a href="https://webring.blackpiratex.com/api/ring?action=prev&slug=YOUR-REALM-SLUG" style="color:#ffeb99; margin-right:12px; font-weight:bold;">← Prev Realm</a>
-  <a href="https://webring.blackpiratex.com/api/ring?action=random" style="color:#ffeb99; margin-right:12px; font-weight:bold;">🎲 Random</a>
-  <a href="https://webring.blackpiratex.com/api/ring?action=next&slug=YOUR-REALM-SLUG" style="color:#ffeb99; font-weight:bold;">Next Realm →</a>
+            <button class="btn copy-btn" onclick="copyCode('code1', this)">Copy Code</button>
+            <textarea id="code1" readonly><div id="websutra-ring" style="background: #ffffff; color: #003366; border: 1px solid #7a92a5; border-radius: 4px; padding: 12px; text-align: center; font-family: Verdana, sans-serif; font-size: 12px;">
+  <p style="margin: 0 0 6px 0; font-weight: bold;"> Member of <a href="https://webring.blackpiratex.com" style="color: #003366;">WebSutra Webring</a></p>
+  <a href="https://webring.blackpiratex.com/api/ring?action=prev&slug=YOUR-MEMBER-SLUG" style="color: #0000cc; margin-right: 10px;">[ &lt;&lt; Prev ]</a>
+  <a href="https://webring.blackpiratex.com/api/ring?action=random" style="color: #0000cc; margin-right: 10px;">[ Random ]</a>
+  <a href="https://webring.blackpiratex.com/api/ring?action=next&slug=YOUR-MEMBER-SLUG" style="color: #0000cc;">[ Next &gt;&gt; ]</a>
 </div></textarea>
         </div>
     </div>
 
     <!-- WIDGET 2: EMBEDDABLE JAVASCRIPT WIDGET -->
     <div class="widget-card">
-        <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-wood-dark); margin-top: 0;">🔮 Rune #2: RPG Guild JS Widget (`widget.js`)</h3>
-        <p>Dynamic asynchronous JavaScript widget that automatically renders an interactive webring portal inside a single <code>&lt;div id="my-webring"&gt;</code> container.</p>
+        <h3 style="color: var(--dir-blue-dark); margin-top: 0; font-size: 16px;">Widget Option #2: Dynamic JS Auto-Widget (`widget.js`)</h3>
+        <p style="font-size: 13px; color: var(--dir-text-muted);"> Asynchronous JavaScript snippet that automatically renders an interactive webring container inside a single <code>&lt;div id="my-webring"&gt;&lt;/div&gt;</code> element.</p>
 
-        <h4 style="font-family: var(--font-fantasy); color: var(--rpg-wood-dark); margin: 12px 0 6px 0;">Live Preview:</h4>
+        <h4 style="color: var(--dir-blue-dark); font-size: 13px; margin: 12px 0 6px 0;">Live Preview:</h4>
         <div class="widget-preview-box">
             <!-- LIVE WIDGET JS TARGET CONTAINER -->
             <div id="my-webring"></div>
         </div>
 
-        <p><strong>Script Integration Snippet:</strong> Place anywhere on your page:</p>
+        <p style="font-size: 12px;"><strong> Script Integration Snippet:</strong> Place anywhere in your HTML page body or footer:</p>
         <div class="code-container">
-            <button class="btn btn-saffron copy-btn" onclick="copyCode('code2', this)">📋 Copy Code</button>
+            <button class="btn copy-btn" onclick="copyCode('code2', this)">Copy Code</button>
             <textarea id="code2" readonly><div id="my-webring"></div>
 <script src="https://webring.blackpiratex.com/widget.js"></script></textarea>
         </div>
     </div>
 
-    <!-- WIDGET 3: 88x31 & 468x60 RETRO IMAGE BANNERS -->
+    <!-- WIDGET 3: 88x31 RETRO IMAGE BADGES -->
     <div class="widget-card">
-        <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-wood-dark); margin-top: 0;">🖼️ Rune #3: Retro Banners &amp; 88x31 Badges</h3>
-        <p>Classic 88x31 button badge and responsive 468x60 / 250x250 iframe banners for indie digital gardens.</p>
+        <h3 style="color: var(--dir-blue-dark); margin-top: 0; font-size: 16px;">Widget Option #3: Retro 88x31 Button Badges</h3>
+        <p style="font-size: 13px; color: var(--dir-text-muted);"> Authentic Early 2000s Webmaster 88x31 button badge for your site footer.</p>
 
-        <h4 style="font-family: var(--font-fantasy); color: var(--rpg-wood-dark); margin: 12px 0 6px 0;">Live Previews:</h4>
-        <div class="widget-preview-box" style="flex-direction: column; gap: 18px;">
+        <h4 style="color: var(--dir-blue-dark); font-size: 13px; margin: 12px 0 6px 0;">Live Preview:</h4>
+        <div class="widget-preview-box">
             <div>
-                <span style="color: var(--text-muted); font-size: 12px; display: block; margin-bottom: 6px;">88x31 Button Badge:</span>
-                <a href="index.html" target="_blank">
-                    <img src="graphics/websutra-badge.jpg" alt="WebSutra Webring Badge" style="border: 2px solid var(--rpg-gold); border-radius: 2px;">
-                </a>
-            </div>
-
-            <div style="width: 100%; max-width: 468px;">
-                <span style="color: var(--text-muted); font-size: 12px; display: block; margin-bottom: 6px;">Responsive Marquee Banner (468x60):</span>
-                <iframe src="classic-banner.html" style="width: 100%; height: 60px; border: none; border-radius: 4px; overflow: hidden;" scrolling="no"></iframe>
-            </div>
-
-            <div>
-                <span style="color: var(--text-muted); font-size: 12px; display: block; margin-bottom: 6px;">Square Realm Banner (250x250):</span>
-                <iframe src="sqare-banner.html" style="width: 250px; height: 250px; border: none; border-radius: 6px; overflow: hidden;" scrolling="no"></iframe>
+                <a href="index.html" target="_blank"><img src="graphics/websutra-badge.jpg" alt="WebSutra Webring Badge" style="width: 88px; height: 31px; border: 1px solid var(--dir-border);"></a>
             </div>
         </div>
 
-        <p><strong>Option A: 88x31 Button Badge Image Code:</strong></p>
-        <div class="code-container" style="margin-bottom: 18px;">
-            <button class="btn btn-saffron copy-btn" onclick="copyCode('code3a', this)">📋 Copy Code</button>
-            <textarea id="code3a" readonly><a href="https://webring.blackpiratex.com" target="_blank">
-  <img src="https://webring.blackpiratex.com/graphics/websutra-badge.jpg" alt="WebSutra Webring Member">
-</a></textarea>
-        </div>
-
-        <p><strong>Option B: Responsive Marquee Banner Iframe Code:</strong></p>
+        <p style="font-size: 12px;"><strong> 88x31 Button Badge Code:</strong></p>
         <div class="code-container">
-            <button class="btn btn-saffron copy-btn" onclick="copyCode('code3b', this)">📋 Copy Code</button>
-            <textarea id="code3b" readonly><iframe src="https://webring.blackpiratex.com/classic-banner.html" style="width:100%; max-width:468px; height:60px; border:none;" scrolling="no"></iframe></textarea>
+            <button class="btn copy-btn" onclick="copyCode('code3a', this)">Copy Code</button>
+            <textarea id="code3a" readonly><a href="https://webring.blackpiratex.com" target="_blank"><img src="https://webring.blackpiratex.com/graphics/websutra-badge.jpg" alt="WebSutra Webring Member" width="88" height="31"></a></textarea>
         </div>
     </div>
 
-    <!-- COMPREHENSIVE INTEGRATION GUIDES -->
-    <div class="widget-card" style="background: var(--rpg-wood-dark); color: var(--rpg-gold-light); border-color: var(--rpg-gold);">
-        <h3 style="font-family: var(--font-fantasy); font-size: 24px; color: var(--rpg-gold); margin-top: 0;">📖 Step-by-Step Integration Guides</h3>
+    <!-- WIDGET 4: 468x60 RETRO BANNER ADS COLLECTION -->
+    <div class="widget-card">
+        <h3 style="color: var(--dir-blue-dark); margin-top: 0; font-size: 16px;">Widget Option #4: Pure CSS Web 1.0 468x60 Banner Ads Collection</h3>
+        <p style="font-size: 13px; color: var(--dir-text-muted);"> Authentic 468x60 pixel retro banner ads built with pure HTML &amp; CSS animations (no external image assets required!). Pick any banner below for your homepage:</p>
+
+        <!-- Banner 1 Preview & Code -->
+        <h4 style="color: var(--dir-blue-dark); font-size: 13px; margin-top: 16px;">1. Tricolor Flash Banner:</h4>
+        <div class="widget-preview-box">
+            <a href="index.html" class="banner banner-1"><span class="banner-1-text">CELEBRATE 80 YEARS OF FREEDOM!</span></a>
+        </div>
+        <div class="code-container">
+            <button class="btn copy-btn" onclick="copyCode('bannerCode1', this)">Copy Code</button>
+            <textarea id="bannerCode1" readonly><a href="https://webring.blackpiratex.com" class="banner banner-1"><span class="banner-1-text">CELEBRATE 80 YEARS OF FREEDOM!</span></a></textarea>
+        </div>
+
+        <!-- Banner 2 Preview & Code -->
+        <h4 style="color: var(--dir-blue-dark); font-size: 13px; margin-top: 16px;">2. Patriotic Marquee Banner:</h4>
+        <div class="widget-preview-box">
+            <a href="index.html" class="banner banner-2"><div class="banner-2-marquee-container">
+                    <span class="banner-2-text"><span class="banner-2-chakra"></span> HAPPY 80TH INDEPENDENCE DAY 1947 - 2026 
+                        <span class="banner-2-chakra"></span> PROUD TO BE INDIAN 
+                        <span class="banner-2-chakra"></span></span>
+                </div></a>
+        </div>
+        <div class="code-container">
+            <button class="btn copy-btn" onclick="copyCode('bannerCode2', this)">Copy Code</button>
+            <textarea id="bannerCode2" readonly><a href="https://webring.blackpiratex.com" class="banner banner-2"><div class="banner-2-marquee-container">
+    <span class="banner-2-text"><span class="banner-2-chakra"></span> HAPPY 80TH INDEPENDENCE DAY 1947 - 2026 
+      <span class="banner-2-chakra"></span> PROUD TO BE INDIAN 
+      <span class="banner-2-chakra"></span></span>
+  </div></a></textarea>
+        </div>
+
+        <!-- Banner 3 Preview & Code -->
+        <h4 style="color: var(--dir-blue-dark); font-size: 13px; margin-top: 16px;">3. Windows 95 Bevel Button Banner:</h4>
+        <div class="widget-preview-box">
+            <a href="index.html" class="banner banner-3"><div class="banner-3-icon"></div>
+                <div class="banner-3-content">
+                    <p class="banner-3-title"> Vande_Mataram.wav</p>
+                    <p class="banner-3-sub"> Click Here to Download</p>
+                </div>
+                <div class="banner-3-icon"></div></a>
+        </div>
+        <div class="code-container">
+            <button class="btn copy-btn" onclick="copyCode('bannerCode3', this)">Copy Code</button>
+            <textarea id="bannerCode3" readonly><a href="https://webring.blackpiratex.com" class="banner banner-3"><div class="banner-3-icon"></div>
+  <div class="banner-3-content">
+    <p class="banner-3-title"> Vande_Mataram.wav</p>
+    <p class="banner-3-sub"> Click Here to Download</p>
+  </div>
+  <div class="banner-3-icon"></div></a></textarea>
+        </div>
+
+        <!-- Banner 4 Preview & Code -->
+        <h4 style="color: var(--dir-blue-dark); font-size: 13px; margin-top: 16px;">4. Simulated GIF Animation Banner:</h4>
+        <div class="widget-preview-box">
+            <a href="index.html" class="banner banner-4"><div class="banner-4-frame1">
+                    <p class="banner-4-text-main"> AUGUST 15, 2026</p>
+                    <p class="banner-4-text-sub"> 80 YEARS OF GLORY</p>
+                </div>
+                <div class="banner-4-frame2">
+                    <p class="banner-4-text-main"> HAPPY INDEPENDENCE DAY</p>
+                    <p class="banner-4-text-sub"> JAI HIND!</p>
+                </div></a>
+        </div>
+        <div class="code-container">
+            <button class="btn copy-btn" onclick="copyCode('bannerCode4', this)">Copy Code</button>
+            <textarea id="bannerCode4" readonly><a href="https://webring.blackpiratex.com" class="banner banner-4"><div class="banner-4-frame1">
+    <p class="banner-4-text-main"> AUGUST 15, 2026</p>
+    <p class="banner-4-text-sub"> 80 YEARS OF GLORY</p>
+  </div>
+  <div class="banner-4-frame2">
+    <p class="banner-4-text-main"> HAPPY INDEPENDENCE DAY</p>
+    <p class="banner-4-text-sub"> JAI HIND!</p>
+  </div></a></textarea>
+        </div>
+
+        <!-- Banner 5 Preview & Code -->
+        <h4 style="color: var(--dir-blue-dark); font-size: 13px; margin-top: 16px;">5. Tricolor Ribbon / Blinking Text Banner:</h4>
+        <div class="widget-preview-box">
+            <a href="index.html" class="banner banner-5"><div class="banner-5-inner">
+                    <span class="banner-5-img"></span>
+                    <span class="banner-5-text">PROUD TO BE INDIAN</span>
+                    <span class="banner-5-img"></span>
+                </div></a>
+        </div>
+        <div class="code-container">
+            <button class="btn copy-btn" onclick="copyCode('bannerCode5', this)">Copy Code</button>
+            <textarea id="bannerCode5" readonly><a href="https://webring.blackpiratex.com" class="banner banner-5"><div class="banner-5-inner">
+    <span class="banner-5-img"></span>
+    <span class="banner-5-text">PROUD TO BE INDIAN</span>
+    <span class="banner-5-img"></span>
+  </div></a></textarea>
+        </div>
+    </div>
+
+    <!-- STEP BY STEP INTEGRATION GUIDE -->
+    <div class="card-panel">
+        <div class="card-header">
+            <h2>Integration Step-by-Step Guide</h2>
+        </div>
         
         <div class="guide-step">
-            <div class="step-num">1</div>
+            <div class="step-num"> 1</div>
             <div>
-                <h4 style="margin: 0 0 4px 0; font-family: var(--font-fantasy); color: #fff;">Inscribe Your Charter</h4>
-                <p style="margin: 0; color: var(--text-muted);">Register your realm homepage at the <a href="join.html">Guild Join Page</a> to get your unique slug and secret rune key.</p>
+                <strong style="color: var(--dir-blue-dark);"> Register Your Site:</strong>
+                <p style="margin: 4px 0 0 0; color: var(--dir-text-muted); font-size: 13px;"> Submit your homepage at the <a href="join.html">Registration Page</a> to obtain your unique member slug and secret key.</p>
             </div>
         </div>
 
         <div class="guide-step">
-            <div class="step-num">2</div>
+            <div class="step-num"> 2</div>
             <div>
-                <h4 style="margin: 0 0 4px 0; font-family: var(--font-fantasy); color: #fff;">Embed Widget Rune Snippet</h4>
-                <p style="margin: 0 0 8px 0; color: var(--text-muted);">Paste your chosen widget code snippet into your website's footer or sidebar:</p>
-                <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 14px;">
-                    <li><strong>HTML / WordPress / Blogger:</strong> Insert into site footer template or custom HTML widget block.</li>
-                    <li><strong>Static Sites (Hugo, Jekyll, Astro, Eleventy):</strong> Paste inside your <code>footer.html</code> layout partial.</li>
-                    <li><strong>React / Next.js / Vue:</strong> Render inside your global <code>Footer.jsx</code> component using standard JSX or <code>widget.js</code> script import.</li>
-                </ul>
+                <strong style="color: var(--dir-blue-dark);"> Embed Widget Code:</strong>
+                <p style="margin: 4px 0 0 0; color: var(--dir-text-muted); font-size: 13px;"> Copy your preferred widget code snippet above and paste it into your site's HTML footer or sidebar template.</p>
             </div>
         </div>
 
         <div class="guide-step">
-            <div class="step-num">3</div>
+            <div class="step-num"> 3</div>
             <div>
-                <h4 style="margin: 0 0 4px 0; font-family: var(--font-fantasy); color: #fff;">Scry &amp; Verify Guild Status</h4>
-                <p style="margin: 0; color: var(--text-muted);">Log into your <a href="dashboard.html">Hero Keep Sanctuary</a> using your secret key and click <strong>"🔍 Verify Widget Placement"</strong>. Our automated scryer will scrape your homepage to confirm the widget rune link and activate your <strong>Verified Champion Status</strong>!</p>
+                <strong style="color: var(--dir-blue-dark);"> Verify Status:</strong>
+                <p style="margin: 4px 0 0 0; color: var(--dir-text-muted); font-size: 13px;"> Log into the <a href="dashboard.html">Webmaster Control Panel</a> using your secret key and click <strong>"Verify Widget Link"</strong> to activate your verified directory status!</p>
             </div>
         </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="card-panel" style="text-align: center; margin-top: 40px;">
-        <p style="color: var(--text-muted); font-size: 13px; margin: 0;">
-            WebSutra Guild Runes &copy; 2026 | <a href="index.html">Return to World Map</a>
-        </p>
+    <!-- RETRO FOOTER -->
+    <footer class="dir-footer">
+        <div> WebSutra Widgets &copy; 2026 • <a href="index.html">Return to Portal Home</a>
+        </div>
     </footer>
 
 </div>
@@ -243,8 +318,7 @@
 <!-- LOAD LIVE WIDGET SCRIPT -->
 <script src="widget.js"></script>
 
-<script>
-    function copyCode(id, btn) {
+<script> function copyCode(id, btn) {
         const textarea = document.getElementById(id);
         textarea.select();
         textarea.setSelectionRange(0, 99999);
@@ -254,7 +328,7 @@
             document.execCommand('copy');
         }
         const original = btn.textContent;
-        btn.textContent = '✓ Copied!';
+        btn.textContent = ' Copied!';
         setTimeout(() => { btn.textContent = original; }, 1500);
     }
 </script>

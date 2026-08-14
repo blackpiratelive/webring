@@ -3,100 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSutra High Wizard Citadel ⚡ | Super Admin</title>
+    <title>WebSutra Super Admin Console</title>
+    <meta name="description" content="Super Admin Management Console for WebSutra Webring & Directory.">
     <link rel="stylesheet" href="style.css">
     <style>
-        .user-card { margin-bottom: 16px; }
+        .user-card { margin-bottom: 14px; }
         summary { 
             cursor: pointer; 
-            background: linear-gradient(180deg, #3d2716 0%, #1a0e06 100%); 
-            color: var(--rpg-gold-light); 
-            padding: 12px 18px; 
-            font-family: var(--font-fantasy); 
-            font-size: 18px; 
+            background: #ffffff; 
+            color: var(--dir-blue-dark); 
+            padding: 10px 14px; 
             font-weight: bold; 
-            border: 2px solid var(--rpg-gold); 
-            border-radius: 6px; 
+            border: 1px solid var(--dir-border); 
+            border-radius: 4px; 
             user-select: none; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        summary:hover { background: linear-gradient(180deg, #5c3b22 0%, #2e1a0b 100%); color: #fff; }
-        .user-details { background: var(--rpg-wood-dark); color: var(--text-main); padding: 20px; border: 2px solid var(--rpg-gold); border-top: none; border-radius: 0 0 6px 6px; box-shadow: inset 0 0 12px rgba(0,0,0,0.6); }
+        summary:hover { background: #f8fafd; border-color: var(--dir-blue-header); }
+        .user-details { background: #ffffff; color: var(--dir-text); padding: 16px; border: 1px solid var(--dir-border); border-top: none; border-radius: 0 0 4px 4px; }
         .site-row { 
             display: grid; 
             grid-template-columns: 1.2fr 1fr 1.5fr 1fr 1.2fr auto auto; 
             gap: 8px; 
-            padding: 10px; 
-            background: #24170c; 
-            margin-top: 8px; 
+            padding: 8px; 
+            background: #f8fafd; 
+            margin-top: 6px; 
             align-items: center; 
-            border: 1px solid var(--rpg-wood-border); 
-            border-radius: 4px;
+            border: 1px solid var(--dir-border); 
+            border-radius: 3px;
         }
-        .site-row input, .site-row select { font-size: 12px; padding: 5px; }
-        .reset-link-box { display: none; margin-top: 14px; padding: 14px; background: #0e0804; color: var(--rpg-gold-light); border: 2px solid var(--rpg-gold); border-radius: 4px; }
-        #loginOverlay { position: fixed; inset: 0; background: rgba(8, 5, 3, 0.92); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 100; }
+        .site-row input, .site-row select { font-size: 11px; padding: 4px; border: 1px solid var(--dir-border); border-radius: 2px; }
+        .reset-link-box { display: none; margin-top: 12px; padding: 12px; background: #f8fafd; border: 1px dashed var(--dir-border); border-radius: 4px; }
+        #loginOverlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 100; }
     </style>
 </head>
 <body>
 
     <!-- ADMIN LOGIN OVERLAY -->
     <div id="loginOverlay">
-        <fieldset class="retro-box" style="width: 420px; text-align: center;">
+        <div class="card-panel" style="width: 380px; text-align: center;">
             <div class="card-header">
-                <h2>⚡ High Wizard Citadel</h2>
+                <h2>Super Admin Auth</h2>
             </div>
-            <h2 style="font-family: var(--font-fantasy); font-size: 24px; color: var(--rpg-gold-light); margin-top: 0;">ADMINISTRATOR AUTH</h2>
-            <div style="margin-bottom: 20px;">
-                <input type="password" id="adminKey" placeholder="Enter High Wizard Password">
+            <p style="font-size: 13px; color: var(--dir-text-muted); margin-bottom: 14px;"> Enter Super Admin Password:</p>
+            <div class="form-group" style="margin-bottom: 16px;">
+                <input type="password" id="adminKey" placeholder="Enter Super Admin Key">
             </div>
-            <button onclick="loadAdmin()" class="btn btn-saffron" style="width: 100%; padding: 12px; font-size: 14px;">
-                🔑 Unlock Citadel Controls
-            </button>
-        </fieldset>
+            <button onclick="loadAdmin()" class="btn btn-primary" style="width: 100%; padding: 8px; font-size: 13px;">Authenticate Admin</button>
+        </div>
     </div>
 
-    <div id="container">
+    <!-- MAIN PORTAL CONTAINER -->
+    <div class="portal-container">
         
         <header class="hero-header">
             <div class="header-top-nav">
+                <div><img src="graphics/flag.gif" alt="India Flag" style="height: 18px; vertical-align: middle;"> <strong> Super Admin Control Desk</strong></div>
                 <div>
-                    <span style="font-size: 24px;">👑</span>
-                    <span style="font-family: var(--font-fantasy); font-size: 18px; color: var(--rpg-gold-light); font-weight: bold; margin-left: 8px;">ADMIN_CONSOLE.SYS</span>
-                </div>
-                <div>
-                    <a href="/" class="btn">🏠 World Map</a>
+                    <a href="index.html" class="btn">Portal Home</a>
                 </div>
             </div>
 
             <div class="hero-title-group">
-                <h1>⚡ High Wizard Citadel</h1>
-                <div class="hero-subtitle">Manage webmaster charters, realm statuses, and rune reset tokens</div>
+                <h1>WebSutra Admin Console</h1>
+                <div class="hero-subtitle"> Manage directory members, site verification statuses, and generate secret reset keys</div>
             </div>
         </header>
 
-        <div class="retro-divider">
-            <img src="graphics/divider-blood.gif" alt="--- divider ---">
+        <!-- RETRO DIRECTORY NAVBAR -->
+        <nav class="dir-navbar">
+            <a href="index.html">Portal Home</a>
+            <a href="members.html">Web Directory</a>
+            <a href="join.html">Join Webring</a>
+            <a href="widgets.html">Widgets &amp; Badges</a>
+            <a href="dashboard.html">Webmaster Control</a>
+            <a href="api-docs.html">API Reference</a>
+            <a href="admin.html" class="active">Admin Console</a>
+        </nav>
+
+        <div class="card-panel">
+            <div class="card-header">
+                <h2>Webmasters Directory Ledger</h2>
+            </div>
+            <div id="content" style="padding-top: 10px;"> Consulting database archives...</div>
         </div>
 
-        <fieldset class="retro-box">
-            <div class="card-header">
-                <h2>👥 ALL GUILD WEBMSTERS LEDGER</h2>
+        <footer class="dir-footer">
+            <div> WebSutra Super Admin Console &copy; 2026 • <a href="index.html">Return to Portal Home</a>
             </div>
-            <div id="content">Consulting database archives...</div>
-        </fieldset>
-
-        <footer class="retro-box" style="text-align: center;">
-            <a href="/" class="btn">&larr; Return to World Map</a>
         </footer>
 
-    </div> <!-- END CONTAINER -->
+    </div>
 
-    <script>
-        const INDIAN_STATES = [
+    <script> const INDIAN_STATES = [
             "Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar",
             "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa",
             "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka",
@@ -146,43 +147,39 @@
             container.innerHTML = users.map(user => `
                 <details class="user-card">
                     <summary>
-                        <span>
-                            🛡️ ID: ${user.id} | ${user.email || 'No Raven Address Registered'} 
-                            <span style="font-size: 14px; opacity: 0.85; margin-left: 8px;">(${user.sites.length}/${user.max_sites} realms)</span>
-                        </span>
-                        <span style="font-size: 12px; color: var(--rpg-gold);">SECRET PROTECTED</span>
+                        <span>ID: ${user.id} | ${user.email || 'No Email Registered'} 
+                            <span style="font-size: 12px; color: var(--dir-text-muted); font-weight: normal;">(${user.sites.length}/${user.max_sites} sites)</span></span>
+                        <span style="font-size: 11px; color: var(--dir-blue-dark);">WEBMASTER RECORD</span>
                     </summary>
                     
                     <div class="user-details">
-                        <div style="margin-bottom: 20px; border-bottom: 1px dashed var(--rpg-gold-dark); padding-bottom: 16px;">
-                            <h4 style="font-family: var(--font-fantasy); font-size: 20px; margin-top: 0; color: var(--rpg-gold-light);">Webmaster Settings</h4>
-                            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-                                <div>
-                                    Email: <input id="email-${user.id}" value="${user.email || ''}" style="width: 220px;">
+                        <div style="margin-bottom: 16px; border-bottom: 1px solid var(--dir-border); padding-bottom: 14px;">
+                            <h4 style="font-size: 14px; margin-top: 0; color: var(--dir-blue-dark);">Webmaster Account Settings</h4>
+                            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                                <div> Email: <input id="email-${user.id}" value="${user.email || ''}" style="width: 200px; padding: 4px; font-size: 12px; border: 1px solid var(--dir-border);">
                                 </div>
-                                <div>
-                                    Max Sites: <input id="limit-${user.id}" type="number" value="${user.max_sites}" style="width: 70px;">
+                                <div> Max Sites: <input id="limit-${user.id}" type="number" value="${user.max_sites}" style="width: 60px; padding: 4px; font-size: 12px; border: 1px solid var(--dir-border);">
                                 </div>
-                                <button class="btn btn-saffron" onclick="saveUser(${user.id})">💾 Save</button>
-                                <button class="btn" onclick="createResetLink(${user.id})">🔑 Secret Reset Link</button>
-                                <button class="btn btn-pink" onclick="deleteUser(${user.id})">🗑️ Delete</button>
+                                <button class="btn btn-primary" onclick="saveUser(${user.id})">Save</button>
+                                <button class="btn" onclick="createResetLink(${user.id})">Generate Reset Link</button>
+                                <button class="btn" onclick="deleteUser(${user.id})">Delete User</button>
                             </div>
                             
                             <div class="reset-link-box" id="reset-link-box-${user.id}">
-                                <strong>One-Time Secret Reset Rune Link:</strong>
-                                <input id="reset-link-${user.id}" readonly style="margin-top: 6px;">
-                                <button class="btn btn-saffron" style="margin-top: 8px;" onclick="copyResetLink(${user.id})">Copy Link</button>
-                                <small id="reset-link-expiry-${user.id}" style="display: block; margin-top: 6px; color: var(--rpg-gold-light);"></small>
+                                <strong> One-Time Secret Reset Link:</strong>
+                                <input id="reset-link-${user.id}" readonly style="margin-top: 4px; width: 100%; font-family: monospace; font-size: 11px; padding: 4px;">
+                                <button class="btn btn-primary" style="margin-top: 6px;" onclick="copyResetLink(${user.id})">Copy Link</button>
+                                <small id="reset-link-expiry-${user.id}" style="display: block; margin-top: 4px; color: var(--dir-text-muted);"></small>
                             </div>
                         </div>
 
-                        <h4 style="font-family: var(--font-fantasy); font-size: 20px; color: var(--rpg-gold-light); margin-bottom: 10px;">Associated Realm Charters</h4>
-                        <div class="site-row" style="background: linear-gradient(180deg, #3d2716 0%, #1a0e06 100%); color: var(--rpg-gold-light); font-weight: bold; font-family: var(--font-pixel); font-size: 11px;">
+                        <h4 style="font-size: 14px; color: var(--dir-blue-dark); margin-bottom: 8px;">Associated Homepages</h4>
+                        <div class="site-row" style="background: var(--dir-blue-header); color: #ffffff; font-weight: bold; font-size: 11px;">
                             <span>Title</span>
-                            <span>Slug (ID)</span>
+                            <span>Slug</span>
                             <span>URL</span>
                             <span>Status</span>
-                            <span>State / Realm</span>
+                            <span>State</span>
                             <span>Save</span>
                             <span>Del</span>
                         </div>
@@ -199,20 +196,20 @@
                                 <input id="url-${site.id}" value="${site.url}" placeholder="URL">
                                 
                                 <select id="status-${site.id}">
-                                    <option value="pending" ${site.status==='pending'?'selected':''}>Pending</option>
-                                    <option value="verified" ${site.status==='verified'?'selected':''}>Verified</option>
-                                    <option value="suspended" ${site.status==='suspended'?'selected':''}>Suspended</option>
+                                    <option value="pending" ${site.status==='pending'?'selected':''}> Pending</option>
+                                    <option value="verified" ${site.status==='verified'?'selected':''}> Verified</option>
+                                    <option value="suspended" ${site.status==='suspended'?'selected':''}> Suspended</option>
                                 </select>
 
                                 <select id="state-${site.id}">
                                     ${stateOpts}
                                 </select>
                                 
-                                <button class="btn btn-saffron" onclick="saveSite(${site.id})">💾</button>
-                                <button class="btn btn-pink" onclick="deleteSite(${site.id})">🗑️</button>
+                                <button class="btn btn-primary" onclick="saveSite(${site.id})"></button>
+                                <button class="btn" onclick="deleteSite(${site.id})"></button>
                             </div>
                         `}).join('')}
-                        ${user.sites.length === 0 ? '<div style="opacity:0.8; padding:12px;">No charters registered for this webmaster.</div>' : ''}
+                        ${user.sites.length === 0 ? '<div style="color: var(--dir-text-muted); padding: 8px; font-size: 12px;"> No homepages registered.</div>' : ''}
                     </div>
                 </details>
             `).join('');
@@ -259,7 +256,7 @@
         }
 
         async function deleteUser(id) {
-            if(!confirm("Delete webmaster and ALL their charters?")) return;
+            if(!confirm("Delete webmaster and ALL their registered sites?")) return;
             await api('delete_user', { userId: id });
             loadAdmin();
         }
@@ -277,11 +274,11 @@
                     state: document.getElementById(`state-${id}`).value
                 }
             });
-            alert("Site Charter Updated");
+            alert("Site Entry Updated");
         }
 
         async function deleteSite(id) {
-            if(!confirm("Delete this site charter?")) return;
+            if(!confirm("Delete this site entry?")) return;
             await api('delete_site', { siteId: id });
             loadAdmin();
         }

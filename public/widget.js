@@ -1,5 +1,5 @@
 // public/widget.js
-// Official WebSutra Classic Fantasy RPG Webring Widget
+// Official WebSutra Classic Web 1.0 Directory & Webring Widget
 
 (() => {
   const widgetContainer = document.getElementById('my-webring');
@@ -14,60 +14,67 @@
 
   widgetContainer.innerHTML = `
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@600;700&display=swap');
-      
-      .websutra-rpg-widget {
-        background: linear-gradient(180deg, #1c120a 0%, #0d0804 100%);
-        border: 2px solid #f4c430;
-        border-radius: 8px;
-        padding: 16px 20px;
-        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-        text-align: center;
-        max-width: 340px;
-        margin: 12px auto;
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7), 0 0 10px rgba(244, 196, 48, 0.2);
-        color: #ffeb99;
+      .websutra-dir-widget {
+        background: #ffffff !important;
+        border: 1px solid #7a92a5 !important;
+        border-radius: 4px !important;
+        padding: 12px 18px !important;
+        font-family: Verdana, Arial, sans-serif !important;
+        text-align: center !important;
+        max-width: 340px !important;
+        margin: 12px auto !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+        color: #003366 !important;
+        box-sizing: border-box !important;
       }
-      .websutra-rpg-widget h3 {
-        font-family: 'Cinzel', serif;
-        font-size: 1.15rem;
-        color: #f4c430;
-        margin: 0 0 10px 0;
-        padding-bottom: 6px;
-        border-bottom: 1px dashed #997514;
-        letter-spacing: 0.5px;
+      .websutra-dir-widget * {
+        box-sizing: border-box !important;
       }
-      .websutra-rpg-widget h3 a {
-        color: #f4c430;
-        text-decoration: none;
+      .websutra-dir-widget h3 {
+        font-size: 13px !important;
+        font-weight: bold !important;
+        color: #003366 !important;
+        margin: 0 0 8px 0 !important;
+        padding: 0 0 4px 0 !important;
+        border: none !important;
+        border-bottom: 1px solid #cbd5e1 !important;
+        background: transparent !important;
+        line-height: 1.4 !important;
       }
-      .websutra-rpg-widget nav {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        gap: 8px;
+      .websutra-dir-widget h3 a, .websutra-dir-widget h3 a:visited {
+        color: #003366 !important;
+        text-decoration: underline !important;
+        background: transparent !important;
       }
-      .websutra-rpg-widget .webring-link {
-        text-decoration: none;
-        color: #ffeb99;
-        font-weight: 700;
-        font-size: 0.85rem;
-        padding: 4px 8px;
-        border-radius: 4px;
-        transition: all 0.15s ease-in-out;
+      .websutra-dir-widget nav {
+        display: flex !important;
+        justify-content: space-around !important;
+        align-items: center !important;
+        gap: 6px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
       }
-      .websutra-rpg-widget .webring-link:hover {
-        background: rgba(244, 196, 48, 0.15);
-        color: #ffffff;
-        text-shadow: 0 0 6px rgba(244, 196, 48, 0.6);
+      .websutra-dir-widget .webring-link, .websutra-dir-widget .webring-link:visited {
+        text-decoration: underline !important;
+        color: #0000cc !important;
+        font-weight: bold !important;
+        font-size: 12px !important;
+        padding: 2px 4px !important;
+        background: transparent !important;
+        transition: color 0.15s ease !important;
+      }
+      .websutra-dir-widget .webring-link:hover {
+        color: #cc0000 !important;
       }
     </style>
-    <div class="websutra-rpg-widget">
-      <h3>🛡️ Member of <a href="${apiBaseUrl}" target="_blank">WebSutra Guild</a></h3>
+    <div class="websutra-dir-widget">
+      <h3>Member of <a href="${apiBaseUrl}" target="_blank">WebSutra Webring</a></h3>
       <nav>
-        <a href="#" data-action="previous" class="webring-link">← Prev Realm</a>
-        <a href="#" data-action="random" class="webring-link">🎲 Random</a>
-        <a href="#" data-action="next" class="webring-link">Next Realm →</a>
+        <a href="#" data-action="previous" class="webring-link">[ &lt;&lt; Prev ]</a>
+        <a href="#" data-action="random" class="webring-link">[ Random ]</a>
+        <a href="#" data-action="next" class="webring-link">[ Next &gt;&gt; ]</a>
       </nav>
     </div>
   `;
@@ -85,21 +92,21 @@
         apiUrl.searchParams.append('action', action);
         apiUrl.searchParams.append('json', 'true');
 
-        titleEl.textContent = '🔮 Navigating Realm Portals...';
+        titleEl.textContent = ' Navigating Webring Directory...';
 
         const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error('Portal Error');
+        if (!response.ok) throw new Error('Navigation Error');
         
         const data = await response.json();
 
         if (data.targetUrl) {
           window.location.href = data.targetUrl;
         } else {
-          throw new Error('No Portal Found');
+          throw new Error('No target site found');
         }
       } catch (error) {
         console.error('Webring Error:', error);
-        titleEl.textContent = '⚠️ Portal Sealed!';
+        titleEl.textContent = ' Directory Navigation Error';
         setTimeout(() => {
           titleEl.innerHTML = originalTitle;
         }, 2000);

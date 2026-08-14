@@ -3,191 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSutra Hero Keep 🇮🇳 | Member Sanctuary</title>
+    <title>Webmaster Control Panel  | WebSutra Webring</title>
+    <meta name="description" content="Webmaster Dashboard to manage your registered homepages, update site details, embed webring snippets, and trigger automated site verification.">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- TOP SCROLLING FANTASY MARQUEE BANNER -->
+<!-- RETRO TOP MARQUEE BANNER -->
 <div class="top-marquee">
-    <marquee scrollamount="6" behavior="scroll">
-        ★ WEBSUTRA HERO KEEP ★ MANAGE REALM CHARTERS ★ VERIFY RUNE WIDGET EMBEDS ★ LEVEL 99 WEBMSTERS 🇮🇳 ★
-    </marquee>
+    <marquee>WEBSUTRA WEBMASTER CONTROL PANEL • MANAGE YOUR REGISTERED HOMEPAGES &amp; VERIFY WIDGET LINKS</marquee>
 </div>
 
-<div id="container">
+<!-- MAIN PORTAL CONTAINER -->
+<div class="portal-container">
 
+    <!-- DIRECTORY HERO HEADER -->
     <header class="hero-header">
         <div class="header-top-nav">
+            <div><img src="graphics/flag.gif" alt="India Flag" style="height: 18px; vertical-align: middle;"> <strong> Webmaster Control Desk</strong></div>
             <div>
-                <span style="font-size: 24px;">🛡️</span>
-                <span style="font-family: var(--font-fantasy); font-size: 18px; color: var(--rpg-gold-light); font-weight: bold; margin-left: 8px;">HERO_SANCTUARY.KEEP</span>
-            </div>
-            <div>
-                <a href="/" class="btn">🏠 World Map</a>
-                <a href="members.html" class="btn btn-saffron">🎒 Members Gallery</a>
-                <a href="widgets.html" class="btn btn-saffron">🔮 Widgets</a>
-                <a href="/" onclick="logout(); return false;" class="btn btn-pink">Logout Sanctuary</a>
+                <a href="index.html" class="btn">Portal Home</a>
+                <a href="members.html" class="btn">Directory Index</a>
+                <a href="join.html" class="btn btn-primary">Register Homepage</a>
+                <a href="#" onclick="logout(); return false;" class="btn">Logout</a>
             </div>
         </div>
 
         <div class="hero-title-group">
-            <h1>🏰 WebSutra Hero Keep</h1>
-            <div class="hero-subtitle">Manage your realm charters &amp; verify rune widget embeds</div>
+            <h1>Webmaster Control Panel</h1>
+            <div class="hero-subtitle"> Manage registered homepages, update profile settings, and verify widget embeds</div>
         </div>
     </header>
 
-    <div class="retro-divider">
-        <img src="graphics/divider-blood.gif" alt="--- divider ---">
-    </div>
+    <!-- RETRO DIRECTORY NAVBAR -->
+    <nav class="dir-navbar">
+        <a href="index.html">Portal Home</a>
+        <a href="members.html">Web Directory</a>
+        <a href="join.html">Join Webring</a>
+        <a href="widgets.html">Widgets &amp; Badges</a>
+        <a href="dashboard.html" class="active">Webmaster Control</a>
+        <a href="api-docs.html">API Reference</a>
+        <a href="admin.html">Admin Console</a>
+    </nav>
 
-    <!-- LOGIN SECTION WINDOW -->
-    <fieldset id="loginSection" class="retro-box">
+    <!-- LOGIN FORM PANEL -->
+    <div id="loginSection" class="card-panel">
         <div class="card-header">
-            <h2>🔑 Enter Secret Rune Key</h2>
+            <h2>Enter Webmaster Secret Key</h2>
         </div>
-        <h2 style="font-family: var(--font-fantasy); font-size: 24px; color: var(--rpg-gold-light); margin-top: 0;">Access Hero Keep</h2>
-        <p>Inscribe the secret key rune you received upon registering your charter below:</p>
+        <p style="color: var(--dir-text-muted); font-size: 13px; margin-bottom: 16px;"> Paste your Webmaster Secret Key generated during registration to access your site control panel:
+        </p>
         
-        <div style="margin-bottom: 20px;">
-            <label for="loginKey">Secret Rune Key:</label>
+        <div class="form-group" style="margin-bottom: 16px;">
+            <label for="loginKey"> Webmaster Secret Key:</label>
             <input type="password" id="loginKey" placeholder="Paste your secret key here...">
         </div>
 
-        <button onclick="login()" class="btn btn-saffron" style="font-size: 15px; width: 100%; padding: 12px;">
-            🔑 Unlock Hero Keep Sanctuary
-        </button>
-        <p style="font-size: 13px; color: var(--text-muted); margin-top: 14px;">
-            <em>Lost your key? Request a High Wizard administrator to generate a secret reset link for your account.</em>
+        <button onclick="login()" class="btn btn-primary" style="width: 100%; padding: 10px; font-size: 14px;">Unlock Webmaster Control Panel</button>
+        <p style="font-size: 11px; color: var(--dir-text-muted); margin-top: 14px; text-align: center;"> Lost your key? Contact <a href="mailto:webmaster@websutra.org">webmaster@websutra.org</a> for key recovery assistance.
         </p>
-    </fieldset>
+    </div>
 
-    <!-- MAIN INTERFACE WINDOW (HIDDEN BEFORE LOGIN) -->
+    <!-- MAIN DASHBOARD INTERFACE (HIDDEN BEFORE LOGIN) -->
     <div id="mainInterface" style="display: none;">
         
-        <!-- PROFILE SETTINGS WINDOW -->
-        <fieldset class="retro-box">
+        <!-- PROFILE SETTINGS PANEL -->
+        <div class="card-panel">
             <div class="card-header">
-                <h2>👤 Webmaster Profile Scroll</h2>
+                <h2>Webmaster Profile</h2>
             </div>
-            <div style="background: var(--rpg-wood-dark); border: 2px solid var(--rpg-gold); border-radius: 4px; padding: 14px; margin-bottom: 18px;">
-                <p style="margin: 0; font-family: var(--font-pixel); font-size: 12px; color: var(--rpg-gold-light);">
-                    Realm Slotted: <strong id="siteCount" style="color: var(--rpg-gold);">0</strong> / <span id="maxSites">2</span> charters permitted
+            <div style="background: #f8fafd; border: 1px solid var(--dir-border); border-radius: 4px; padding: 12px; margin-bottom: 16px;">
+                <p style="margin: 0; font-size: 12px; color: var(--dir-blue-dark);"> Registered Sites: <strong id="siteCount" style="color: var(--dir-blue-header);"> 0</strong> / <span id="maxSites">2</span> permitted
                 </p>
             </div>
 
-            <div style="margin-bottom: 16px;">
-                <label for="userEmail">Registered Raven Address (Email):</label>
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label for="userEmail"> Webmaster Email Address:</label>
                 <input type="email" id="userEmail" placeholder="your-email@example.com">
             </div>
 
-            <button onclick="saveProfile()" class="btn" style="font-size: 13px;">💾 Update Profile Scroll</button>
-        </fieldset>
-
-        <div class="retro-divider">
-            <img src="graphics/divider-blood.gif" alt="--- divider ---">
+            <button onclick="saveProfile()" class="btn btn-primary">Save Profile Settings</button>
         </div>
 
-        <!-- SITES MANAGEMENT SECTION -->
-        <fieldset class="retro-box">
+        <!-- SITES MANAGEMENT PANEL -->
+        <div class="card-panel">
             <div class="card-header">
-                <h2>🌐 Realm Charters &amp; Inventory</h2>
+                <h2>Registered Webmaster Homepages</h2>
             </div>
             <div id="sitesContainer"></div>
 
-            <button id="showAddBtn" onclick="toggleAddForm()" class="btn btn-saffron" style="font-size: 14px; margin-top: 12px;">
-                ➕ Charter Another Realm
-            </button>
+            <button id="showAddBtn" onclick="toggleAddForm()" class="btn btn-primary" style="margin-top: 12px;">Register Additional Homepage</button>
 
-            <!-- ADD SITE CARD -->
-            <div id="addSiteCard" style="display: none; background: var(--rpg-wood-dark); border: 2px solid var(--rpg-gold); border-radius: 6px; padding: 20px; margin-top: 20px;">
-                <h3 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-gold-light); margin-top: 0;">Add New Realm Charter</h3>
+            <!-- ADD SITE FORM -->
+            <div id="addSiteCard" style="display: none; background: #f8fafd; border: 1px solid var(--dir-border); border-radius: 4px; padding: 16px; margin-top: 16px;">
+                <h3 style="color: var(--dir-blue-dark); margin-top: 0; font-size: 15px;">Add New Site Registration</h3>
                 
-                <div style="margin-bottom: 14px;">
-                    <label>Realm / Site Title:</label>
-                    <input type="text" id="newTitle" placeholder="e.g. My Creative Corner">
+                <div class="form-group">
+                    <label> Site Title:</label>
+                    <input type="text" id="newTitle" placeholder="e.g. My Personal Blog">
                 </div>
 
-                <div style="margin-bottom: 14px;">
-                    <label>Homepage URL:</label>
+                <div class="form-group">
+                    <label> Homepage URL:</label>
                     <input type="url" id="newUrl" placeholder="https://example.com">
                 </div>
 
-                <div style="margin-bottom: 14px;">
-                    <label>Unique Guild Slug (ID):</label>
-                    <input type="text" id="newSlug" placeholder="my-creative-corner">
+                <div class="form-group">
+                    <label> Unique Member Slug:</label>
+                    <input type="text" id="newSlug" placeholder="my-blog-slug">
                 </div>
 
-                <div style="margin-bottom: 18px;">
-                    <label>Indian Realm / State (Optional):</label>
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label> Indian State / Region:</label>
                     <select id="newState">
                         <option value="">-- None / Outside India --</option>
-                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                        <option value="Andhra Pradesh">Andhra Pradesh</option>
-                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                        <option value="Assam">Assam</option>
-                        <option value="Bihar">Bihar</option>
-                        <option value="Chandigarh">Chandigarh</option>
-                        <option value="Chhattisgarh">Chhattisgarh</option>
-                        <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
-                        <option value="Delhi">Delhi</option>
-                        <option value="Goa">Goa</option>
-                        <option value="Gujarat">Gujarat</option>
-                        <option value="Haryana">Haryana</option>
-                        <option value="Himachal Pradesh">Himachal Pradesh</option>
-                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                        <option value="Jharkhand">Jharkhand</option>
-                        <option value="Karnataka">Karnataka</option>
-                        <option value="Kerala">Kerala</option>
-                        <option value="Ladakh">Ladakh</option>
-                        <option value="Lakshadweep">Lakshadweep</option>
-                        <option value="Madhya Pradesh">Madhya Pradesh</option>
-                        <option value="Maharashtra">Maharashtra</option>
-                        <option value="Manipur">Manipur</option>
-                        <option value="Meghalaya">Meghalaya</option>
-                        <option value="Mizoram">Mizoram</option>
-                        <option value="Nagaland">Nagaland</option>
-                        <option value="Odisha">Odisha</option>
-                        <option value="Puducherry">Puducherry</option>
-                        <option value="Punjab">Punjab</option>
-                        <option value="Rajasthan">Rajasthan</option>
-                        <option value="Sikkim">Sikkim</option>
-                        <option value="Tamil Nadu">Tamil Nadu</option>
-                        <option value="Telangana">Telangana</option>
-                        <option value="Tripura">Tripura</option>
-                        <option value="Uttar Pradesh">Uttar Pradesh</option>
-                        <option value="Uttarakhand">Uttarakhand</option>
-                        <option value="West Bengal">West Bengal</option>
+                        <option value="Andaman and Nicobar Islands"> Andaman and Nicobar Islands</option>
+                        <option value="Andhra Pradesh"> Andhra Pradesh</option>
+                        <option value="Arunachal Pradesh"> Arunachal Pradesh</option>
+                        <option value="Assam"> Assam</option>
+                        <option value="Bihar"> Bihar</option>
+                        <option value="Chandigarh"> Chandigarh</option>
+                        <option value="Chhattisgarh"> Chhattisgarh</option>
+                        <option value="Dadra and Nagar Haveli and Daman and Diu"> Dadra and Nagar Haveli and Daman and Diu</option>
+                        <option value="Delhi"> Delhi</option>
+                        <option value="Goa"> Goa</option>
+                        <option value="Gujarat"> Gujarat</option>
+                        <option value="Haryana"> Haryana</option>
+                        <option value="Himachal Pradesh"> Himachal Pradesh</option>
+                        <option value="Jammu and Kashmir"> Jammu and Kashmir</option>
+                        <option value="Jharkhand"> Jharkhand</option>
+                        <option value="Karnataka"> Karnataka</option>
+                        <option value="Kerala"> Kerala</option>
+                        <option value="Ladakh"> Ladakh</option>
+                        <option value="Lakshadweep"> Lakshadweep</option>
+                        <option value="Madhya Pradesh"> Madhya Pradesh</option>
+                        <option value="Maharashtra"> Maharashtra</option>
+                        <option value="Manipur"> Manipur</option>
+                        <option value="Meghalaya"> Meghalaya</option>
+                        <option value="Mizoram"> Mizoram</option>
+                        <option value="Nagaland"> Nagaland</option>
+                        <option value="Odisha"> Odisha</option>
+                        <option value="Puducherry"> Puducherry</option>
+                        <option value="Punjab"> Punjab</option>
+                        <option value="Rajasthan"> Rajasthan</option>
+                        <option value="Sikkim"> Sikkim</option>
+                        <option value="Tamil Nadu"> Tamil Nadu</option>
+                        <option value="Telangana"> Telangana</option>
+                        <option value="Tripura"> Tripura</option>
+                        <option value="Uttar Pradesh"> Uttar Pradesh</option>
+                        <option value="Uttarakhand"> Uttarakhand</option>
+                        <option value="West Bengal"> West Bengal</option>
                     </select>
                 </div>
 
                 <div>
-                    <button onclick="addSite()" class="btn btn-saffron">Inscribe Charter</button>
+                    <button onclick="addSite()" class="btn btn-primary">Submit Site</button>
                     <button onclick="toggleAddForm()" class="btn">Cancel</button>
                 </div>
             </div>
-        </fieldset>
+        </div>
 
     </div> <!-- END MAIN INTERFACE -->
 
-    <div class="retro-divider">
-        <img src="graphics/divider-blood.gif" alt="--- divider ---">
-    </div>
-
-    <!-- FOOTER -->
-    <fieldset class="retro-box" style="text-align: center;">
-        <div style="margin-bottom: 10px;">
-            <span>Need assistance? Contact <a href="mailto:sudip@blackpiratex.com">sudip@blackpiratex.com</a></span>
+    <!-- RETRO FOOTER -->
+    <footer class="dir-footer">
+        <div> WebSutra Control Panel &copy; 2026 • <a href="index.html">Return to Portal Home</a>
         </div>
-        <p style="font-size: 13px; color: var(--text-muted); margin: 0;">
-            WebSutra Webring &copy; 2026 | <a href="/">Return to World Map</a>
-        </p>
-    </fieldset>
+    </footer>
 
-</div> <!-- END CONTAINER -->
+</div>
 
-<script>
-    const INDIAN_STATES = [
+<script> const INDIAN_STATES = [
         "Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar",
         "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa",
         "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka",
@@ -226,7 +212,7 @@
 
     async function login() {
         const keyInput = document.getElementById('loginKey').value.trim();
-        if(!keyInput) return alert("Please enter your key");
+        if(!keyInput) return alert("Please enter your secret key");
         
         const data = await api('/api/manage', { action: 'login', key: keyInput });
 
@@ -243,19 +229,19 @@
 
     function logout() {
         localStorage.removeItem('websutra_key');
-        location.href = '/';
+        location.href = 'index.html';
     }
 
     async function verifySite(slug, btnId) {
         const btn = document.getElementById(btnId);
         const originalText = btn.textContent;
-        btn.textContent = "Scrying Scraper...";
+        btn.textContent = "Scanning Website...";
         btn.disabled = true;
 
         const res = await api('/api/verify', { slug: slug });
 
         if (res.success) {
-            btn.textContent = "✓ Verified";
+            btn.textContent = " Verified";
             setTimeout(() => login(), 1000); 
         } else {
             alert(res.error);
@@ -267,7 +253,7 @@
     async function saveProfile() {
         const newEmail = document.getElementById('userEmail').value;
         const res = await api('/api/manage', { action: 'update_profile', newEmail });
-        if(res.success) alert("Profile updated."); else alert(res.error);
+        if(res.success) alert("Profile settings updated."); else alert(res.error);
     }
 
     async function saveSite(id) {
@@ -283,7 +269,7 @@
     }
 
     async function deleteSite(id) {
-        if(!confirm("Permanently delete this realm charter?")) return;
+        if(!confirm("Are you sure you want to delete this site registration?")) return;
         const res = await api('/api/manage', { action: 'delete_site', siteId: id });
         if(res.success) login(); else alert(res.error);
     }
@@ -334,7 +320,7 @@
 
         const container = document.getElementById('sitesContainer');
         if(sites.length === 0) {
-            container.innerHTML = '<p>No chartered realms found. Click Charter Another Realm below!</p>';
+            container.innerHTML = '<p style="color: var(--dir-text-muted);"> No registered sites found. Click "Register Additional Homepage" below.</p>';
             return;
         }
 
@@ -343,67 +329,61 @@
         container.innerHTML = sites.map(site => {
             const snippet = `
 <div id="websutra-ring">
-  <p>Member of <a href="${host}">WebSutra</a></p>
+  <p> Member of <a href="${host}">WebSutra</a></p>
   <a href="${host}/api/ring?action=prev&slug=${site.slug}">← Prev</a>
   <a href="${host}/api/ring?action=random">Random</a>
   <a href="${host}/api/ring?action=next&slug=${site.slug}">Next →</a>
 </div>`.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-            const statusClass = site.status === 'verified' ? 'verified' : (site.status === 'pending' ? 'pending' : 'suspended');
-            
-            const memberSince = user.created_at ? new Date(user.created_at) : new Date();
-            const daysActive = Math.max(0, Math.floor((new Date() - memberSince) / (1000 * 60 * 60 * 24)));
-            const totalXP = 500 + (daysActive * 100);
-            const level = Math.max(1, Math.floor(Math.sqrt(totalXP / 20)));
-
+            const statusClass = site.status === 'verified' ? 'verified' : 'pending';
             const stateOptionsHtml = '<option value="">-- None / Outside India --</option>' + INDIAN_STATES.map(s => 
                 `<option value="${s}" ${site.state === s ? 'selected' : ''}>${s}</option>`
             ).join('');
 
             return `
-            <div style="background: var(--rpg-wood-dark); border: 2px solid var(--rpg-gold); border-radius: 6px; padding: 18px; margin-bottom: 22px; box-shadow: 0 4px 12px rgba(0,0,0,0.6);">
-                <h4 style="margin: 0 0 14px 0; font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-gold-light);">
-                    🛡️ ${site.title} 
-                    <span class="status-pill ${statusClass}" style="vertical-align: middle; margin-left: 10px;">LVL ${level} (${totalXP.toLocaleString()} XP) — ${site.status.toUpperCase()}</span>
-                </h4>
+            <div style="background: #ffffff; border: 1px solid var(--dir-border); border-radius: 4px; padding: 16px; margin-bottom: 18px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                    <h4 style="margin: 0; font-size: 16px; color: var(--dir-blue-dark);">${site.title}</h4>
+                    <span class="status-pill ${statusClass}">${site.status.toUpperCase()}</span>
+                </div>
                 
-                <div style="margin-bottom: 12px;">
-                    <label>Site Title:</label>
+                <div class="form-group">
+                    <label> Site Title:</label>
                     <input type="text" id="title-${site.id}" value="${site.title}">
                 </div>
 
-                <div style="margin-bottom: 12px;">
-                    <label>URL:</label>
+                <div class="form-group">
+                    <label> URL:</label>
                     <input type="url" id="url-${site.id}" value="${site.url}">
                 </div>
 
-                <div style="margin-bottom: 12px;">
-                    <label>Guild Slug:</label>
+                <div class="form-group">
+                    <label> Member Slug:</label>
                     <input type="text" id="slug-${site.id}" value="${site.slug}">
                 </div>
 
-                <div style="margin-bottom: 16px;">
-                    <label>Indian Realm / State:</label>
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <label> State / Region:</label>
                     <select id="state-${site.id}">
                         ${stateOptionsHtml}
                     </select>
                 </div>
                 
-                <div style="margin-bottom: 18px;">
-                    <button onclick="saveSite(${site.id})" class="btn btn-saffron">💾 Save Changes</button>
-                    <button onclick="deleteSite(${site.id})" class="btn btn-pink">🗑️ Delete Charter</button>
+                <div style="margin-bottom: 14px; display: flex; gap: 8px;">
+                    <button onclick="saveSite(${site.id})" class="btn btn-primary">Save Changes</button>
+                    <button onclick="deleteSite(${site.id})" class="btn">Delete Site</button>
                 </div>
                 
-                <hr style="border: 0; border-top: 1px dashed var(--rpg-gold-dark);">
+                <hr style="border: 0; border-top: 1px solid var(--dir-border); margin: 12px 0;">
                 
-                <p style="font-weight: bold; margin-bottom: 8px; color: var(--rpg-gold);">HTML Integration Snippet:</p>
-                <textarea rows="5" readonly style="background: var(--rpg-parchment-light); color: var(--rpg-parchment-text); font-family: var(--font-mono);">${snippet}</textarea>
+                <p style="font-weight: bold; margin-bottom: 6px; font-size: 12px;"> Webring Widget Snippet:</p>
+                <textarea rows="4" readonly style="font-family: monospace; font-size: 12px; width: 100%; padding: 8px; border: 1px solid var(--dir-border); border-radius: 3px;">${snippet}</textarea>
                 
-                <div style="margin-top: 16px; font-weight: bold; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
-                    <span>Verification Status: <strong>${site.status}</strong></span>
+                <div style="margin-top: 12px; font-size: 12px; display: flex; align-items: center; justify-content: space-between;">
+                    <span>Status: <strong>${site.status}</strong></span>
                     ${site.status === 'pending' 
-                        ? `<button id="verify-btn-${site.id}" onclick="verifySite('${site.slug}', 'verify-btn-${site.id}')" class="btn btn-saffron">🔍 Verify Widget Placement</button>`
-                        : `<span style="color: #22c55e;">✓ Guild Verified</span>`
+                        ? `<button id="verify-btn-${site.id}" onclick="verifySite('${site.slug}', 'verify-btn-${site.id}')" class="btn btn-primary">Verify Widget Link</button>`
+                        : `<span style="color: #28a745; font-weight: bold;">Verified Member</span>`
                     }
                 </div>
             </div>`;

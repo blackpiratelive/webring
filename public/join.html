@@ -3,143 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join WebSutra Guild 🇮🇳 | Register Your Realm</title>
+    <title>Join WebSutra Webring  | Site Registration Desk</title>
+    <meta name="description" content="Submit your personal website or indie blog to WebSutra Webring & Directory. Get your webmaster secret key and widget snippet.">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- TOP SCROLLING FANTASY GUILD MARQUEE BANNER -->
+<!-- RETRO TOP MARQUEE BANNER -->
 <div class="top-marquee">
-    <marquee scrollamount="6" behavior="scroll">
-        ★ JOIN THE WEBSUTRA GUILD HALL ★ REGISTER YOUR REALM OR DIGITAL GARDEN ★ DISCOVER HANDMADE WEBMSTERS ACROSS INDIA 🇮🇳 ★
-    </marquee>
+    <marquee>WEBSUTRA WEBRING REGISTRATION • SUBMIT YOUR PERSONAL HOMEPAGE TO THE DIRECTORY • SUPPORT INDIE WEBMASTERS</marquee>
 </div>
 
-<div id="container">
+<!-- MAIN PORTAL CONTAINER -->
+<div class="portal-container">
 
-    <!-- HERO HEADER -->
+    <!-- DIRECTORY HERO HEADER -->
     <header class="hero-header">
         <div class="header-top-nav">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 24px;">🛡️</span>
-                <span style="font-family: var(--font-fantasy); font-size: 18px; color: var(--rpg-gold-light); font-weight: bold;">WEBSUTRA GUILD HALL</span>
-            </div>
+            <div><img src="graphics/flag.gif" alt="India Flag" style="height: 18px; vertical-align: middle;"> <strong> WebSutra Site Registration</strong></div>
             <div>
-                <a href="index.html" class="btn">🏠 World Map</a>
-                <a href="members.html" class="btn btn-saffron">🎒 Members Gallery</a>
-                <a href="widgets.html" class="btn btn-saffron">🔮 Widgets</a>
-                <a href="dashboard.html" class="btn btn-cyan">🔑 Key Login</a>
+                <a href="index.html" class="btn">Portal Home</a>
+                <a href="members.html" class="btn">Directory Index</a>
+                <a href="dashboard.html" class="btn">Webmaster Login</a>
             </div>
         </div>
 
         <div class="hero-title-group">
-            <h1>⚔️ Join The WebSutra Guild 🇮🇳</h1>
-            <div class="hero-subtitle">Register your realm homepage, claim your Secret Rune Key, and embed the Guild Widget!</div>
+            <h1>Join WebSutra Webring &amp; Directory</h1>
+            <div class="hero-subtitle"> Register your personal site, receive your Webmaster Secret Key, and embed the Webring Widget</div>
         </div>
     </header>
 
-    <!-- JOIN FORM CARD -->
+    <!-- RETRO DIRECTORY NAVBAR -->
+    <nav class="dir-navbar">
+        <a href="index.html">Portal Home</a>
+        <a href="members.html">Web Directory</a>
+        <a href="join.html" class="active">Join Webring</a>
+        <a href="widgets.html">Widgets &amp; Badges</a>
+        <a href="dashboard.html">Webmaster Control</a>
+        <a href="api-docs.html">API Reference</a>
+        <a href="admin.html">Admin Console</a>
+    </nav>
+
+    <!-- JOIN FORM CARD PANEL -->
     <main class="card-panel">
         <div class="card-header">
-            <h2>📜 Adventurer Guild Charter Form</h2>
+            <h2>Webmaster Registration Form</h2>
         </div>
 
-        <p style="color: var(--text-muted); margin-bottom: 24px;">
-            Inscribe your realm details below to claim your place in the WebSutra Webring. Store your Secret Rune Key securely!
+        <p style="color: var(--dir-text-muted); margin-bottom: 20px; font-size: 13px;"> Fill in your website details below to submit your site for WebSutra Webring verification. Please store your generated Secret Key securely for future updates!
         </p>
 
         <form id="joinForm">
-            <div style="margin-bottom: 20px;">
-                <label for="title">Realm / Site Title (Required):</label>
-                <input type="text" id="title" placeholder="e.g. Rohit's Digital Garden" required>
+            <div class="form-group">
+                <label for="title"> Site Title (Required):</label>
+                <input type="text" id="title" placeholder="e.g. Rohit's Personal Homepage" required>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="url">Realm Homepage URL (Required):</label>
+            <div class="form-group">
+                <label for="url"> Homepage URL (Required):</label>
                 <input type="url" id="url" placeholder="e.g. https://rohit.me" required>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="slug">Unique Guild Slug / ID (Required):</label>
-                <input type="text" id="slug" placeholder="e.g. rohit-notes" required pattern="[a-zA-Z0-9-]+">
-                <small style="color: var(--text-muted); display: block; margin-top: 6px;">(Letters, numbers, and hyphens only)</small>
+            <div class="form-group">
+                <label for="slug"> Unique Member Slug / Identifier (Required):</label>
+                <input type="text" id="slug" placeholder="e.g. rohit-homepage" required pattern="[a-zA-Z0-9-]+">
+                <small style="color: var(--dir-text-muted); display: block; margin-top: 4px;">(Letters, numbers, and hyphens only)</small>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label for="state">Indian Realm / State (Optional):</label>
+            <div class="form-group">
+                <label for="state"> Indian State / Region (Optional):</label>
                 <select id="state">
                     <option value="">-- None / Outside India --</option>
-                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                    <option value="Andhra Pradesh">Andhra Pradesh</option>
-                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                    <option value="Assam">Assam</option>
-                    <option value="Bihar">Bihar</option>
-                    <option value="Chandigarh">Chandigarh</option>
-                    <option value="Chhattisgarh">Chhattisgarh</option>
-                    <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
-                    <option value="Delhi">Delhi</option>
-                    <option value="Goa">Goa</option>
-                    <option value="Gujarat">Gujarat</option>
-                    <option value="Haryana">Haryana</option>
-                    <option value="Himachal Pradesh">Himachal Pradesh</option>
-                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                    <option value="Jharkhand">Jharkhand</option>
-                    <option value="Karnataka">Karnataka</option>
-                    <option value="Kerala">Kerala</option>
-                    <option value="Ladakh">Ladakh</option>
-                    <option value="Lakshadweep">Lakshadweep</option>
-                    <option value="Madhya Pradesh">Madhya Pradesh</option>
-                    <option value="Maharashtra">Maharashtra</option>
-                    <option value="Manipur">Manipur</option>
-                    <option value="Meghalaya">Meghalaya</option>
-                    <option value="Mizoram">Mizoram</option>
-                    <option value="Nagaland">Nagaland</option>
-                    <option value="Odisha">Odisha</option>
-                    <option value="Puducherry">Puducherry</option>
-                    <option value="Punjab">Punjab</option>
-                    <option value="Rajasthan">Rajasthan</option>
-                    <option value="Sikkim">Sikkim</option>
-                    <option value="Tamil Nadu">Tamil Nadu</option>
-                    <option value="Telangana">Telangana</option>
-                    <option value="Tripura">Tripura</option>
-                    <option value="Uttar Pradesh">Uttar Pradesh</option>
-                    <option value="Uttarakhand">Uttarakhand</option>
-                    <option value="West Bengal">West Bengal</option>
+                    <option value="Andaman and Nicobar Islands"> Andaman and Nicobar Islands</option>
+                    <option value="Andhra Pradesh"> Andhra Pradesh</option>
+                    <option value="Arunachal Pradesh"> Arunachal Pradesh</option>
+                    <option value="Assam"> Assam</option>
+                    <option value="Bihar"> Bihar</option>
+                    <option value="Chandigarh"> Chandigarh</option>
+                    <option value="Chhattisgarh"> Chhattisgarh</option>
+                    <option value="Dadra and Nagar Haveli and Daman and Diu"> Dadra and Nagar Haveli and Daman and Diu</option>
+                    <option value="Delhi"> Delhi</option>
+                    <option value="Goa"> Goa</option>
+                    <option value="Gujarat"> Gujarat</option>
+                    <option value="Haryana"> Haryana</option>
+                    <option value="Himachal Pradesh"> Himachal Pradesh</option>
+                    <option value="Jammu and Kashmir"> Jammu and Kashmir</option>
+                    <option value="Jharkhand"> Jharkhand</option>
+                    <option value="Karnataka"> Karnataka</option>
+                    <option value="Kerala"> Kerala</option>
+                    <option value="Ladakh"> Ladakh</option>
+                    <option value="Lakshadweep"> Lakshadweep</option>
+                    <option value="Madhya Pradesh"> Madhya Pradesh</option>
+                    <option value="Maharashtra"> Maharashtra</option>
+                    <option value="Manipur"> Manipur</option>
+                    <option value="Meghalaya"> Meghalaya</option>
+                    <option value="Mizoram"> Mizoram</option>
+                    <option value="Nagaland"> Nagaland</option>
+                    <option value="Odisha"> Odisha</option>
+                    <option value="Puducherry"> Puducherry</option>
+                    <option value="Punjab"> Punjab</option>
+                    <option value="Rajasthan"> Rajasthan</option>
+                    <option value="Sikkim"> Sikkim</option>
+                    <option value="Tamil Nadu"> Tamil Nadu</option>
+                    <option value="Telangana"> Telangana</option>
+                    <option value="Tripura"> Tripura</option>
+                    <option value="Uttar Pradesh"> Uttar Pradesh</option>
+                    <option value="Uttarakhand"> Uttarakhand</option>
+                    <option value="West Bengal"> West Bengal</option>
                 </select>
             </div>
 
-            <div style="margin-bottom: 28px;">
-                <label for="email">Raven Address / Email (Optional):</label>
-                <input type="email" id="email" placeholder="Private, used for secret key recovery only">
+            <div class="form-group" style="margin-bottom: 24px;">
+                <label for="email"> Webmaster Email (Optional):</label>
+                <input type="email" id="email" placeholder="Private email, used only for key recovery">
             </div>
 
-            <button type="submit" class="btn btn-saffron" style="width: 100%; padding: 14px; font-size: 15px;">
-                🚀 Inscribe Charter &amp; Unlock Secret Rune Key
-            </button>
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px; font-size: 14px;">Register Homepage &amp; Generate Webmaster Key</button>
         </form>
 
         <div id="result"></div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="card-panel" style="text-align: center;">
-        <div style="margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-            <span>📬 Guild Master Raven: <a href="mailto:sudip@blackpiratex.com">sudip@blackpiratex.com</a></span>
+    <!-- RETRO FOOTER -->
+    <footer class="dir-footer">
+        <div> Webmaster Contact: <a href="mailto:webmaster@websutra.org">webmaster@websutra.org</a>
         </div>
-
-        <p style="color: var(--text-muted); font-size: 13px; margin: 0;">
-            WebSutra Realm &copy; 2026 | <a href="index.html">Return to World Map</a>
-        </p>
+        <div style="margin-top: 4px; font-size: 11px;"> WebSutra Directory &copy; 2026 • <a href="index.html">Return to Portal Home</a>
+        </div>
     </footer>
 
 </div>
 
-<script>
-    document.getElementById('joinForm').addEventListener('submit', async (e) => {
+<script> document.getElementById('joinForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = e.target.querySelector('button');
         const originalText = btn.innerHTML;
-        btn.innerHTML = "Inscribing Charter...";
+        btn.innerHTML = "Submitting Site Registration...";
         btn.disabled = true;
 
         const payload = {
@@ -161,16 +161,16 @@
             if (data.success) {
                 const resultDiv = document.getElementById('result');
                 resultDiv.innerHTML = `
-                    <div style="background: var(--rpg-wood-dark); color: var(--rpg-gold-light); border: 3px solid var(--rpg-gold); border-radius: 6px; padding: 24px; margin-top: 28px; box-shadow: 0 8px 20px rgba(0,0,0,0.8);">
-                        <h3 style="font-family: var(--font-fantasy); font-size: 24px; color: var(--rpg-gold); margin-top: 0;">🎉 Charter Inscribed Successfully!</h3>
-                        <p><strong>⚠️ SAVE THIS SECRET RUNE KEY SECURELY:</strong></p>
-                        <div style="background: #000; color: #fbbf24; padding: 14px; border: 2px solid var(--rpg-gold); border-radius: 4px; font-family: var(--font-mono); font-size: 18px; font-weight: bold; margin: 12px 0; word-break: break-all; user-select: all;">${data.secretKey}</div>
-                        <p style="font-size: 13px; color: var(--text-muted);"><em>You require this key to access your Hero Keep. It is revealed only once!</em></p>
-                        <hr style="border: 0; border-top: 1px dashed var(--rpg-gold-dark); margin: 18px 0;">
-                        <p><strong>Guild Rune Integration Code:</strong> Embed this snippet into your website footer:</p>
-                        <textarea rows="5" readonly style="background: var(--rpg-parchment-light); color: var(--rpg-parchment-text); font-family: var(--font-mono); border: 2px solid var(--rpg-wood-border); border-radius: 4px; padding: 10px; width: 100%;">${data.snippet}</textarea>
-                        <div style="margin-top: 20px;">
-                            <a href="dashboard.html" class="btn btn-saffron" style="font-size: 15px;">Enter Hero Keep Dashboard &rarr;</a>
+                    <div style="background: #f8fafd; border: 1px solid var(--dir-blue-header); border-radius: 4px; padding: 20px; margin-top: 24px;">
+                        <h3 style="color: var(--dir-blue-dark); margin-top: 0; font-size: 18px;">Site Registered Successfully!</h3>
+                        <p style="margin-bottom: 6px;"><strong> SAVE THIS WEBMASTER SECRET KEY SECURELY:</strong></p>
+                        <div style="background: #ffffff; color: var(--dir-blue-dark); padding: 12px; border: 1px dashed var(--dir-border); border-radius: 4px; font-family: monospace; font-size: 16px; font-weight: bold; margin: 10px 0; word-break: break-all; user-select: all;">${data.secretKey}</div>
+                        <p style="font-size: 11px; color: var(--dir-text-muted);"><em> Use this secret key to log into your Webmaster Control Panel. It is revealed only once!</em></p>
+                        <hr style="border: 0; border-top: 1px solid var(--dir-border); margin: 14px 0;">
+                        <p><strong> Webring Widget Embed Snippet:</strong> Add this code snippet to your homepage footer:</p>
+                        <textarea rows="4" readonly style="font-family: monospace; font-size: 12px; width: 100%; padding: 8px; border: 1px solid var(--dir-border); border-radius: 3px;">${data.snippet}</textarea>
+                        <div style="margin-top: 16px;">
+                            <a href="dashboard.html" class="btn btn-primary">Enter Webmaster Control Panel &rarr;</a>
                         </div>
                     </div>
                 `;
@@ -178,12 +178,12 @@
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             } else {
-                alert(data.error || "Error joining webring guild");
+                alert(data.error || "Error registering website");
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             }
         } catch (err) {
-            alert("Server Error");
+            alert("Server Error while registering site");
             btn.innerHTML = originalText;
             btn.disabled = false;
         }

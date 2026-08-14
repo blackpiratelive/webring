@@ -3,107 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebSutra Oracle API Docs 🔮 | Guild Documentation</title>
+  <title>WebSutra REST API Reference  | Webmaster Docs</title>
+  <meta name="description" content="Public REST API documentation and JSON endpoints for WebSutra Webring & Directory.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- RETRO TOP MARQUEE BANNER -->
 <div class="top-marquee">
-    <marquee scrollamount="6" behavior="scroll">
-        ★ WEBSUTRA ORACLE API REFERENCE ★ JSON ENDPOINTS FOR EXTERNAL REALM EMBEDS & BADGES ★ OPEN ACCESS ★
-    </marquee>
+    <marquee>WEBSUTRA REST API REFERENCE • OPEN JSON ENDPOINTS FOR EXTERNAL WIDGETS &amp; DIRECTORY FEEDS</marquee>
 </div>
 
-<div id="container">
+<!-- MAIN PORTAL CONTAINER -->
+<div class="portal-container">
 
+    <!-- DIRECTORY HERO HEADER -->
     <header class="hero-header">
         <div class="header-top-nav">
+            <div><img src="graphics/flag.gif" alt="India Flag" style="height: 18px; vertical-align: middle;"> <strong> API Documentation</strong></div>
             <div>
-                <span style="font-size: 24px;">🔮</span>
-                <span style="font-family: var(--font-fantasy); font-size: 18px; color: var(--rpg-gold-light); font-weight: bold; margin-left: 8px;">WEBSUTRA_API.MAN</span>
-            </div>
-            <div>
-                <a href="/" class="btn">🏠 World Map</a>
-                <a href="members.html" class="btn btn-saffron">🎒 Members Gallery</a>
-                <a href="dashboard.html" class="btn btn-cyan">🔑 Hero Keep</a>
+                <a href="index.html" class="btn">Portal Home</a>
+                <a href="members.html" class="btn">Directory Index</a>
+                <a href="join.html" class="btn btn-primary">Register Site</a>
             </div>
         </div>
 
         <div class="hero-title-group">
-            <h1>🔮 Oracle API Reference</h1>
-            <div class="hero-subtitle">Simple JSON endpoints for external realm embeds &amp; widgets</div>
+            <h1>WebSutra REST API Reference</h1>
+            <div class="hero-subtitle"> Open JSON endpoints for external webring widgets, RSS feeds, and directory integration</div>
         </div>
     </header>
 
-    <div class="retro-divider">
-        <img src="graphics/divider-blood.gif" alt="--- divider ---">
-    </div>
+    <!-- RETRO DIRECTORY NAVBAR -->
+    <nav class="dir-navbar">
+        <a href="index.html">Portal Home</a>
+        <a href="members.html">Web Directory</a>
+        <a href="join.html">Join Webring</a>
+        <a href="widgets.html">Widgets &amp; Badges</a>
+        <a href="dashboard.html">Webmaster Control</a>
+        <a href="api-docs.html" class="active">API Reference</a>
+        <a href="admin.html">Admin Console</a>
+    </nav>
 
-    <!-- API BASE INFO -->
-    <fieldset class="retro-box">
+    <!-- API BASE INFO PANEL -->
+    <div class="card-panel">
         <div class="card-header">
-            <h2>⚡ BASE REALM CONFIGURATION</h2>
+            <h2>Base API Configuration</h2>
         </div>
         
-        <h2 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-gold-light); margin-top: 0;">Base Guild URL</h2>
-        <div style="background: #000; color: #fbbf24; font-family: var(--font-mono); padding: 14px; border: 2px solid var(--rpg-gold); border-radius: 4px;">
-            https://webring.blackpiratex.com
+        <h3 style="color: var(--dir-blue-dark); font-size: 14px; margin-top: 0;">Base Directory URL:</h3>
+        <div style="background: #ffffff; color: var(--dir-blue-dark); font-family: monospace; padding: 10px; border: 1px dashed var(--dir-border); border-radius: 4px; font-weight: bold;"> https://webring.blackpiratex.com
         </div>
 
-        <h2 style="font-family: var(--font-fantasy); font-size: 22px; color: var(--rpg-gold-light);">Authentication</h2>
-        <p>None required for public endpoints below. Open to all webmasters across realms.</p>
-    </fieldset>
-
-    <div class="retro-divider">
-        <img src="graphics/divider-blood.gif" alt="--- divider ---">
+        <h3 style="color: var(--dir-blue-dark); font-size: 14px; margin-top: 14px;">Authentication:</h3>
+        <p style="font-size: 13px; color: var(--dir-text-muted);"> None required for public endpoints below. Open CORS enabled for all webmasters.</p>
     </div>
 
-    <!-- ENDPOINTS -->
-    <fieldset class="retro-box">
+    <!-- ENDPOINTS PANEL -->
+    <div class="card-panel">
         <div class="card-header">
-            <h2>📡 ENDPOINT: GET /api/latest</h2>
+            <h2>Endpoint: GET /api/latest</h2>
         </div>
 
-        <p>Returns the latest 10 verified champions for external feeds or webmaster guild portals.</p>
+        <p style="font-size: 13px; color: var(--dir-text-muted);"> Returns the latest 10 verified webmaster homepages for external feeds or webmaster portals.</p>
 
-        <h3 style="font-family: var(--font-fantasy); font-size: 20px; color: var(--rpg-gold-light);">Sample Response (200 OK)</h3>
-        <pre style="background: #000; color: #fbbf24; font-family: var(--font-mono); padding: 16px; border: 2px solid var(--rpg-gold); border-radius: 4px; overflow-x: auto;"><code>{
+        <h4 style="color: var(--dir-blue-dark); font-size: 13px;">Sample Response (JSON 200 OK):</h4>
+        <textarea rows="9" readonly style="font-family: monospace; font-size: 12px; width: 100%; padding: 10px; border: 1px solid var(--dir-border); border-radius: 3px; background: #ffffff;">{
   "count": 10,
   "sites": [
     {
-      "title": "Rohit's Garden",
-      "url": "https://rohit.me"
+      "title": "Rohit's Personal Site",
+      "url": "https://rohit.me",
+      "slug": "rohit-me",
+      "state": "Maharashtra"
     }
   ]
-}</code></pre>
+}</textarea>
 
-        <h3 style="font-family: var(--font-fantasy); font-size: 20px; color: var(--rpg-gold-light);">Headers &amp; Caching</h3>
-        <ul style="background: var(--rpg-wood-dark); border: 2px solid var(--rpg-gold); border-radius: 4px; padding: 14px 14px 14px 32px;">
-            <li>CORS Header: <code>Access-Control-Allow-Origin: *</code></li>
-            <li>Cache Control: <code>public, max-age=60, s-maxage=300, stale-while-revalidate=600</code></li>
-            <li>Returns only verified sites (<code>status='verified'</code>).</li>
+        <h4 style="color: var(--dir-blue-dark); font-size: 13px; margin-top: 14px;">Headers &amp; Caching:</h4>
+        <ul style="background: #f8fafd; border: 1px solid var(--dir-border); border-radius: 4px; padding: 12px 12px 12px 28px; font-size: 12px; line-height: 1.6;">
+            <li> CORS Header: <code> Access-Control-Allow-Origin: *</code></li>
+            <li> Cache Control: <code> public, max-age=60, s-maxage=300, stale-while-revalidate=600</code></li>
+            <li> Returns verified directory sites only (<code> status='verified'</code>).</li>
         </ul>
 
-        <h3 style="font-family: var(--font-fantasy); font-size: 20px; color: var(--rpg-gold-light);">Example JavaScript Embed</h3>
-        <pre style="background: #000; color: #34d399; font-family: var(--font-mono); padding: 16px; border: 2px solid #34d399; border-radius: 4px; overflow-x: auto;"><code>fetch('https://webring.blackpiratex.com/api/latest')
+        <h4 style="color: var(--dir-blue-dark); font-size: 13px; margin-top: 14px;">Example JavaScript Fetch Request:</h4>
+        <textarea rows="7" readonly style="font-family: monospace; font-size: 12px; width: 100%; padding: 10px; border: 1px solid var(--dir-border); border-radius: 3px; background: #ffffff;"> fetch('https://webring.blackpiratex.com/api/latest')
   .then(res => res.json())
   .then(data => {
     data.sites.forEach(site => {
-      console.log(site.title, site.url);
+      console.log(site.title, site.url, site.state);
     });
-  });</code></pre>
-    </fieldset>
-
-    <div class="retro-divider">
-        <img src="graphics/divider-blood.gif" alt="--- divider ---">
+  });</textarea>
     </div>
 
-    <!-- FOOTER -->
-    <fieldset class="retro-box" style="text-align: center;">
-        <a href="/" class="btn btn-saffron">&larr; Return to World Map</a>
-    </fieldset>
+    <!-- RETRO FOOTER -->
+    <footer class="dir-footer">
+        <div> WebSutra API Documentation &copy; 2026 • <a href="index.html">Return to Portal Home</a>
+        </div>
+    </footer>
 
-</div> <!-- END CONTAINER -->
+</div>
 
 </body>
 </html>

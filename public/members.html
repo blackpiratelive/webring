@@ -3,325 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSutra Guild Champions Gallery 🛡️ | Gamified XP Leaderboard</title>
+    <title>WebSutra Directory Index  | Verified Webmasters Roster</title>
+    <meta name="description" content="Browse the complete directory of verified Indian personal homepages, indie blogs, and passion sites registered on WebSutra Webring.">
     <link rel="stylesheet" href="style.css">
     <style>
         .filter-bar {
             display: flex;
             gap: 12px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            background: var(--rpg-wood-dark);
-            border: 2px solid var(--rpg-gold);
-            border-radius: 6px;
-            padding: 14px;
+            background: #ffffff;
+            border: 1px solid var(--dir-border);
+            border-radius: 4px;
+            padding: 12px 16px;
         }
 
         .filter-bar input, .filter-bar select {
-            font-size: 14px;
-            max-width: 260px;
-        }
-
-        .champions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .champion-card {
-            background: var(--rpg-parchment-light);
-            color: var(--rpg-parchment-text);
-            border: 4px solid var(--rpg-wood-mid);
-            outline: 2px solid var(--rpg-gold);
-            border-radius: 8px;
-            padding: 16px;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.6);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .champion-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 24px rgba(244, 196, 48, 0.4);
-            border-color: var(--rpg-wood-dark);
-        }
-
-        .champion-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: linear-gradient(180deg, #d97706 0%, #78350f 100%);
-            color: #fff;
-            border: 1px solid #fbbf24;
-            border-radius: 4px;
-            font-family: var(--font-pixel);
-            font-size: 10px;
-            padding: 3px 6px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .champion-img {
-            width: 100%;
-            aspect-ratio: 16 / 10;
-            object-fit: cover;
-            border: 2px solid var(--rpg-wood-border);
-            border-radius: 4px;
-            margin-bottom: 12px;
-            background: #000;
-        }
-
-        .champion-title {
-            font-family: var(--font-fantasy);
-            font-size: 20px;
-            color: var(--rpg-wood-dark);
-            margin: 0 0 4px 0;
-            line-height: 1.2;
-            word-break: break-word;
-        }
-
-        .champion-rank {
-            font-family: var(--font-pixel);
-            font-size: 11px;
-            color: #92400e;
-            margin-bottom: 10px;
-        }
-
-        .xp-container {
-            margin: 10px 0;
-        }
-
-        .xp-header {
-            display: flex;
-            justify-content: space-between;
-            font-family: var(--font-pixel);
-            font-size: 10px;
-            color: var(--rpg-wood-dark);
-            margin-bottom: 4px;
-        }
-
-        .xp-bar-track {
-            width: 100%;
-            height: 12px;
-            background: var(--rpg-wood-dark);
-            border: 1px solid var(--rpg-gold);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .xp-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #f59e0b, #10b981);
-            border-radius: 2px;
-            transition: width 0.4s ease;
-        }
-
-        .stats-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: var(--font-body);
             font-size: 13px;
-            color: #573a1d;
-            border-top: 1px dashed var(--rpg-parchment-dark);
-            padding-top: 10px;
-            margin-top: 10px;
+            padding: 6px 10px;
+            border: 1px solid var(--dir-border);
+            border-radius: 3px;
         }
 
         .stats-summary-box {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 14px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .stat-card {
-            background: var(--rpg-wood-dark);
-            border: 2px solid var(--rpg-gold);
-            border-radius: 6px;
+            background: #ffffff;
+            border: 1px solid var(--dir-border);
+            border-top: 3px solid var(--dir-blue-header);
+            border-radius: 4px;
             padding: 14px;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
         .stat-card .val {
-            font-family: var(--font-pixel);
             font-size: 22px;
-            color: var(--rpg-gold-light);
+            font-weight: bold;
+            color: var(--dir-blue-dark);
             margin-top: 4px;
         }
 
         .stat-card .lbl {
-            font-family: var(--font-fantasy);
-            font-size: 14px;
-            color: var(--text-muted);
+            font-size: 11px;
+            color: var(--dir-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .directory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .site-card {
+            background: #ffffff;
+            border: 1px solid var(--dir-border);
+            border-radius: 4px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.2s ease;
+        }
+
+        .site-card:hover {
+            border-color: var(--dir-blue-header);
+        }
+
+        .site-card-img {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            object-fit: cover;
+            border: 1px solid var(--dir-border);
+            border-radius: 3px;
+            margin-bottom: 10px;
+            background: #f8fafd;
+        }
+
+        .site-card-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--dir-blue-dark);
+            margin: 0 0 6px 0;
+            line-height: 1.3;
+        }
+
+        .site-card-url {
+            font-size: 12px;
+            word-break: break-all;
+            margin-bottom: 8px;
+        }
+
+        .site-card-meta {
+            font-size: 11px;
+            color: var(--dir-text-muted);
+            border-top: 1px solid #e2e8f0;
+            padding-top: 8px;
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     </style>
 </head>
 <body>
 
-<!-- TOP SCROLLING MARQUEE BANNER -->
+<!-- RETRO TOP MARQUEE BANNER -->
 <div class="top-marquee">
-    <marquee scrollamount="6" behavior="scroll">
-        ★ WEBSUTRA GUILD CHAMPIONS GALLERY ★ VERIFIED WEBMSTERS &amp; REALM XP LEADERBOARD ★ LEVEL UP YOUR REALM 🇮🇳 ★
-    </marquee>
+    <marquee>WEBSUTRA MEMBER DIRECTORY • EXPLORE INDIE HOME PAGES ACROSS INDIA • SUPPORT PERSONAL WEBSITES!</marquee>
 </div>
 
-<div id="container">
+<!-- MAIN PORTAL CONTAINER -->
+<div class="portal-container">
 
+    <!-- DIRECTORY HERO HEADER -->
     <header class="hero-header">
         <div class="header-top-nav">
+            <div><img src="graphics/flag.gif" alt="India Flag" style="height: 18px; vertical-align: middle;"> <strong> WebSutra Directory Index</strong></div>
             <div>
-                <span style="font-size: 24px;">🛡️</span>
-                <span style="font-family: var(--font-fantasy); font-size: 18px; color: var(--rpg-gold-light); font-weight: bold; margin-left: 8px;">CHAMPIONS_GALLERY.DAT</span>
-            </div>
-            <div>
-                <a href="index.html" class="btn">🏠 World Map</a>
-                <a href="join.html" class="btn btn-saffron">⚔️ Join Guild</a>
-                <a href="dashboard.html" class="btn btn-cyan">🔑 Key Login</a>
+                <a href="index.html" class="btn">Portal Home</a>
+                <a href="join.html" class="btn btn-primary">Register Homepage</a>
+                <a href="dashboard.html" class="btn">Webmaster Login</a>
             </div>
         </div>
 
         <div class="hero-title-group">
-            <h1>🛡️ Guild Champions Gallery</h1>
-            <div class="hero-subtitle">Verified Webmaster Members &amp; Gamified XP Leaderboard</div>
+            <h1>Registered Webmasters Index</h1>
+            <div class="hero-subtitle"> Complete List of Verified Webmaster Homepages, Blogs &amp; Indie Sites</div>
         </div>
     </header>
+
+    <!-- RETRO DIRECTORY NAVBAR -->
+    <nav class="dir-navbar">
+        <a href="index.html">Portal Home</a>
+        <a href="members.html" class="active">Web Directory</a>
+        <a href="join.html">Join Webring</a>
+        <a href="widgets.html">Widgets &amp; Badges</a>
+        <a href="dashboard.html">Webmaster Control</a>
+        <a href="api-docs.html">API Reference</a>
+        <a href="admin.html">Admin Console</a>
+    </nav>
 
     <!-- STATS SUMMARY COUNTERS -->
     <div class="stats-summary-box">
         <div class="stat-card">
-            <div class="lbl">🛡️ Verified Champions</div>
-            <div class="val" id="totalVerifiedCount">0</div>
+            <div class="lbl"> Verified Members</div>
+            <div class="val" id="totalVerifiedCount"> 0</div>
         </div>
         <div class="stat-card">
-            <div class="lbl">⚡ Total Guild XP</div>
-            <div class="val" id="totalGuildXP">0</div>
+            <div class="lbl"> States &amp; Territories</div>
+            <div class="val" id="totalStatesCount"> 0</div>
         </div>
         <div class="stat-card">
-            <div class="lbl">👑 Oldest Realm Veteran</div>
-            <div class="val" id="maxMemberDays">0 Days</div>
+            <div class="lbl"> Oldest Registered Member</div>
+            <div class="val" id="maxMemberDays"> 0 Days</div>
         </div>
     </div>
 
     <!-- FILTER & SORT CONTROLS -->
     <div class="filter-bar">
         <div style="display: flex; align-items: center; gap: 10px; flex: 1; min-width: 240px;">
-            <span style="font-family: var(--font-pixel); font-size: 12px; color: var(--rpg-gold);">🔍 SEARCH:</span>
-            <input type="text" id="searchInput" placeholder="Filter by Champion or Slug..." oninput="filterAndRender()">
+            <strong style="font-size: 12px; color: var(--dir-blue-dark);"> SEARCH DIRECTORY:</strong>
+            <input type="text" id="searchInput" placeholder="Search title, URL, or state..." oninput="filterAndRender()">
         </div>
 
         <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-family: var(--font-pixel); font-size: 12px; color: var(--rpg-gold);">🏆 SORT BY:</span>
+            <strong style="font-size: 12px; color: var(--dir-blue-dark);"> VIEW STYLE:</strong>
+            <select id="viewToggle" onchange="filterAndRender()">
+                <option value="grid"> Grid Card View</option>
+                <option value="table"> Directory Table View</option>
+            </select>
+
+            <strong style="font-size: 12px; color: var(--dir-blue-dark); margin-left: 10px;"> SORT BY:</strong>
             <select id="sortSelect" onchange="filterAndRender()">
-                <option value="xp-desc">Highest XP / Veteran Level</option>
-                <option value="newest">Newest Champions First</option>
-                <option value="title-asc">Alphabetical Title (A-Z)</option>
+                <option value="newest"> Newest Members First</option>
+                <option value="oldest"> Oldest Members First</option>
+                <option value="title-asc"> Title (A to Z)</option>
             </select>
         </div>
     </div>
 
-    <!-- CHAMPIONS GRID CONTAINER -->
-    <main id="championsGrid" class="champions-grid">
-        <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-            <p style="font-family: var(--font-fantasy); font-size: 20px; color: var(--rpg-gold-light);">Consulting the Guild Hall Scroll Archives...</p>
+    <!-- DIRECTORY CONTAINER -->
+    <main id="directoryContainer">
+        <div style="text-align: center; padding: 40px; background: #fff; border: 1px solid var(--dir-border); border-radius: 4px;">
+            <p style="color: var(--dir-text-muted);"> Loading Webmaster Directory Index...</p>
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="card-panel" style="text-align: center; margin-top: 40px;">
-        <p style="color: var(--text-muted); font-size: 13px; margin: 0;">
-            WebSutra Guild Champions Gallery &copy; 2026 | <a href="index.html">Return to World Map</a>
-        </p>
+    <!-- RETRO FOOTER -->
+    <footer class="dir-footer">
+        <div>
+            <strong> WebSutra Directory Index &copy; 2026</strong> • Celebrating Indian Personal Homepages
+        </div>
+        <div style="margin-top: 4px; font-size: 11px;">
+            <a href="index.html">Return to Portal Home</a> • <a href="join.html">Add Your Site to Directory</a>
+        </div>
     </footer>
 
 </div>
 
-<script>
-    let rawMembers = [];
+<script> let rawMembers = [];
 
-    // FANTASY RPG AUDIO SYNTHESIZER
-    class RPGAudioEngine {
-        constructor() {
-            this.enabled = true;
-            this.ctx = null;
-        }
-        init() {
-            if (!this.ctx) {
-                this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-        }
-        playClick() {
-            if (!this.enabled) return;
-            try {
-                this.init();
-                const osc = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(350, this.ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(700, this.ctx.currentTime + 0.08);
-                gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.08);
-                osc.connect(gain);
-                gain.connect(this.ctx.destination);
-                osc.start();
-                osc.stop(this.ctx.currentTime + 0.08);
-            } catch(e) {}
+    function formatDate(dateStr) {
+        if (!dateStr) return 'N/A';
+        try {
+            const d = new Date(dateStr);
+            if (isNaN(d.getTime())) return String(dateStr).split('T')[0] || 'N/A';
+            return d.toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
+        } catch(e) {
+            return String(dateStr).split('T')[0] || 'N/A';
         }
     }
-    const rpgAudio = new RPGAudioEngine();
 
-    // GAMIFIED XP & LEVEL FORMULAS
-    function calculateMemberXP(days) {
-        const activeDays = Math.max(0, parseInt(days) || 0);
-        // Base 500 XP for being verified + 100 XP per active day in realm
-        const totalXP = 500 + (activeDays * 100);
-        const level = Math.max(1, Math.floor(Math.sqrt(totalXP / 20)));
-
-        let rankTitle = '🗡️ Apprentice Webmaster';
-        if (level >= 35) rankTitle = '👑 Sovereign Webmaster';
-        else if (level >= 20) rankTitle = '🐉 Grand Guild Champion';
-        else if (level >= 10) rankTitle = '🧙 Arch-Mage of HTML';
-        else if (level >= 5) rankTitle = '🛡️ Realm Knight';
-
-        // Calculate progress to next level
-        const currentLevelMinXP = 20 * Math.pow(level, 2);
-        const nextLevelMinXP = 20 * Math.pow(level + 1, 2);
-        const levelRange = nextLevelMinXP - currentLevelMinXP;
-        const currentProgress = Math.min(levelRange, Math.max(0, totalXP - currentLevelMinXP));
-        const progressPercent = Math.min(100, Math.floor((currentProgress / levelRange) * 100));
-
-        return {
-            days: activeDays,
-            totalXP,
-            level,
-            rankTitle,
-            progressPercent,
-            nextLevelMinXP
-        };
+    function escapeHtml(val) {
+        return String(val ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     }
 
-    async function loadGalleryMembers() {
+    async function loadMembers() {
         try {
             const res = await fetch('/api/members?t=' + new Date().getTime());
             if (!res.ok) throw new Error("Failed to load members");
             const data = await res.json();
             
-            // SHOW ONLY VERIFIED MEMBERS
             rawMembers = data.filter(s => s.status === 'verified');
             updateSummaryCounters();
             filterAndRender();
         } catch (e) {
             console.error(e);
-            document.getElementById('championsGrid').innerHTML = `
-                <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--rpg-ruby);">
-                    <p style="font-family: var(--font-fantasy); font-size: 20px;">⚠️ Failed to consult the Guild Archives. Please try again later.</p>
+            document.getElementById('directoryContainer').innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #dc3545; background: #fff; border: 1px solid var(--dir-border);">
+                    <p> Failed to load directory roster. Please try refreshing.</p>
                 </div>
             `;
         }
@@ -330,21 +250,20 @@
     function updateSummaryCounters() {
         document.getElementById('totalVerifiedCount').textContent = rawMembers.length;
         
-        let totalXP = 0;
+        const statesSet = new Set(rawMembers.map(s => s.state).filter(Boolean));
+        document.getElementById('totalStatesCount').textContent = statesSet.size;
+
         let maxDays = 0;
-
         rawMembers.forEach(m => {
-            const xpInfo = calculateMemberXP(m.member_days);
-            totalXP += xpInfo.totalXP;
-            if (xpInfo.days > maxDays) maxDays = xpInfo.days;
+            const days = parseInt(m.member_days) || 0;
+            if (days > maxDays) maxDays = days;
         });
-
-        document.getElementById('totalGuildXP').textContent = totalXP.toLocaleString() + ' XP';
         document.getElementById('maxMemberDays').textContent = maxDays + ' Days';
     }
 
     function filterAndRender() {
         const query = document.getElementById('searchInput').value.toLowerCase().trim();
+        const viewStyle = document.getElementById('viewToggle').value;
         const sortVal = document.getElementById('sortSelect').value;
 
         let filtered = rawMembers.filter(m => 
@@ -354,72 +273,76 @@
             (m.state && m.state.toLowerCase().includes(query))
         );
 
-        if (sortVal === 'xp-desc') {
-            filtered.sort((a, b) => {
-                const xpA = calculateMemberXP(a.member_days).totalXP;
-                const xpB = calculateMemberXP(b.member_days).totalXP;
-                return xpB - xpA;
-            });
-        } else if (sortVal === 'newest') {
-            filtered.sort((a, b) => (a.member_days || 0) - (b.member_days || 0));
+        if (sortVal === 'newest') {
+            filtered.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+        } else if (sortVal === 'oldest') {
+            filtered.sort((a, b) => new Date(a.created_at || 0) - new Date(b.created_at || 0));
         } else if (sortVal === 'title-asc') {
             filtered.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
         }
 
-        const grid = document.getElementById('championsGrid');
+        const container = document.getElementById('directoryContainer');
 
         if (filtered.length === 0) {
-            grid.innerHTML = `
-                <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: var(--rpg-wood-dark); border: 2px solid var(--rpg-gold); border-radius: 6px;">
-                    <p style="font-family: var(--font-fantasy); font-size: 20px; color: var(--rpg-gold-light);">No verified champions matched your search query.</p>
+            container.innerHTML = `
+                <div style="text-align: center; padding: 40px; background: #fff; border: 1px solid var(--dir-border); border-radius: 4px;">
+                    <p style="color: var(--dir-text-muted); font-size: 14px;"> No webmasters found matching your query.</p>
                 </div>
             `;
             return;
         }
 
-        grid.innerHTML = filtered.map(m => {
-            const xp = calculateMemberXP(m.member_days);
-
-            return `
-                <div class="champion-card" onclick="rpgAudio.playClick()">
-                    <span class="champion-badge">VERIFIED</span>
-
-                    <div>
-                        <a href="${escapeHtml(m.url)}" target="_blank" style="text-decoration: none;">
-                            <img class="champion-img" src="/screenshots/${encodeURIComponent(m.slug)}.png" alt="${escapeHtml(m.title)}" onerror="this.src='india.png'">
-                        </a>
-
-                        <h3 class="champion-title">${escapeHtml(m.title)}</h3>
-                        <div class="champion-rank">${xp.rankTitle}</div>
-                        ${m.state ? `<div style="font-family: var(--font-pixel); font-size: 10px; color: #b45309; margin-bottom: 8px;">📍 ${escapeHtml(m.state)}</div>` : ''}
-
-                        <div class="xp-container">
-                            <div class="xp-header">
-                                <span>LEVEL ${xp.level}</span>
-                                <span>${xp.totalXP.toLocaleString()} XP</span>
+        if (viewStyle === 'grid') {
+            container.innerHTML = `
+                <div class="directory-grid">
+                    ${filtered.map(m => `
+                        <div class="site-card">
+                            <div>
+                                <a href="${escapeHtml(m.url)}" target="_blank" rel="noopener"><img class="site-card-img" src="/screenshots/${encodeURIComponent(m.slug)}.png" alt="${escapeHtml(m.title)}" onerror="this.src='india.png'"></a>
+                                <h3 class="site-card-title">${escapeHtml(m.title)}</h3>
+                                <div class="site-card-url"><a href="${escapeHtml(m.url)}" target="_blank" rel="noopener">${escapeHtml(m.url)}</a></div>
                             </div>
-                            <div class="xp-bar-track">
-                                <div class="xp-bar-fill" style="width: ${xp.progressPercent}%;"></div>
+                            <div class="site-card-meta">
+                                <span>${escapeHtml(m.state || 'India')}</span>
+                                <span>Joined ${formatDate(m.created_at)}</span>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="stats-footer">
-                        <span>⏳ ${xp.days} Day(s) Active</span>
-                        <a href="${escapeHtml(m.url)}" target="_blank" class="btn" style="font-size: 10px; padding: 4px 8px;">
-                            Visit Realm &rarr;
-                        </a>
+                    `).join('')}
+                </div>
+            `;
+        } else {
+            container.innerHTML = `
+                <div class="card-panel">
+                    <div class="table-responsive">
+                        <table class="dir-table">
+                            <thead>
+                                <tr>
+                                    <th> Site Title</th>
+                                    <th> URL</th>
+                                    <th> State / Region</th>
+                                    <th> Member Since</th>
+                                    <th> Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${filtered.map(m => `
+                                    <tr>
+                                        <td><strong>${escapeHtml(m.title)}</strong></td>
+                                        <td><a href="${escapeHtml(m.url)}" target="_blank" rel="noopener">${escapeHtml(m.url)}</a></td>
+                                        <td>${escapeHtml(m.state || 'India')}</td>
+                                        <td>${formatDate(m.created_at)}</td>
+                                        <td><span class="status-pill verified">${escapeHtml(m.status)}</span></td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             `;
-        }).join('');
+        }
     }
 
-    function escapeHtml(val) {
-        return String(val ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    }
-
-    loadGalleryMembers();
+    loadMembers();
 </script>
 
 </body>

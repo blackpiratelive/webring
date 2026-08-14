@@ -1,7 +1,7 @@
 # AI Handoff: WebSutra Webring
 
 ## Purpose
-WebSutra is a static site + serverless API for an India-focused webring & directory celebrating handmade personal homepages, indie blogs, and webmasters. Users submit a site, receive a secret key + widget snippet, and verify placement. Member and admin dashboards exist. The DB is the single source of truth.
+WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Indian personal homepages, indie blogs, and passion websites. Users register their site, receive a Webmaster Secret Key + widget snippet, and verify link placement. Member and admin control panels exist. The DB is the single source of truth.
 
 ---
 
@@ -10,7 +10,7 @@ WebSutra is a static site + serverless API for an India-focused webring & direct
   - `api/join.js` - Handles site registration (including optional state selection), password hashing, and widget snippet generation.
   - `api/verify.js` - Scrapes member site to verify WebSutra widget code placement.
   - `api/ring.js` - Handles next/prev/random redirects and JSON responses.
-  - `api/members.js` - Returns verified and pending webring members with member_days and state.
+  - `api/members.js` - Returns verified and pending webring members with `member_days` and state.
   - `api/manage.js` - Member dashboard CRUD API (login, add_site, update, delete) with state field management.
   - `api/admin.js` - Super admin API (list all, reset links, user/site/state management).
   - `api/reset-secret.js` - One-time secret reset consumption.
@@ -20,18 +20,18 @@ WebSutra is a static site + serverless API for an India-focused webring & direct
   - `lib/secret-hash.mjs` - HMAC-SHA256 secret hashing algorithms.
   - `lib/secret-reset-tokens.mjs` - One-time secret reset token generation and consumption.
 - **Static UI (`public/`)**:
-  - `public/index.html` - **Primary Full-Screen Interactive World Map Viewport** (Hero Guild HUD with HP/MP bars, pan/zoom, state matching, real Level/XP calculation per state, Mana Ember particle canvas, `📜` FAB Quest Scroll, slide-out Quest Tome drawer with `🔮 Widgets` tab).
-  - `public/widgets.html` - **Guild Runes & Widgets Catalog** (Embed code snippets, live previews, 88x31 badges, `widget.js` script embeds, and step-by-step framework integration guides).
-  - `public/members.html` - **Gamified Guild Champions Gallery & XP Leaderboard** (Displays verified members only, state badges, level & XP based on `member_days`, live search, and sorting).
-  - `public/demo.html` - **Traditional Scrolling Homepage** (About WebSutra, inline map, Member Gallery, and Members Directory table).
-  - `public/join.html` - Dedicated Webring registration page ("Guild Charter Desk") with optional Indian State dropdown, secret key generator, and snippet output.
-  - `public/dashboard.html` - Member login & site management dashboard ("Hero Keep") with optional State selection and real Level/XP status badges.
-  - `public/admin.html` - Super admin dashboard ("High Wizard Citadel") with full State assignment capabilities for all sites.
-  - `public/reset-secret.html` - One-time secret reset page ("Key Recovery Altar").
-  - `public/api-docs.html` - Interactive API documentation ("Oracle API Reference").
-  - `public/widget.js` - Embeddable webring widget script.
-  - `public/style.css` - **Classic Fantasy RPG World Map & Questbook Design System** (Ultra-legible `Plus Jakarta Sans` typography across body and UI buttons, parchment cards, embossed wood & gold 3D buttons, RPG status bars, `Cinzel Decorative`, `Courier Prime`).
-  - `public/graphics/` - Retro GIFs (`flag.gif`, `divider-blood.gif`, `email-me.gif`, `join-now.gif`), badge (`websutra-badge.jpg`), and `states.svg`.
+  - `public/index.html` - **Webmaster Portal Homepage** (Top marquee, directory hero header banner, Web 1.0 navigation bar, Webring quick nav widget, statistics counter, 88x31 badges, interactive SVG India state directory map, 468x60 retro banner network, and recently verified webmasters table).
+  - `public/widgets.html` - **Webring Widgets & Badges Catalog** (Embed code snippets, live previews, 88x31 badges, 468x60 pure CSS retro banner ad collection, `widget.js` script embeds, and step-by-step framework integration guides).
+  - `public/members.html` - **Registered Webmasters Directory Index** (Searchable directory roster, state filters, grid card and table view toggles).
+  - `public/join.html` - **Site Registration Desk** with optional Indian State dropdown, secret key generator, and snippet output.
+  - `public/dashboard.html` - **Webmaster Control Panel** for login, site CRUD management, and widget verification.
+  - `public/admin.html` - **Super Admin Console** with full user, site, and state management capabilities.
+  - `public/reset-secret.html` - **Key Recovery Desk** for one-time secret key resets.
+  - `public/api-docs.html` - **REST API Reference** page.
+  - `public/demo.html` - **Traditional Directory View** (About WebSutra, inline map, and webmaster directory).
+  - `public/widget.js` - Embeddable webring widget script with scoped CSS isolation.
+  - `public/style.css` - **Early 2000s Web Directory Design System (Yahoo! / DMOZ Aesthetic)** (Light off-white background `#f4f6f9`, steel blue headers `#003366`, slate borders `#7a92a5`, Verdana typography, classic blue/purple link colors, retro status pills, 468x60 banner keyframe animations).
+  - `public/graphics/` - Retro GIFs (`flag.gif`, `email-me.gif`, `join-now.gif`), badge (`websutra-badge.jpg`), `states.svg`, and local SVG fallback `states.js`.
   - `public/india.png` - India map graphic used in About sections.
 - **Docs**:
   - `AI_HANDOFF.md`
@@ -47,20 +47,21 @@ WebSutra is a static site + serverless API for an India-focused webring & direct
    - Automatic DB schema initialization (`ensureStateColumn` in `lib/db-init.mjs`) automatically adds `state` column to `sites` table on request.
    - Secret key hashes use HMAC-SHA256 with a pepper (`SECRET_HASH_PEPPER`).
 
-2. **Full-Screen Interactive Map & Questbook Navigation System**:
-   - `public/index.html` serves as a full-viewport (`100vw` × `100vh`) interactive realm map.
-   - Features **Google Maps-Style Pan & Zoom Engine**: mouse wheel zoom, mouse drag pan, mobile touch pinch-to-zoom, touch drag pan, and runic `[ ➕ ]` / `[ ➖ ]` / `[ 🧭 ]` control stack.
-   - Features **HTML5 Canvas Mana Ember Background** (`#constellations-bg`) rendering floating golden embers and cyan mana sparks.
-   - Built-in **Web Audio API Chiptune SFX Engine**: zero-dependency audio synthesizer for button clinks, parchment drawer unrolls, and hover harps with `🔊 SFX ON` toggle.
-   - Floating `📜` Quest Scroll FAB button opens a parchment modal drawer containing `Overview`, `Widgets`, `Join Guild`, `Members Gallery`, `Directory`, `Oracle FAQ`, `Manifesto`, `Codex`, `Privacy`, and `Key Login`.
+2. **Early 2000s Web Directory Design System (Yahoo! / DMOZ Style)**:
+   - Clean, lightweight 2-column portal layout (`.portal-container`) with top marquee banner, hero header, and navigation bar.
+   - Soft directory palette (`#f4f6f9` background, `#ffffff` card panels, `#003366` steel blue headers, `#7a92a5` borders).
+   - Standard retro link colors (`#0000cc` blue links, `#800080` purple visited, `#cc0000` hover red).
+   - Pure Web Directory metrics: Level/XP fantasy metrics removed in favor of authentic Join Date, State, and Verification status.
+   - Clean retro webmaster typography and icons (zero emojis across all templates).
 
-3. **Gamified XP Leaderboard System (`members.html` & Map Popups)**:
-   - Displays verified member websites (`status === 'verified'`).
-   - XP Formula: `500 Base XP + (member_days * 100 XP)`.
-   - Level Formula: `Math.floor(Math.sqrt(totalXP / 20))`.
-   - Dynamic Ranks: `Apprentice Webmaster`, `Realm Knight`, `Arch-Mage of HTML`, `Grand Guild Champion`, `Sovereign Master`.
+3. **Standalone SVG Map & Dual Fallback Engine**:
+   - `public/graphics/states.svg` is stored separately as a standalone SVG graphic asset.
+   - `loadSvgMap()` in `public/index.html` fetches `/graphics/states.svg` over HTTP/HTTPS, and falls back seamlessly to `public/graphics/states.js` when previewed on local `file://` protocols.
 
-4. **Data Model**:
+4. **Web 1.0 468x60 Pure CSS Retro Banner Network**:
+   - Includes 5 classic banner ad designs: Tricolor Flash, Patriotic Marquee, Windows 95 3D Bevel Button, Simulated GIF Animation, and Tricolor Ribbon.
+
+5. **Data Model**:
    - `users`: `id`, `secret_key_hash`, `email`, `max_sites`, `created_at`.
    - `sites`: `id`, `user_id`, `slug` (unique), `url`, `title`, `status` (`pending` | `verified` | `suspended`), `state` (`TEXT`, optional).
    - `secret_reset_tokens`: `user_id`, `token_hash`, `expires_at`, `used_at`.
@@ -86,8 +87,8 @@ WebSutra is a static site + serverless API for an India-focused webring & direct
 ---
 
 ## Recent Accomplishments
-- **Guild Runes & Widgets Catalog (`public/widgets.html` & Drawer Tab)**: Created a dedicated widgets page and drawer scroll tab containing interactive widget previews, 1-click copyable embed code snippets, 88x31 badges, `widget.js` embeds, and step-by-step framework integration guides.
-- **Active State Map Fills & Unique State HSL Palette**: States with at least 1 registered site automatically render with distinct, unique HSL fill colors and glowing neon drop-shadows across the world map.
-- **Button & UI Typography Upgrade**: Replaced blocky `Press Start 2P` pixel font on buttons, badges, and banners with crisp, clean **`Plus Jakarta Sans`**, solving illegibility on long button labels.
-- **Highly Legible Typography Upgrade**: Replaced cramped cursive fonts with Google Font `'Plus Jakarta Sans'`, providing crisp, modern, highly readable body text while preserving medieval `'Cinzel'` headings.
-- **Dynamic Map & Dashboard Level/XP Calculation**: Replaced hardcoded "LEVEL 99" badges with dynamic Level and XP calculations based on `member_days` across state popups and member dashboards.
+- **Web 1.0 Theme Conversion**: Completely redesigned WebSutra from RPG Fantasy Video Game theme to an authentic Early 2000s Web Directory (Yahoo! / DMOZ style).
+- **Standalone SVG Map Loader**: Preserved `public/graphics/states.svg` as a separate asset with dynamic `fetch()` loading and local `states.js` fallback for offline viewing.
+- **Web 1.0 468x60 Retro Banner Ads**: Built 5 pure CSS animated 468x60 banner ads and integrated them onto the homepage and widget catalog.
+- **Zero Emojis Policy**: Stripped out all emojis across the codebase, replacing them with clean retro webmaster typography, text/ASCII bracket indicators, and GIF icons.
+- **Complete Portal Page Alignment**: Updated all static pages (`index.html`, `members.html`, `join.html`, `widgets.html`, `dashboard.html`, `admin.html`, `reset-secret.html`, `api-docs.html`, `demo.html`, and `widget.js`).

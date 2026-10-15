@@ -91,6 +91,7 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
 ---
 
 ## Recent Accomplishments
+- **Member Directory Full Roster Resolution (`public/members.html` & `api/members.js`)**: Fixed TypeError crash in `updateSummaryCounters()` caused by mismatched element IDs (`totalVerifiedCount`), enabled listing of all registered members (verified, pending, suspended) with a new Status dropdown filter, added dynamic status pill badge classes and styling (`.status-pill.suspended`), and added CORS header to `api/members.js`.
 - **Indian Webring Retro Badge Showcase (`public/graphics/indian-webring-badge.png`)**: Renamed and moved newly added high-res retro badge artwork to `public/graphics/`, integrated dedicated showcase panel and sidebar poster card on `index.html`, and added copyable HTML embed option in `widgets.html`.
 - **Verified-Only Ring Navigation (`api/ring.js`)**: Updated ring routing query with `WHERE status = 'verified'` to ensure suspended and unverified pending sites are excluded from next/prev/random ring navigation.
 - **API SQL Column Reference Fix (`api/members.js`)**: Fixed SQLite query runtime error caused by referencing non-existent `s.created_at` column; corrected query to pull `u.created_at` from `users` table (`u`).

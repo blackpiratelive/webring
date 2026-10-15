@@ -156,7 +156,11 @@
     <!-- STATS SUMMARY COUNTERS -->
     <div class="stats-summary-box">
         <div class="stat-card">
-            <div class="lbl"> Verified Members</div>
+            <div class="lbl"> Registered Webmasters</div>
+            <div class="val" id="totalMembersCount"> 0</div>
+        </div>
+        <div class="stat-card">
+            <div class="lbl"> Verified Webmasters</div>
             <div class="val" id="totalVerifiedCount"> 0</div>
         </div>
         <div class="stat-card">
@@ -176,14 +180,22 @@
             <input type="text" id="searchInput" placeholder="Search title, URL, or state..." oninput="filterAndRender()">
         </div>
 
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <strong style="font-size: 12px; color: var(--dir-blue-dark);"> VIEW STYLE:</strong>
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <strong style="font-size: 12px; color: var(--dir-blue-dark);"> STATUS:</strong>
+            <select id="statusFilter" onchange="filterAndRender()">
+                <option value="all" selected> All Members (All Statuses)</option>
+                <option value="verified"> Verified Only</option>
+                <option value="pending"> Pending Only</option>
+                <option value="suspended"> Suspended Only</option>
+            </select>
+
+            <strong style="font-size: 12px; color: var(--dir-blue-dark); margin-left: 6px;"> VIEW STYLE:</strong>
             <select id="viewToggle" onchange="filterAndRender()">
                 <option value="grid"> Grid Card View</option>
                 <option value="table"> Directory Table View</option>
             </select>
 
-            <strong style="font-size: 12px; color: var(--dir-blue-dark); margin-left: 10px;"> SORT BY:</strong>
+            <strong style="font-size: 12px; color: var(--dir-blue-dark); margin-left: 6px;"> SORT BY:</strong>
             <select id="sortSelect" onchange="filterAndRender()">
                 <option value="newest"> Newest Members First</option>
                 <option value="oldest"> Oldest Members First</option>
@@ -230,7 +242,7 @@
             if (!res.ok) throw new Error("Failed to load members");
             const data = await res.json();
             
-            rawMembers = data.filter(s => s.status === 'verified');
+            rawMembers = Array.isArray(data) ? data : [];
             updateSummaryCounters();
             filterAndRender();
         } catch (e) {
@@ -244,19 +256,27 @@
     }
 
     function updateSummaryCounters() {
-        document.getElementById('verifiedCount').textContent = rawMembers.length;
+        const totalEl = document.getElementById('totalMembersCount');
+        if (totalEl) totalEl.textContent = rawMembers.length;
+
+        const verifiedEl = document.getElementById('totalVerifiedCount') || document.getElementById('verifiedCount');
+        if (verifiedEl) verifiedEl.textContent = rawMembers.filter(m => m.status === 'verified').length;
+
         const statesSet = new Set(rawMembers.map(m => m.state).filter(Boolean));
-        document.getElementById('statesCount').textContent = statesSet.size;
+        const statesEl = document.getElementById('totalStatesCount') || document.getElementById('statesCount');
+        if (statesEl) statesEl.textContent = statesSet.size;
 
         let maxDays = 0;
         rawMembers.forEach(m => {
             if (m.member_days && m.member_days > maxDays) maxDays = m.member_days;
         });
-        document.getElementById('maxMemberDays').textContent = maxDays + ' Days';
+        const daysEl = document.getElementById('maxMemberDays');
+        if (daysEl) daysEl.textContent = maxDays + ' Days';
     }
 
     function filterAndRender() {
         const query = document.getElementById('searchInput').value.toLowerCase().trim();
+        const statusVal = document.getElementById('statusFilter') ? document.getElementById('statusFilter').value : 'all';
         const viewStyle = document.getElementById('viewToggle').value;
         const sortVal = document.getElementById('sortSelect').value;
 
@@ -266,6 +286,10 @@
             (m.url && m.url.toLowerCase().includes(query)) ||
             (m.state && m.state.toLowerCase().includes(query))
         );
+
+        if (statusVal !== 'all') {
+            filtered = filtered.filter(m => m.status === statusVal);
+        }
 
         if (sortVal === 'newest') {
             filtered.sort((a, b) => new Date(b.created_at || b.member_since || 0) - new Date(a.created_at || a.member_since || 0));
@@ -298,7 +322,10 @@
                             </div>
                             <div class="site-card-meta">
                                 <span>${escapeHtml(m.state || 'India')}</span>
-                                <span class="status-pill swaraj" style="font-size: 10px; margin-top: 4px;">80th Swaraj Member</span>
+                                <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px;">
+                                    <span class="status-pill ${escapeHtml(m.status || 'verified')}">${escapeHtml(m.status || 'verified')}</span>
+                                    <span class="status-pill swaraj" style="font-size: 10px;">80th Swaraj Member</span>
+                                </div>
                                 <span>Joined ${formatDate(m)}</span>
                             </div>
                         </div>
@@ -327,7 +354,7 @@
                                         <td>${escapeHtml(m.state || 'India')}</td>
                                         <td>${formatDate(m)}</td>
                                         <td>
-                                            <span class="status-pill verified">${escapeHtml(m.status)}</span>
+                                            <span class="status-pill ${escapeHtml(m.status || 'verified')}">${escapeHtml(m.status || 'verified')}</span>
                                             <span class="status-pill swaraj" style="font-size: 10px; margin-left: 4px;">80th Swaraj Member</span>
                                         </td>
                                     </tr>

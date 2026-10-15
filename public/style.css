@@ -497,6 +497,12 @@ input:focus, textarea:focus, select:focus {
   border: 1px solid #ffecb5;
 }
 
+.status-pill.suspended {
+  background: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
+}
+
 /* MODAL OVERLAY */
 .modal-overlay {
   position: fixed;

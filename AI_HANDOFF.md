@@ -31,7 +31,7 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
   - `public/demo.html` - **Traditional Directory View** (About WebSutra, inline map with state text labels, and webmaster directory).
   - `public/widget.js` - Embeddable webring widget script with scoped CSS isolation.
   - `public/style.css` - **Early 2000s Web Directory Design System (Yahoo! / DMOZ Aesthetic)** (Light off-white background `#f4f6f9`, steel blue headers `#003366`, slate borders `#7a92a5`, Verdana typography, classic blue/purple link colors, retro status pills, 80th Independence Day commemorative badge styles, 468x60 banner keyframe animations).
-  - `public/graphics/` - Retro GIFs (`flag.gif`, `email-me.gif`, `join-now.gif`), badge (`websutra-badge.jpg`), `states.svg`, and local SVG fallback `states.js`.
+  - `public/graphics/` - Retro GIFs (`flag.gif`, `email-me.gif`, `join-now.gif`), badges (`websutra-badge.jpg`, `indian-webring-badge.png`), `states.svg`, and local SVG fallback `states.js`.
   - `public/india.png` - India map graphic used in About sections.
 - **Docs**:
   - `AI_HANDOFF.md`
@@ -91,6 +91,7 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
 ---
 
 ## Recent Accomplishments
+- **Indian Webring Retro Badge Showcase (`public/graphics/indian-webring-badge.png`)**: Renamed and moved newly added high-res retro badge artwork to `public/graphics/`, integrated dedicated showcase panel and sidebar poster card on `index.html`, and added copyable HTML embed option in `widgets.html`.
 - **Verified-Only Ring Navigation (`api/ring.js`)**: Updated ring routing query with `WHERE status = 'verified'` to ensure suspended and unverified pending sites are excluded from next/prev/random ring navigation.
 - **API SQL Column Reference Fix (`api/members.js`)**: Fixed SQLite query runtime error caused by referencing non-existent `s.created_at` column; corrected query to pull `u.created_at` from `users` table (`u`).
 - **Webmaster Contact Email Update**: Updated all support mailto links, dashboard key recovery notices, registration forms, and page footers across all pages to point to `sudip@blackpiratex.com`.

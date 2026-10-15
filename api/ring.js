@@ -58,10 +58,16 @@ export default async function handler(req, res) {
     }
 
     // --- PART B: ROUTING (Rest of your code remains same) ---
-    const allSitesResult = await db.execute('SELECT slug, url FROM sites ORDER BY id ASC');
+    const allSitesResult = await db.execute("SELECT slug, url FROM sites WHERE status = 'verified' ORDER BY id ASC");
     const sites = allSitesResult.rows;
 
-    if (!sites.length) return res.redirect('https://webring.blackpiratex.com');
+    if (!sites.length) {
+      if (json === 'true') {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        return res.status(200).json({ targetUrl: 'https://webring.blackpiratex.com' });
+      }
+      return res.redirect('https://webring.blackpiratex.com');
+    }
 
     let targetUrl = 'https://webring.blackpiratex.com';
 

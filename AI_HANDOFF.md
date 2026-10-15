@@ -91,6 +91,7 @@ WebSutra is a classic Web 1.0 directory and webring dedicated to celebrating Ind
 ---
 
 ## Recent Accomplishments
+- **Verified-Only Ring Navigation (`api/ring.js`)**: Updated ring routing query with `WHERE status = 'verified'` to ensure suspended and unverified pending sites are excluded from next/prev/random ring navigation.
 - **API SQL Column Reference Fix (`api/members.js`)**: Fixed SQLite query runtime error caused by referencing non-existent `s.created_at` column; corrected query to pull `u.created_at` from `users` table (`u`).
 - **Webmaster Contact Email Update**: Updated all support mailto links, dashboard key recovery notices, registration forms, and page footers across all pages to point to `sudip@blackpiratex.com`.
 - **Member Join Date Resolution**: Updated `api/members.js` SQL query to export both `created_at` and `member_since` with `COALESCE(u.created_at, CURRENT_TIMESTAMP)`, and enhanced `formatDate()` helper to resolve object member attributes seamlessly.
